@@ -5,6 +5,9 @@
  */
 package au.com.spacebattle.sprite;
 
+import au.com.rmit.Game2dEngine.action.ExpandByAction;
+import static java.lang.Math.abs;
+
 /**
  *
  * @author ricolwang
@@ -16,9 +19,17 @@ public class Boss extends Enemy
     {
         super(x, y, width, height, mass, velocityX, velocityY);
     }
-    
-    public Boss(String imagename)
+
+    public Boss()
     {
-        super(imagename);
+        super("boss-enemy.png");
+
+        this.lifetime = abs(theRandom.nextInt()) % 5 + 5;
+
+        float num = abs(theRandom.nextInt()) % 50;
+        float time = abs(theRandom.nextInt()) % 3 + 2;
+        ExpandByAction aAction = new ExpandByAction();
+        aAction.expandBy(num, time);
+        this.addAction(aAction);
     }
 }

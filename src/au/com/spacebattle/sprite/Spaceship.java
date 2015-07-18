@@ -41,5 +41,10 @@ public class Spaceship extends MovingSprite
             
         }
     }
+    
+    public void fire(String imagename)
+    {
+
+    }
 
 }

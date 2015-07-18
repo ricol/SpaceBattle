@@ -20,5 +20,6 @@ public class Enemy extends Spaceship
     public Enemy(String imagename)
     {
         super(imagename);
+        
     }
 }
