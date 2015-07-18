@@ -5,12 +5,13 @@ import au.com.rmit.Game2dEngine.action.MoveCentreYToAction;
 import au.com.rmit.Game2dEngine.action.MoveXByAction;
 import au.com.rmit.Game2dEngine.action.MoveYByAction;
 import au.com.rmit.Game2dEngine.director.Director;
+import au.com.rmit.Game2dEngine.node.Sprite;
 import au.com.spacebattle.scene.SpaceShipScene;
 import au.com.spacebattle.scene.TestScene;
-import au.com.spacebattle.sprite.BlueMissile;
+import au.com.spacebattle.sprite.Enemy;
 import au.com.spacebattle.sprite.Missile;
-import au.com.spacebattle.sprite.MySpaceship;
-import au.com.spacebattle.sprite.RedMissile;
+import au.com.spacebattle.sprite.Spaceship;
+import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +22,9 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import static java.lang.Math.abs;
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
 import java.util.Random;
 import javax.swing.Timer;
 
@@ -38,10 +42,12 @@ public class FrameMain extends javax.swing.JFrame implements KeyListener, Action
 
     Random theRandom = new Random();
     SpaceShipScene theScene;
-    MySpaceship theShip;
+    Spaceship theShip;
 
     char c;
     Timer keyTimer = new Timer(200, this);
+    Timer timerForEnemy = new Timer(300, this);
+    Timer timerForFire = new Timer(200, this);
 
     public FrameMain()
     {
@@ -137,8 +143,16 @@ public class FrameMain extends javax.swing.JFrame implements KeyListener, Action
         Director.getSharedInstance().setParent(this.panelGame);
         Director.getSharedInstance().showScene(theScene);
 
-        this.theShip = new MySpaceship(this.getWidth() / 2.0, this.getHeight() * (3 / 4.0), 100, 100, 0, 0, 0);
+        this.theShip = new Spaceship("my-spaceship.png");
+        this.theShip.lifetime = Sprite.EVER;
+
+        this.theShip.setX(this.getWidth() / 2.0);
+        this.theShip.setY(this.getHeight() * (3 / 4.0));
+
         this.theScene.addSprite(theShip);
+
+        this.timerForEnemy.start();
+        this.timerForFire.start();
     }
 
     void launchTest()
@@ -202,20 +216,22 @@ public class FrameMain extends javax.swing.JFrame implements KeyListener, Action
         } else if (e == 'f')
         {
             //fire
-            Missile aMissile = new RedMissile(theShip.getX(),
-                theShip.getY(), 0, 0, -200);
+            Missile aMissile = this.createAFriendlyMissile();
+            aMissile.setX(theShip.getX());
+            aMissile.setY(theShip.getY());
+            aMissile.setVelocityY(-300);
             this.theScene.addSprite(aMissile);
 
-            aMissile = new BlueMissile(theShip.getX() + theShip.getWidth() / 2,
-                theShip.getY(), 0, 0, -300);
-            aMissile.setX(aMissile.getX() - aMissile.getWidth() / 2);
-
+            aMissile = this.createAFriendlyMissile();
+            aMissile.setX(theShip.getX() + theShip.getWidth() / 2);
+            aMissile.setY(theShip.getY());
+            aMissile.setVelocityY(-600);
             this.theScene.addSprite(aMissile);
 
-            aMissile = new RedMissile(theShip.getX() + theShip.getWidth(),
-                theShip.getY(), 0, 0, -200);
-            aMissile.setX(aMissile.getX() - aMissile.getWidth());
-
+            aMissile = this.createAFriendlyMissile();
+            aMissile.setX(theShip.getX() + theShip.getWidth());
+            aMissile.setY(theShip.getY());
+            aMissile.setVelocityY(-300);
             this.theScene.addSprite(aMissile);
         }
     }
@@ -223,21 +239,53 @@ public class FrameMain extends javax.swing.JFrame implements KeyListener, Action
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        this.fireKey(c);
+        if (e.getSource().equals(this.keyTimer))
+        {
+            this.fireKey(c);
+        } else if (e.getSource().equals(this.timerForEnemy))
+        {
+            this.theScene.addSprite(this.createAEnemy());
+        } else if (e.getSource().equals(this.timerForFire))
+        {
+            this.fireKey('f');
+        }
     }
 
     @Override
     public void mouseClicked(MouseEvent e)
     {
-        c = 'f';
-        this.keyTimer.start();
-        this.fireKey(c);
+//        c = 'f';
+//        this.keyTimer.start();
+//        this.fireKey(c);
     }
 
     @Override
     public void mousePressed(MouseEvent e)
     {
+        if (e.getButton() == MouseEvent.BUTTON3)
+        {
+            //Blast
+            float velocity = 500;
+            float delta = 0;
+            
+            while (delta < (Math.PI * 2))
+            {
+                float velocityX = (float) sin(delta) * velocity;
+                float velocityY = (float) cos(delta) * velocity;
 
+                delta += 0.1;
+
+                Missile aMissile = new Missile("red-missile.png");
+                aMissile.setX(this.theShip.getCentreX());
+                aMissile.setY(this.theShip.getCentreY());
+
+                aMissile.lifetime = 0.5;
+                aMissile.setVelocityX(velocityX);
+                aMissile.setVelocityY(velocityY);
+                
+                this.theScene.addSprite(aMissile);
+            }
+        }
     }
 
     @Override
@@ -278,4 +326,68 @@ public class FrameMain extends javax.swing.JFrame implements KeyListener, Action
         aCentreYAction.MoveCentreYTo(y, 0);
         theShip.addAction(aCentreYAction);
     }
+
+    Enemy createAEnemy()
+    {
+        String[] data = new String[]
+        {
+            "blue-enemy.png", "boss-enemy.png", "purple-enemy.png", "green-enemy.png"
+        };
+        int index = abs(theRandom.nextInt()) % data.length;
+        Enemy aEnemy = new Enemy(data[index]);
+
+        boolean b = theRandom.nextBoolean();
+        index = b ? 1 : 0;
+        index = (int) power(-1, index);
+        int size = (int) (this.getWidth() * (1 / 4.0));
+
+        aEnemy.setX(this.getWidth() / 2 + index * abs(theRandom.nextInt()) % size);
+        aEnemy.setY(-100);
+        
+        b = theRandom.nextBoolean();
+        index = b ? 1 : 0;
+        index = (int) power(-1, index);
+        
+        float velocityX = index * abs(theRandom.nextInt()) % 100 + 50;
+        float velocttyY = abs(theRandom.nextInt()) % 300 + 200;
+        
+        aEnemy.setVelocityX(velocityX);
+        aEnemy.setVelocityY(velocttyY);
+        aEnemy.lifetime = 5;
+
+        return aEnemy;
+    }
+
+    Missile createAFriendlyMissile()
+    {
+        String[] data = new String[]
+        {
+            "blue-missile.png", "green-missile.png", "nuclear.png", "red-missile.png"
+        };
+        int index = abs(theRandom.nextInt()) % data.length;
+
+        Missile aMissile = new Missile(data[index]);
+
+        return aMissile;
+    }
+    
+    Missile createARocketMissile()
+    {
+        Missile aMissile = new Missile("rocket.png");
+        return aMissile;
+    }
+
+    Missile createAEnemyMissile()
+    {
+        String[] data = new String[]
+        {
+            "red-enemy-missile.png"
+        };
+        int index = abs(theRandom.nextInt()) % data.length;
+
+        Missile aMissile = new Missile(data[index]);
+
+        return aMissile;
+    }
+
 }

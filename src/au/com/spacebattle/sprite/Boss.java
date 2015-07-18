@@ -9,14 +9,16 @@ package au.com.spacebattle.sprite;
  *
  * @author ricolwang
  */
-public class EnemySpaceship extends Spaceship
+public class Boss extends Enemy
 {
 
-    public EnemySpaceship(double x, double y, double width, double height, double mass, double velocityX, double velocityY)
+    public Boss(double x, double y, double width, double height, double mass, double velocityX, double velocityY)
     {
         super(x, y, width, height, mass, velocityX, velocityY);
-        this.setImage("enemy-spaceship.png");
-        this.lifetime = 5;
     }
     
+    public Boss(String imagename)
+    {
+        super(imagename);
+    }
 }

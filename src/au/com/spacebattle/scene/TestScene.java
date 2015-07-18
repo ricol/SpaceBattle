@@ -8,7 +8,7 @@ package au.com.spacebattle.scene;
 import au.com.rmit.Game2dEngine.gravity.Gravity;
 import au.com.rmit.Game2dEngine.node.Sprite;
 import au.com.rmit.Game2dEngine.scene.Scene;
-import au.com.spacebattle.sprite.MySpaceship;
+import au.com.spacebattle.sprite.Spaceship;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -57,11 +57,11 @@ public class TestScene extends Scene
             @Override
             public void mousePressed(MouseEvent e)
             {
-                MySpaceship aObject;
+                Spaceship aObject;
 
                 int width = 100;
                 int height = 100;
-                aObject = new MySpaceship(e.getX() - width / 2, e.getY() - height / 2, width, height, 0, 0, 0);
+                aObject = new Spaceship(e.getX() - width / 2, e.getY() - height / 2, width, height, 0, 0, 0);
                 aObject.lifetime = Sprite.EVER;
                 aObject.bDeadIfNoActions = true;
 //                aObject.applyGravity(g);
