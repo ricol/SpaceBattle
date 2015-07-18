@@ -216,19 +216,19 @@ public class FrameMain extends javax.swing.JFrame implements KeyListener, Action
         } else if (e == 'f')
         {
             //fire
-            Missile aMissile = this.createAFriendlyMissile();
+            Missile aMissile = new Missile("nuclear.png");
             aMissile.setX(theShip.getX());
             aMissile.setY(theShip.getY());
             aMissile.setVelocityY(-300);
             this.theScene.addSprite(aMissile);
 
-            aMissile = this.createAFriendlyMissile();
+            aMissile = new Missile("blue-missile.png");
             aMissile.setX(theShip.getX() + theShip.getWidth() / 2);
             aMissile.setY(theShip.getY());
             aMissile.setVelocityY(-600);
             this.theScene.addSprite(aMissile);
 
-            aMissile = this.createAFriendlyMissile();
+            aMissile = new Missile("nuclear.png");
             aMissile.setX(theShip.getX() + theShip.getWidth());
             aMissile.setY(theShip.getY());
             aMissile.setVelocityY(-300);
