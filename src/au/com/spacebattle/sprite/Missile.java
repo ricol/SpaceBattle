@@ -15,18 +15,19 @@ import javax.imageio.ImageIO;
  *
  * @author ricolwang
  */
-public class Spaceship extends MovingSprite
+public class Missile extends MovingSprite
 {
 
-    public Spaceship(double x, double y, double width, double height, double mass, double velocityX, double velocityY)
+    public Missile(double x, double y, double width, double height, double mass, double velocityX, double velocityY)
     {
         super(x, y, width, height, mass, velocityX, velocityY);
+
     }
 
-    public Spaceship(String imagename)
+    public Missile(String imagename)
     {
         super(0, 0, 0, 0, 0, 0, 0);
-
+        
         BufferedImage aImage;
 
         try
@@ -40,11 +41,6 @@ public class Spaceship extends MovingSprite
         {
             
         }
-    }
-    
-    public void fire(String imagename)
-    {
-
     }
 
 }

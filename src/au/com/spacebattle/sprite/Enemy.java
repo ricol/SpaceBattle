@@ -5,20 +5,21 @@
  */
 package au.com.spacebattle.sprite;
 
-import au.com.rmit.Game2dEngine.node.Sprite;
-
 /**
  *
  * @author ricolwang
  */
-public class MySpaceship extends Spaceship
+public class Enemy extends Spaceship
 {
 
-    public MySpaceship(double x, double y, double width, double height, double mass, double velocityX, double velocityY)
+    public Enemy(double x, double y, double width, double height, double mass, double velocityX, double velocityY)
     {
         super(x, y, width, height, mass, velocityX, velocityY);
-        this.setImage("my-spaceship.png");
-        this.lifetime = Sprite.EVER;
     }
     
+    public Enemy(String imagename)
+    {
+        super(imagename);
+        
+    }
 }
