@@ -5,8 +5,12 @@
  */
 package au.com.spacebattle.scene;
 
-import au.com.rmit.Game2dEngine.action.MoveXYByAction;
-import au.com.rmit.Game2dEngine.action.MoveXYToAction;
+import au.com.rmit.Game2dEngine.action.AlphaByAction;
+import au.com.rmit.Game2dEngine.action.AlphaToAction;
+import au.com.rmit.Game2dEngine.action.MoveXByAction;
+import au.com.rmit.Game2dEngine.action.MoveXToAction;
+import au.com.rmit.Game2dEngine.action.MoveYByAction;
+import au.com.rmit.Game2dEngine.action.MoveYToAction;
 import au.com.rmit.Game2dEngine.gravity.Gravity;
 import au.com.rmit.Game2dEngine.node.Sprite;
 import au.com.rmit.Game2dEngine.scene.Scene;
@@ -66,72 +70,125 @@ public class SpaceShipScene extends Scene
                 int width = 100;
                 int height = 100;
                 aObject = new MySpaceship(e.getX() - width / 2, e.getY() - height / 2, width, height, 0, 0, 0);
-                addSprite(aObject);
                 aObject.lifetime = Sprite.EVER;
                 aObject.bDeadIfNoActions = true;
 //                aObject.applyGravity(g);
 
-                for (int i = 0; i < 10; i++)
                 {
-                    {
-                        MoveXYByAction aMoveXYByAction = new MoveXYByAction();
-
-                        int indexX = (int) power(-1, (int) abs(theRandom.nextInt() % 10));
-                        int indexY = (int) power(-1, (int) abs(theRandom.nextInt() % 10));
-                        int randomX = indexX * (int) (abs(theRandom.nextInt()) % 400);
-                        int randomY = indexY * (int) (abs(theRandom.nextInt()) % 400);
-                        int timeX = (int) (abs(theRandom.nextInt()) % 2 + 2);
-                        int timeY = (int) (abs(theRandom.nextInt()) % 2 + 2);
-
-                        System.out.println("randomX: " + randomX + " in " + timeX + "seconds");
-                        System.out.println("randomY: " + randomY + " in " + timeY + "seconds");
-
-                        aMoveXYByAction.moveXBy(randomX, timeX);
-                        aMoveXYByAction.moveYBy(randomY, timeY);
-
-                        aObject.addAction(aMoveXYByAction);
-                    }
-
-                    {
-                        MoveXYToAction aMoveXYToAction = new MoveXYToAction(aObject);
-
-                        int randomX = (int) (abs(theRandom.nextInt()) % getWidth());
-                        int randomY = (int) (abs(theRandom.nextInt()) % getHeight());
-                        int timeX = (int) (abs(theRandom.nextInt()) % 2 + 2);
-                        int timeY = (int) (abs(theRandom.nextInt()) % 2 + 2);
-
-                        System.out.println("MoveXTo: " + randomX + " in " + timeX + "seconds");
-                        System.out.println("MoveYTo: " + randomY + " in " + timeY + "seconds");
-
-                        aMoveXYToAction.moveXTo(randomX, timeX);
-                        aMoveXYToAction.moveYTo(randomY, timeY);
-
-                        aObject.addAction(aMoveXYToAction);
-                    }
+                    MoveXByAction aAction = new MoveXByAction();
+                    int indexX = (int) power(-1, (int) abs(theRandom.nextInt() % 10));
+                    int randomX = indexX * (int) (abs(theRandom.nextInt()) % 400);
+                    int timeX = (int) (abs(theRandom.nextInt()) % 2 + 2);
+                    System.out.println("MoveXBy: " + randomX + " in " + timeX + "seconds");
+                    aAction.moveXBy(randomX, timeX);
+                    aObject.addAction(aAction);
                 }
-//                for (int i = 0; i < 10; i++)
+
+                {
+                    MoveYByAction aAction = new MoveYByAction();
+                    int indexY = (int) power(-1, (int) abs(theRandom.nextInt() % 10));
+                    int randomY = indexY * (int) (abs(theRandom.nextInt()) % 400);
+                    int timeY = (int) (abs(theRandom.nextInt()) % 2 + 2);
+                    System.out.println("MoveYBy: " + randomY + " in " + timeY + "seconds");
+                    aAction.moveYBy(randomY, timeY);
+                    aObject.addAction(aAction);
+                }
+
+                {
+                    MoveXToAction aAction = new MoveXToAction(aObject);
+                    int randomX = (int) (abs(theRandom.nextInt()) % getWidth());
+                    int timeX = (int) (abs(theRandom.nextInt()) % 2 + 2);
+                    System.out.println("MoveXTo: " + randomX + " in " + timeX + "seconds");
+                    aAction.moveXTo(randomX, timeX);
+                    aObject.addAction(aAction);
+                }
+
+                {
+                    MoveYToAction aAction = new MoveYToAction(aObject);
+                    int randomY = (int) (abs(theRandom.nextInt()) % getHeight());
+                    int timeY = (int) (abs(theRandom.nextInt()) % 2 + 2);
+                    System.out.println("MoveYTo: " + randomY + " in " + timeY + "seconds");
+                    aAction.moveYTo(randomY, timeY);
+                    aObject.addAction(aAction);
+                }
 //                {
-//                    ScaleWidthHeightByAction aScaleWidthHeightByAction = new ScaleWidthHeightByAction();
-//
+//                    ScaleWidthByAction aAction = new ScaleWidthByAction();
 //                    int indexX = (int) power(-1, (int) abs(theRandom.nextInt() % 10));
-//                    int indexY = (int) power(-1, (int) abs(theRandom.nextInt() % 10));
 //                    int randomX = indexX * (int) (abs(theRandom.nextInt()) % 300);
-//                    int randomY = indexY * (int) (abs(theRandom.nextInt()) % 300);
 //                    int timeX = (int) (abs(theRandom.nextInt()) % 2 + 2);
-//                    int timeY = (int) (abs(theRandom.nextInt()) % 2 + 2);
-//
 //                    System.out.println("Scale Width By: " + randomX + " in " + timeX + "seconds");
+//                    aAction.scaleWidthBy(randomX, timeX);
+//                    aObject.addAction(aAction);
+//                }
+//
+//                {
+//                    ScaleHeightByAction aAction = new ScaleHeightByAction();
+//                    int indexY = (int) power(-1, (int) abs(theRandom.nextInt() % 10));
+//                    int randomY = indexY * (int) (abs(theRandom.nextInt()) % 300);
+//                    int timeY = (int) (abs(theRandom.nextInt()) % 2 + 2);
 //                    System.out.println("Scale Height By: " + randomY + " in " + timeY + "seconds");
+//                    aAction.scaleHeightBy(randomY, timeY);
+//                    aObject.addAction(aAction);
+//                }
 //
-//                    aScaleWidthHeightByAction.scaleWidthBy(randomX, timeX);
-//                    aScaleWidthHeightByAction.scaleHeightBy(randomY, timeY);
+//                {
+//                    ScaleWidthToAction aAction = new ScaleWidthToAction(aObject);
+//                    int randomX = (int) (abs(theRandom.nextInt()) % 300);
+//                    int timeX = (int) (abs(theRandom.nextInt()) % 2 + 2);
+//                    System.out.println("Scale Width To: " + randomX + " in " + timeX + "seconds");
+//                    aAction.ScaleWidthTo(randomX, timeX);
+//                    aObject.addAction(aAction);
+//                }
 //
-//                    aObject.addAction(aScaleWidthHeightByAction);
+//                {
+//                    ScaleHeightToAction aAction = new ScaleHeightToAction(aObject);
+//                    int randomY = (int) (abs(theRandom.nextInt()) % 300);
+//                    int timeY = (int) (abs(theRandom.nextInt()) % 2 + 2);
+//                    System.out.println("Scale Height To: " + randomY + " in " + timeY + "seconds");
+//                    aAction.ScaleHeightTo(randomY, timeY);
+//                    aObject.addAction(aAction);
 //                }
 
+//                    {
+//                        RotateByAction aAction = new RotateByAction();
+//                        int index = (int) power(-1, (int) abs(theRandom.nextInt() % 10));
+//                        float angle = (float) (index * (abs(theRandom.nextFloat()) * 2 * Math.PI));
+//                        int time = (int) (abs(theRandom.nextInt()) % 2 + 2);
+//                        System.out.println("Rotate By: " + angle + " in " + time + "seconds");
+//                        aAction.rotateBy(angle, time);
+//                        aObject.addAction(aAction);
+//                    }
+//                    {
+//                        RotateToAction aAction = new RotateToAction(aObject);
+//                        float angle = (float) (abs(theRandom.nextFloat()) * 2 * Math.PI);
+//                        int time = (int) (abs(theRandom.nextInt()) % 2 + 2);
+//                        System.out.println("Rotate To: " + angle + " in " + time + "seconds");
+//                        aAction.rotateTo(angle, time);
+//                        aObject.addAction(aAction);
+//                    }
+                {
+                    AlphaByAction aAction = new AlphaByAction();
+                    float alpha = -1 * (float) ((abs(theRandom.nextInt()) % 10) / 10.0);
+                    int time = (int) (abs(theRandom.nextInt()) % 2 + 2);
+                    System.out.println("AlphaBy: " + alpha + " in " + time + "seconds");
+                    aAction.alphaBy(alpha, time);
+                    aObject.addAction(aAction);
+                }
+
+                {
+                    AlphaToAction aAction = new AlphaToAction(aObject);
+                    float alpha = (float) ((abs(theRandom.nextInt()) % 10) / 10.0);
+                    int time = (int) (abs(theRandom.nextInt()) % 2 + 2);
+                    System.out.println("AlphaTo: " + alpha + " in " + time + "seconds");
+                    aAction.alphaTo(alpha, time);
+                    aObject.addAction(aAction);
+                }
+
+                addSprite(aObject);
             }
 
             @Override
+
             public void mouseReleased(MouseEvent e)
             {
             }
@@ -145,7 +202,8 @@ public class SpaceShipScene extends Scene
             public void mouseExited(MouseEvent e)
             {
             }
-        });
+        }
+        );
 
 //        Timer aTimer;
 //        aTimer = new Timer(100, new ActionListener()

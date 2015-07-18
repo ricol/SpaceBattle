@@ -42,6 +42,7 @@ public class FrameMain extends javax.swing.JFrame
 
         panelGame = new javax.swing.JPanel();
         btnSpaceShip = new javax.swing.JButton();
+        btnPause = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter()
@@ -74,6 +75,15 @@ public class FrameMain extends javax.swing.JFrame
             }
         });
 
+        btnPause.setText("Pause");
+        btnPause.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnPauseActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -81,14 +91,18 @@ public class FrameMain extends javax.swing.JFrame
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnSpaceShip)
-                .addContainerGap(668, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnPause)
+                .addContainerGap(598, Short.MAX_VALUE))
             .addComponent(panelGame, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnSpaceShip)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSpaceShip)
+                    .addComponent(btnPause))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -107,7 +121,14 @@ public class FrameMain extends javax.swing.JFrame
         Director.getSharedInstance().showScene(new SpaceShipScene());
     }//GEN-LAST:event_btnSpaceShipActionPerformed
 
+    private void btnPauseActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnPauseActionPerformed
+    {//GEN-HEADEREND:event_btnPauseActionPerformed
+        // TODO add your handling code here:
+        Director.getSharedInstance().pause();
+    }//GEN-LAST:event_btnPauseActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnPause;
     private javax.swing.JButton btnSpaceShip;
     private javax.swing.JPanel panelGame;
     // End of variables declaration//GEN-END:variables
