@@ -5,9 +5,15 @@
  */
 package au.com.spacebattle.scene;
 
+import au.com.rmit.Game2dEngine.allScenes.FountainScene;
 import au.com.rmit.Game2dEngine.scene.Scene;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -41,6 +47,14 @@ public class SpaceShipScene extends Scene implements KeyListener
 //            }
 //        });
 //        aTimer.start();
+
+        try
+        {
+            this.theImageBackground = ImageIO.read(new File("space.jpg"));
+        } catch (IOException ex)
+        {
+            Logger.getLogger(FountainScene.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override

@@ -5,14 +5,16 @@
  */
 package au.com.spacebattle.scene;
 
+import au.com.rmit.Game2dEngine.action.CountdownByAction;
 import au.com.rmit.Game2dEngine.gravity.Gravity;
 import au.com.rmit.Game2dEngine.node.Sprite;
 import au.com.rmit.Game2dEngine.scene.Scene;
-import au.com.spacebattle.sprite.Spaceship;
+import au.com.spacebattle.sprite.other.TestSpaceship;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import static java.lang.Math.abs;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import javax.swing.Timer;
@@ -57,14 +59,25 @@ public class TestScene extends Scene
             @Override
             public void mousePressed(MouseEvent e)
             {
-                Spaceship aObject;
+                TestSpaceship aObject;
 
                 int width = 100;
                 int height = 100;
-                aObject = new Spaceship(e.getX() - width / 2, e.getY() - height / 2, width, height, 0, 0, 0);
+                aObject = new TestSpaceship();
+                aObject.setX(e.getX() - width / 2);
+                aObject.setY(e.getY() - height / 2);
+
                 aObject.lifetime = Sprite.EVER;
                 aObject.bDeadIfNoActions = true;
+
 //                aObject.applyGravity(g);
+                {
+                    CountdownByAction aAction = new CountdownByAction();
+                    int value = abs(theRandom.nextInt()) % 5 + 1;
+                    System.out.println("Countdown by: " + value);
+                    aAction.CountdownBy(value);
+                    aObject.addAction(aAction);
+                }
 
 //                {
 //                    MoveXByAction aAction = new MoveXByAction();
@@ -202,7 +215,6 @@ public class TestScene extends Scene
 //                    aAction.MoveCentreXTo(randomX, timeX);
 //                    aObject.addAction(aAction);
 //                }
-
 //                {
 //                    MoveCentreYToAction aAction = new MoveCentreYToAction(aObject);
 //                    int randomY = (int) (abs(theRandom.nextInt()) % getHeight());
@@ -211,7 +223,6 @@ public class TestScene extends Scene
 //                    aAction.MoveCentreYTo(randomY, timeY);
 //                    aObject.addAction(aAction);
 //                }
-
                 addSprite(aObject);
             }
 

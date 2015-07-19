@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package au.com.spacebattle.sprite;
+package au.com.spacebattle.sprite.missile;
 
 import au.com.rmit.Game2dEngine.node.MovingSprite;
 import java.awt.image.BufferedImage;
@@ -27,7 +27,7 @@ public class Missile extends MovingSprite
     public Missile(String imagename)
     {
         super(0, 0, 0, 0, 0, 0, 0);
-        
+
         BufferedImage aImage;
 
         try
@@ -35,12 +35,25 @@ public class Missile extends MovingSprite
             aImage = ImageIO.read(new File(imagename));
             this.setWidth(aImage.getWidth());
             this.setHeight(aImage.getHeight());
-            
+
             this.setImage(imagename);
         } catch (IOException e)
         {
-            
+
         }
+
+        this.lifetime = 0.5f;
     }
 
+    @Override
+    public void onDead()
+    {
+        super.onDead(); //To change body of generated methods, choose Tools | Templates.
+
+        this.explode();
+    }
+
+    public void explode()
+    {
+    }
 }
