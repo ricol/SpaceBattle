@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package au.com.spacebattle.sprite;
+package au.com.spacebattle.sprite.spaceship;
 
 import au.com.rmit.Game2dEngine.node.MovingSprite;
 import java.awt.image.BufferedImage;
@@ -34,14 +34,14 @@ public class Spaceship extends MovingSprite
             aImage = ImageIO.read(new File(imagename));
             this.setWidth(aImage.getWidth());
             this.setHeight(aImage.getHeight());
-            
+
             this.setImage(imagename);
         } catch (IOException e)
         {
-            
+
         }
     }
-    
+
     public void fire(String imagename)
     {
 

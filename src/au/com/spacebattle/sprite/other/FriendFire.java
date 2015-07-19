@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package au.com.spacebattle.sprite;
+package au.com.spacebattle.sprite.other;
 
 import au.com.rmit.Game2dEngine.action.ExpandByAction;
 import au.com.rmit.Game2dEngine.node.MovingSprite;
@@ -15,20 +15,25 @@ import java.awt.Graphics2D;
  *
  * @author ricolwang
  */
-public class Sheld extends MovingSprite
+public class FriendFire extends MovingSprite
 {
 
-    public Sheld(double x, double y, double width, double height, double mass, double velocityX, double velocityY)
+    public FriendFire(double x, double y, double width, double height, double mass, double velocityX, double velocityY)
     {
         super(x, y, width, height, mass, velocityX, velocityY);
 
         this.bCustomDrawing = true;
-        this.red = 255;
+        this.blue = 255;
         this.bDeadIfNoActions = true;
 
         ExpandByAction aAction = new ExpandByAction();
-        aAction.expandBy(300, 0.5f);
+        aAction.expandBy(10, 0.1f);
         this.addAction(aAction);
+    }
+
+    public FriendFire()
+    {
+        this(0, 0, 0, 0, 0, 0, 0);
     }
 
     @Override
@@ -44,5 +49,4 @@ public class Sheld extends MovingSprite
         theGraphics2D.setStroke(new BasicStroke(5, 2, 1));
         theGraphics2D.drawArc(0, 0, (int) getWidth(), (int) getHeight(), 0, 360);
     }
-
 }
