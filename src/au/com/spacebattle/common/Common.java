@@ -11,5 +11,19 @@ package au.com.spacebattle.common;
  */
 public class Common
 {
-    public static final float SPEED_MISSILE = 300;
+    public static final float SPEED_EXPLODE_PARTICLE = 300;
+    
+    public static final float SPEED_MISSILE_FRIEND = 500;
+    public static final float SPEED_MISSILE_ENEMY = 500;
+    public static final float SPEED_MAIN_MISSILE_ENEMY = 400;
+
+    public static final float SPEED_ENEMY_SHIP_X = 50;
+    public static final float SPEED_ENEMY_SHIP_CHANGE_X = 50;
+    public static final float SPEED_ENEMY_SHIP_Y = 100;
+    public static final float SPEED_ENEMY_SHIP_CHANGE_Y = 50;
+
+    public static final float SPEED_ENEMY_BOSS_SHIP_X = 2;
+    public static final float SPEED_ENEMY_BOSS_SHIP_CHANGE_X = 2;
+    public static final float SPEED_ENEMY_BOSS_SHIP_Y = 10;
+    public static final float SPEED_ENEMY_BOSS_SHIP_CHANGE_Y = 2;
 }

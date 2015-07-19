@@ -30,8 +30,8 @@ public class BossMainWeaponMissile extends Missile
 
         for (int i = 0; i < number; i++)
         {
-            double tmpX = power(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_MISSILE;
-            double tmpY = power(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_MISSILE;
+            double tmpX = power(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE;
+            double tmpY = power(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE;
 
             ExpodeParticle aFire = new ExpodeParticle();
             aFire.setX(this.getCentreX());

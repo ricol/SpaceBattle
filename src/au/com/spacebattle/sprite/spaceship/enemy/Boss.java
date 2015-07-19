@@ -6,7 +6,9 @@
 package au.com.spacebattle.sprite.spaceship.enemy;
 
 import au.com.rmit.Game2dEngine.action.Action;
+import au.com.rmit.Game2dEngine.action.CountdownByAction;
 import au.com.rmit.Game2dEngine.action.ExpandByAction;
+import au.com.spacebattle.common.Common;
 import au.com.spacebattle.sprite.missile.BossMainWeaponMissile;
 import au.com.spacebattle.sprite.missile.Missile;
 import au.com.spacebattle.sprite.other.EnemyFire;
@@ -26,9 +28,9 @@ public class Boss extends Enemy
 
     public Boss()
     {
-        super("boss-enemy.png");
+        super("PlaneBoss.png");
 
-        this.lifetime = abs(theRandom.nextInt()) % 5 + 5;
+        this.lifetime = abs(theRandom.nextInt()) % 5 + 20;
 
         float num = abs(theRandom.nextInt()) % 50;
         float time = abs(theRandom.nextInt()) % 2 + 1;
@@ -36,7 +38,7 @@ public class Boss extends Enemy
         aAction.expandBy(num, time);
         aAction.identifer = "ActionExpand";
         this.addAction(aAction);
-        
+
         this.layer = 4;
     }
 
@@ -63,7 +65,7 @@ public class Boss extends Enemy
             aMissile.setX(this.getCentreX());
             aMissile.setY(this.getCentreY() + this.getHeight() / 2);
 //            aMissile.setVelocityX(abs(theRandom.nextInt()) % 50 + 50);
-            aMissile.setVelocityY(abs(theRandom.nextInt()) % 200 + 500);
+            aMissile.setVelocityY(Common.SPEED_MAIN_MISSILE_ENEMY);
             aMissile.layer = this.layer;
             this.theScene.addSprite(aMissile);
 
@@ -75,6 +77,11 @@ public class Boss extends Enemy
             aFire.setVelocityY(this.velocityY);
 
             this.theScene.addSprite(aFire);
+
+            CountdownByAction aAction = new CountdownByAction();
+            aAction.CountdownBy(abs(theRandom.nextFloat()) * 3);
+            aAction.identifer = "ActionCountdownForFireingBossWeapon";
+            this.addAction(aAction);
         }
     }
 
