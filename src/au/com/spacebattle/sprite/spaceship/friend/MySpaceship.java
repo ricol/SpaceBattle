@@ -10,6 +10,7 @@ import au.com.rmit.Game2dEngine.action.MoveCentreYToAction;
 import au.com.rmit.Game2dEngine.action.MoveXByAction;
 import au.com.rmit.Game2dEngine.action.MoveYByAction;
 import au.com.rmit.Game2dEngine.node.Sprite;
+import au.com.spacebattle.common.Common;
 import au.com.spacebattle.sprite.missile.MainWeapanFriendMissile;
 import au.com.spacebattle.sprite.missile.Missile;
 import au.com.spacebattle.sprite.missile.NormalWeanponFriendMissile;
@@ -23,7 +24,8 @@ import au.com.spacebattle.sprite.spaceship.Spaceship;
  */
 public class MySpaceship extends Spaceship
 {
-
+    public boolean bAutoshot;
+    
     public MySpaceship()
     {
         super("my-spaceship.png");
@@ -34,7 +36,7 @@ public class MySpaceship extends Spaceship
     {
         //fire
         float delta = 15;
-        float speed = 500;
+        float speed = Common.SPEED_MISSILE_FRIEND;
         Missile aMissile = new NormalWeanponFriendMissile("red-missile.png");
         aMissile.setX(this.getX() - delta + 20);
         aMissile.setY(this.getY() + 20);
@@ -71,11 +73,11 @@ public class MySpaceship extends Spaceship
     public void fireMainWeapon()
     {
         float delta = 12;
-        float speed = 500;
+        float speed = Common.SPEED_MISSILE_FRIEND;
         Missile aMissile = new MainWeapanFriendMissile("blue-missile.png");
         aMissile.setX(this.getX() + this.getWidth() / 2 - delta);
         aMissile.setY(this.getY() - delta * 5);
-        aMissile.setVelocityY(-speed * 1.5);
+        aMissile.setVelocityY(-speed * 1.2);
         this.theScene.addSprite(aMissile);
 
         FriendFire aFire = new FriendFire();

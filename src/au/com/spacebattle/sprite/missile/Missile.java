@@ -42,7 +42,7 @@ public class Missile extends MovingSprite
 
         }
 
-        this.lifetime = 0.5f;
+        this.lifetime = 1f;
     }
 
     @Override

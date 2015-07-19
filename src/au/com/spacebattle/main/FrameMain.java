@@ -2,14 +2,12 @@ package au.com.spacebattle.main;
 
 import au.com.rmit.Game2dEngine.director.Director;
 import au.com.rmit.Game2dEngine.node.Sprite;
+import au.com.spacebattle.common.Common;
 import au.com.spacebattle.scene.SpaceShipScene;
 import au.com.spacebattle.scene.TestScene;
-import au.com.spacebattle.sprite.spaceship.enemy.BlueEnemy;
 import au.com.spacebattle.sprite.spaceship.enemy.Boss;
 import au.com.spacebattle.sprite.spaceship.enemy.Enemy;
-import au.com.spacebattle.sprite.spaceship.enemy.GreenEnemy;
 import au.com.spacebattle.sprite.missile.Missile;
-import au.com.spacebattle.sprite.spaceship.enemy.PurpleEnemy;
 import au.com.spacebattle.sprite.spaceship.friend.MySpaceship;
 import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
 import java.awt.Dimension;
@@ -227,34 +225,25 @@ public class FrameMain extends javax.swing.JFrame implements KeyListener, Action
                 index = b ? 1 : 0;
                 index = (int) power(-1, index);
 
-                float velocityX = index * abs(theRandom.nextInt()) % 100 + 50;
-                float velocttyY = abs(theRandom.nextInt()) % 300 + 200;
+                float velocityX = index * abs(theRandom.nextInt()) % Common.SPEED_ENEMY_SHIP_CHANGE_X + Common.SPEED_ENEMY_SHIP_X;
+                float velocttyY = abs(theRandom.nextInt()) % Common.SPEED_ENEMY_SHIP_CHANGE_Y + Common.SPEED_ENEMY_SHIP_Y;
 
                 aBoss.setVelocityX(velocityX / 2);
                 aBoss.setVelocityY(velocttyY / 2);
+                
+                aBoss.lifetime = 10;
 
                 aBoss.theTarget = this.theShip;
                 this.theScene.addSprite(aBoss, 5);
             } else
             {
-                Enemy aEnemy = null;
-                int index = abs(theRandom.nextInt()) % 3;
-                switch (index)
+                String[] data = new String[]
                 {
-                    case 0:
-                        aEnemy = new BlueEnemy();
-                        break;
-                    case 1:
-                        aEnemy = new GreenEnemy();
-                        break;
-                    case 2:
-                        aEnemy = new PurpleEnemy();
-                        break;
-                    default:
-                        aEnemy = new BlueEnemy();
-                        break;
-                }
+                    "Plane1.png", "Plane2.png", "Plane3.png", "Plane4.png", "Plane5.png", "Plane6.png", "Plane7.png", "Plane8.png"
+                };
 
+                int index = abs(theRandom.nextInt()) % data.length;
+                Enemy aEnemy = new Enemy(data[index]);
                 boolean b = theRandom.nextBoolean();
                 index = b ? 1 : 0;
                 index = (int) power(-1, index);
@@ -267,28 +256,35 @@ public class FrameMain extends javax.swing.JFrame implements KeyListener, Action
                 index = b ? 1 : 0;
                 index = (int) power(-1, index);
 
-                float velocityXTmp = index * abs(theRandom.nextInt()) % 50 + 20;
-                float velocttyYTmp = abs(theRandom.nextInt()) % 100 + 100;
+                float velocityXTmp = index * abs(theRandom.nextInt()) % Common.SPEED_ENEMY_SHIP_CHANGE_X + Common.SPEED_ENEMY_SHIP_X;
+                float velocttyYTmp = abs(theRandom.nextInt()) % Common.SPEED_ENEMY_SHIP_CHANGE_Y + Common.SPEED_ENEMY_SHIP_Y;
 
                 aEnemy.setVelocityX(velocityXTmp);
                 aEnemy.setVelocityY(velocttyYTmp);
-                aEnemy.lifetime = 5;
+                aEnemy.lifetime = 10;
 
                 aEnemy.theTarget = this.theShip;
                 this.theScene.addSprite(aEnemy, aEnemy.layer);
             }
         } else if (e.getSource().equals(this.timerForFire))
         {
-            this.fireKey('f');
+            if (theShip.bAutoshot)
+            {
+                this.fireKey('f');
+            }
         } else if (e.getSource().equals(this.timerForFirMainWeapon))
         {
-            theShip.fireMainWeapon();
+            if (theShip.bAutoshot)
+            {
+                theShip.fireMainWeapon();
+            }
         }
     }
 
     @Override
     public void mouseClicked(MouseEvent e)
     {
+        theShip.bAutoshot = !theShip.bAutoshot;
     }
 
     @Override

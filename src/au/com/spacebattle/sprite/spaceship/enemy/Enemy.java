@@ -9,6 +9,7 @@ import au.com.rmit.Game2dEngine.action.Action;
 import au.com.rmit.Game2dEngine.action.CountdownByAction;
 import au.com.rmit.Game2dEngine.action.MoveXByAction;
 import au.com.rmit.Game2dEngine.action.MoveYByAction;
+import au.com.spacebattle.common.Common;
 import au.com.spacebattle.sprite.missile.EnemyMissile;
 import au.com.spacebattle.sprite.missile.Missile;
 import au.com.spacebattle.sprite.other.EnemyFire;
@@ -34,12 +35,12 @@ public class Enemy extends Spaceship
         super(imagename);
 
         CountdownByAction aAction = new CountdownByAction();
-        aAction.CountdownBy(abs(theRandom.nextFloat()) * 2);
+        aAction.CountdownBy(abs(theRandom.nextFloat()));
         aAction.identifer = "ActionCountdownForFireing";
         this.addAction(aAction);
         
         aAction = new CountdownByAction();
-        aAction.CountdownBy(abs(theRandom.nextFloat()) * 2);
+        aAction.CountdownBy(abs(theRandom.nextFloat()) * 3);
         aAction.identifer = "ActionCountdownForFireingBossWeapon";
         this.addAction(aAction);
 
@@ -59,7 +60,7 @@ public class Enemy extends Spaceship
             aMissile.setX(this.getCentreX() - aMissile.getWidth() / 2);
             aMissile.setY(this.getCentreY() + this.getHeight() / 2);
 //            aMissile.setVelocityX(abs(theRandom.nextInt()) % 50 + 50);
-            aMissile.setVelocityY(abs(theRandom.nextInt()) % 200 + 500);
+            aMissile.setVelocityY(Common.SPEED_MISSILE_ENEMY);
             aMissile.layer = this.layer;
             this.theScene.addSprite(aMissile);
 
@@ -74,13 +75,13 @@ public class Enemy extends Spaceship
 
             CountdownByAction aNewAction = new CountdownByAction();
             aNewAction.CountdownBy(abs(theRandom.nextFloat()) * 2);
-            aNewAction.identifer = "ActionCountdown";
+            aNewAction.identifer = "ActionCountdownForFireing";
             this.addAction(aNewAction);
         } else if (theAction.identifer.equals("ActionCountdownForChangingSpeed"))
         {
             //change speed
-            float time = abs(theRandom.nextInt()) % 2 + 3;
-            float valueX = abs(theRandom.nextInt()) % 100 + 50;
+            float time = abs(theRandom.nextInt()) % 2 + 15;
+            float valueX = abs(theRandom.nextInt()) % Common.SPEED_ENEMY_SHIP_CHANGE_X + Common.SPEED_ENEMY_SHIP_X;
             if (this.theTarget != null)
             {
                 float x = (float) this.theTarget.getX();
@@ -91,7 +92,7 @@ public class Enemy extends Spaceship
             aMoveXByAction.moveXBy(valueX, time);
             this.addAction(aMoveXByAction);
 
-            float valueY = abs(theRandom.nextInt()) % 100 + 50;
+            float valueY = abs(theRandom.nextInt()) % Common.SPEED_ENEMY_SHIP_CHANGE_Y + Common.SPEED_ENEMY_SHIP_Y;
             if (this.theTarget != null)
             {
                 float y = (float) this.theTarget.getY();
