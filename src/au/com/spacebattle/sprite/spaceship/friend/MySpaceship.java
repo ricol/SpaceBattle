@@ -24,8 +24,9 @@ import au.com.spacebattle.sprite.spaceship.Spaceship;
  */
 public class MySpaceship extends Spaceship
 {
+
     public boolean bAutoshot;
-    
+
     public MySpaceship()
     {
         super("my-spaceship.png");
