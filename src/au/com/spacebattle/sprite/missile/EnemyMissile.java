@@ -21,6 +21,10 @@ public class EnemyMissile extends Missile
     public EnemyMissile(String imagename)
     {
         super(imagename);
+
+        this.bCollisionDetect = true;
+        this.collisionCategory = Common.CATEGORY_ENEMY_SHIP;
+        this.collisionTargetCategory = Common.CATEGORY_FRIEND_SHIP;
     }
 
     @Override
@@ -42,7 +46,7 @@ public class EnemyMissile extends Missile
             aFire.setGreen(0);
             aFire.setBlue(0);
             aFire.bDeadIfNoActions = true;
-            
+
             AlphaToAction aAction = new AlphaToAction(aFire);
             aAction.alphaTo(0, 0.2f);
             aFire.addAction(aAction);

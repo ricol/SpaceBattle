@@ -6,12 +6,20 @@
 package au.com.spacebattle.sprite.spaceship.enemy;
 
 import au.com.rmit.Game2dEngine.action.Action;
+import au.com.rmit.Game2dEngine.action.AlphaToAction;
 import au.com.rmit.Game2dEngine.action.CountdownByAction;
 import au.com.rmit.Game2dEngine.action.ExpandByAction;
+import au.com.rmit.Game2dEngine.node.Sprite;
 import au.com.spacebattle.common.Common;
 import au.com.spacebattle.sprite.missile.BossMainWeaponMissile;
+import au.com.spacebattle.sprite.missile.FriendLaserWeapon;
+import au.com.spacebattle.sprite.missile.MainWeapanFriendMissile;
 import au.com.spacebattle.sprite.missile.Missile;
+import au.com.spacebattle.sprite.missile.NormalWeanponFriendMissile;
 import au.com.spacebattle.sprite.other.EnemyFire;
+import au.com.spacebattle.sprite.other.ExpodeParticle;
+import au.com.spacebattle.sprite.spaceship.friend.MySpaceship;
+import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
 import static java.lang.Math.abs;
 
 /**
@@ -20,11 +28,6 @@ import static java.lang.Math.abs;
  */
 public class Boss extends Enemy
 {
-
-    public Boss(double x, double y, double width, double height, double mass, double velocityX, double velocityY)
-    {
-        super(x, y, width, height, mass, velocityX, velocityY);
-    }
 
     public Boss()
     {
@@ -39,7 +42,8 @@ public class Boss extends Enemy
         aAction.identifer = "ActionExpand";
         this.addAction(aAction);
 
-        this.layer = 4;
+        this.layer = Common.LAYER_BOSS_SHIP;
+        this.resetTotalLife(500);
     }
 
     @Override
@@ -85,4 +89,53 @@ public class Boss extends Enemy
         }
     }
 
+    @Override
+    public void onCollideWith(Sprite target)
+    {
+        if (target instanceof MainWeapanFriendMissile)
+        {
+            this.decreaseLife(100);
+            System.out.println("Hit Boss with main weapon...enemy life left: " + this.getLife());
+        } else if (target instanceof NormalWeanponFriendMissile)
+        {
+            this.decreaseLife(20);
+            System.out.println("Hit Boss with normal weapon...enemy life left: " + this.getLife());
+        } else if (target instanceof MySpaceship)
+        {
+            this.decreaseLife(200);
+            System.out.println("Hit Boss with my space ship...enemy life left: " + this.getLife());
+        } else if (target instanceof FriendLaserWeapon)
+        {
+            this.decreaseLife(20);
+            System.out.println("Hit enemy with laser...enemy life left: " + this.getLife());
+        }
+    }
+
+    @Override
+    public void explode()
+    {
+        int number = abs(theRandom.nextInt()) % 10 + 20;
+
+        for (int i = 0; i < number; i++)
+        {
+            double tmpX = power(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE * 2;
+            double tmpY = power(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE * 2;
+
+            ExpodeParticle aFire = new ExpodeParticle();
+            aFire.setX(this.getCentreX());
+            aFire.setY(this.getCentreY());
+            aFire.setVelocityX(tmpX);
+            aFire.setVelocityY(tmpY);
+            aFire.setRed(255);
+            aFire.setGreen(0);
+            aFire.setBlue(0);
+            aFire.bDeadIfNoActions = true;
+
+            AlphaToAction aAction = new AlphaToAction(aFire);
+            aAction.alphaTo(0, 0.2f);
+            aFire.addAction(aAction);
+
+            this.theScene.addSprite(aFire);
+        }
+    }
 }

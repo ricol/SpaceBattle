@@ -42,13 +42,21 @@ public class MainWeapanFriendMissile extends FriendMissile
             aFire.setGreen(0);
             aFire.setBlue(255);
             aFire.bDeadIfNoActions = true;
-            
+
             AlphaToAction aAction = new AlphaToAction(aFire);
             aAction.alphaTo(0, 0.3f);
             aFire.addAction(aAction);
-            
+
             this.theScene.addSprite(aFire);
         }
+    }
+    
+    @Override
+    public void onDead()
+    {
+        super.onDead(); //To change body of generated methods, choose Tools | Templates.
+
+        this.explode();
     }
 
 }

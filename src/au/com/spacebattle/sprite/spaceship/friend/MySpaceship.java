@@ -5,6 +5,7 @@
  */
 package au.com.spacebattle.sprite.spaceship.friend;
 
+import au.com.rmit.Game2dEngine.action.AlphaToAction;
 import au.com.rmit.Game2dEngine.action.MoveCentreXToAction;
 import au.com.rmit.Game2dEngine.action.MoveCentreYToAction;
 import au.com.rmit.Game2dEngine.action.MoveXByAction;
@@ -14,22 +15,39 @@ import au.com.spacebattle.common.Common;
 import au.com.spacebattle.sprite.missile.MainWeapanFriendMissile;
 import au.com.spacebattle.sprite.missile.Missile;
 import au.com.spacebattle.sprite.missile.NormalWeanponFriendMissile;
+import au.com.spacebattle.sprite.other.ExpodeParticle;
 import au.com.spacebattle.sprite.other.FriendFire;
-import au.com.spacebattle.sprite.other.Sheld;
 import au.com.spacebattle.sprite.spaceship.Spaceship;
+import au.com.spacebattle.sprite.missile.FriendLaserWeapon;
+import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import static java.lang.Math.abs;
+import javax.swing.Timer;
 
 /**
  *
  * @author ricolwang
  */
-public class MySpaceship extends Spaceship
+public class MySpaceship extends Spaceship implements ActionListener
 {
+
+    Timer timerForLaser = new Timer(10, this);
+    Timer timerForStop = new Timer(3000, this);
+    boolean bLaser = false;
     public boolean bAutoshot;
-    
+
     public MySpaceship()
     {
         super("my-spaceship.png");
         this.lifetime = Sprite.EVER;
+        this.bCollisionDetect = true;
+        this.collisionCategory = Common.CATEGORY_FRIEND_SHIP;
+        this.collisionTargetCategory = Common.CATEGORY_ENEMY_SHIP;
+
+        this.layer = Common.LAYER_FRIEND_SHIP;
+        this.resetTotalLife(500);
+        this.timerForLaser.start();
     }
 
     public void fire()
@@ -106,11 +124,19 @@ public class MySpaceship extends Spaceship
 
     public void openSheld()
     {
-        //sheld up
-        Sheld aSheld = new Sheld(this.getCentreX(), this.getCentreY(), 0, 0, 0, 0, 0);
-        aSheld.lifetime = 1;
+//        //sheld up
+//        Sheld aSheld = new Sheld(this.getCentreX(), this.getCentreY(), 0, 0, 0, 0, 0);
+//        aSheld.lifetime = 1;
+//        aSheld.layer = this.layer;
+//
+//        theScene.addSprite(aSheld);
+        openLaser();
+    }
 
-        theScene.addSprite(aSheld);
+    public void openLaser()
+    {
+        bLaser = true;
+        this.timerForStop.start();
     }
 
     public void moveDown(float value, float duration)
@@ -140,5 +166,72 @@ public class MySpaceship extends Spaceship
         MoveXByAction aAction = new MoveXByAction();
         aAction.moveXBy(value, duration);
         this.addAction(aAction);
+    }
+
+    @Override
+    public void onCollideWith(Sprite target)
+    {
+//        if (target instanceof BossMainWeaponMissile)
+//        {
+//            this.decreaseLife(5);
+//            System.out.println("Collide with the boss main weapon...life left: " + this.getLife());
+//        } else if (target instanceof EnemyMissile)
+//        {
+//            this.decreaseLife(1);
+//            System.out.println("Collide with enemy missile...life left: " + this.getLife());
+//        } else if (target instanceof Enemy)
+//        {
+//            this.decreaseLife(3);
+//            System.out.println("Collide with Enemy...life left: " + this.getLife());
+//        } else if (target instanceof Boss)
+//        {
+//            this.decreaseLife(5);
+//            System.out.println("Collide with Boss...life left: " + this.getLife());
+//        }
+    }
+
+    @Override
+    public void explode()
+    {
+        int number = abs(theRandom.nextInt()) % 10 + 30;
+
+        for (int i = 0; i < number; i++)
+        {
+            double tmpX = power(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE * 2;
+            double tmpY = power(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE * 2;
+
+            ExpodeParticle aFire = new ExpodeParticle();
+            aFire.setX(this.getCentreX());
+            aFire.setY(this.getCentreY());
+            aFire.setVelocityX(tmpX);
+            aFire.setVelocityY(tmpY);
+            aFire.setRed(0);
+            aFire.setGreen(255);
+            aFire.setBlue(0);
+            aFire.bDeadIfNoActions = true;
+
+            AlphaToAction aAction = new AlphaToAction(aFire);
+            aAction.alphaTo(0, 0.2f);
+            aFire.addAction(aAction);
+
+            this.theScene.addSprite(aFire);
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e)
+    {
+        if (e.getSource().equals(this.timerForLaser))
+        {
+            if (bLaser)
+            {
+                FriendLaserWeapon laserWeapon = new FriendLaserWeapon(this);
+                theScene.addSprite(laserWeapon);
+            }
+        }else if (e.getSource().equals(this.timerForStop))
+        {
+            bLaser = false;
+            this.timerForStop.stop();
+        }
     }
 }

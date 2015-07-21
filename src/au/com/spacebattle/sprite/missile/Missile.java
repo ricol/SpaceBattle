@@ -6,6 +6,7 @@
 package au.com.spacebattle.sprite.missile;
 
 import au.com.rmit.Game2dEngine.node.MovingSprite;
+import au.com.rmit.Game2dEngine.node.Sprite;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -50,10 +51,17 @@ public class Missile extends MovingSprite
     {
         super.onDead(); //To change body of generated methods, choose Tools | Templates.
 
-        this.explode();
+//        this.explode();
     }
 
     public void explode()
     {
+        
+    }
+
+    @Override
+    public void onCollideWith(Sprite target)
+    {
+        this.setDead();
     }
 }
