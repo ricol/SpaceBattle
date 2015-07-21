@@ -50,5 +50,13 @@ public class MainWeapanFriendMissile extends FriendMissile
             this.theScene.addSprite(aFire);
         }
     }
+    
+    @Override
+    public void onDead()
+    {
+        super.onDead(); //To change body of generated methods, choose Tools | Templates.
+
+        this.explode();
+    }
 
 }
