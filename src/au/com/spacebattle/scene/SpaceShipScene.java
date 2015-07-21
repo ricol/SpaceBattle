@@ -29,7 +29,7 @@ import javax.swing.Timer;
  */
 public class SpaceShipScene extends Scene implements ActionListener
 {
-
+    boolean bUp;
     public MySpaceship theShip;
 
     Timer timerForFire = new Timer(200, this);
@@ -38,13 +38,13 @@ public class SpaceShipScene extends Scene implements ActionListener
 
     public SpaceShipScene()
     {
-        try
-        {
-            this.theImageBackground = ImageIO.read(new File("space.jpg"));
-        } catch (IOException ex)
-        {
-            Logger.getLogger(FountainScene.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try
+//        {
+//            this.theImageBackground = ImageIO.read(new File("space.jpg"));
+//        } catch (IOException ex)
+//        {
+//            Logger.getLogger(FountainScene.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 
         this.theShip = new MySpaceship();
         this.theShip.lifetime = Sprite.EVER;
@@ -57,6 +57,37 @@ public class SpaceShipScene extends Scene implements ActionListener
         this.timerForEnemy.start();
         this.timerForFire.start();
         this.timerForFirMainWeapon.start();
+
+//        Timer aTimer = new Timer(100, new ActionListener()
+//        {
+//
+//            @Override
+//            public void actionPerformed(ActionEvent e)
+//            {
+//                int tmpBlue = getBlue();
+//                if (bUp)
+//                {
+//                    ++tmpBlue;
+//                    if (tmpBlue > 50)
+//                    {
+//                        tmpBlue = 50;
+//                        bUp = false;
+//                    }
+//                } else
+//                {
+//                    --tmpBlue;
+//                    if (tmpBlue < 0)
+//                    {
+//                        tmpBlue = 0;
+//                        bUp = true;
+//                    }
+//                }
+//
+//                setBlue(tmpBlue);
+//            }
+//        });
+//        aTimer.start();
+
     }
 
     public void addABoss()
