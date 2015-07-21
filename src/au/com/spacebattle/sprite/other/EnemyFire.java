@@ -10,6 +10,7 @@ import au.com.rmit.Game2dEngine.node.MovingSprite;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Polygon;
 
 /**
  *
@@ -27,7 +28,7 @@ public class EnemyFire extends MovingSprite
         this.bDeadIfNoActions = true;
 
         ExpandByAction aAction = new ExpandByAction();
-        aAction.expandBy(10, 0.1f);
+        aAction.expandBy(10, 0.05f);
         this.addAction(aAction);
     }
 
@@ -46,7 +47,15 @@ public class EnemyFire extends MovingSprite
         theGraphics2D.fillRect(0, 0, (int) getWidth(), (int) getHeight());
         Color theColor = new Color(red / 255.0f, green / 255.0f, blue / 255.0f, alpha);
         theGraphics2D.setColor(theColor);
-        theGraphics2D.setStroke(new BasicStroke(5, 2, 1));
-        theGraphics2D.drawArc(0, 0, (int) getWidth(), (int) getHeight(), 0, 360);
+        theGraphics2D.setStroke(new BasicStroke(3, 2, 1));
+        Polygon p = new Polygon(new int[]
+        {
+            0, (int) getWidth() / 2, (int) getWidth()
+        }, new int[]
+        {
+            0, (int) getHeight() - 2, 0
+        }, 3);
+        
+        theGraphics2D.drawPolygon(p);
     }
 }
