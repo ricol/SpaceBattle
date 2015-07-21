@@ -193,7 +193,7 @@ public class MySpaceship extends Spaceship implements ActionListener
     @Override
     public void explode()
     {
-        int number = abs(theRandom.nextInt()) % 10 + 100;
+        int number = abs(theRandom.nextInt()) % 10 + 30;
 
         for (int i = 0; i < number; i++)
         {

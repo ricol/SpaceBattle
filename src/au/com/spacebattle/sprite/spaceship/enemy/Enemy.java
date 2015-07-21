@@ -143,7 +143,7 @@ public class Enemy extends Spaceship
             System.out.println("Hit enemy with my space ship...enemy life left: " + this.getLife());
         } else if (target instanceof FriendLaserWeapon)
         {
-            this.setDead();
+            this.decreaseLife(20);
             System.out.println("Hit enemy with laser...enemy life left: " + this.getLife());
         }
     }
@@ -151,7 +151,7 @@ public class Enemy extends Spaceship
     @Override
     public void explode()
     {
-        int number = abs(theRandom.nextInt()) % 10 + 50;
+        int number = abs(theRandom.nextInt()) % 10 + 10;
 
         for (int i = 0; i < number; i++)
         {

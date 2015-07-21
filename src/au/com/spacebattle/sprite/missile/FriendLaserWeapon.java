@@ -18,7 +18,7 @@ import static java.lang.Math.abs;
 public class FriendLaserWeapon extends FriendMissile
 {
 
-    public static final int HEIGHT = 500;
+    public static final int HEIGHT = 1000;
     public static final int WIDTH = 20;
 
     MySpaceship theShip;

@@ -106,7 +106,7 @@ public class Boss extends Enemy
             System.out.println("Hit Boss with my space ship...enemy life left: " + this.getLife());
         } else if (target instanceof FriendLaserWeapon)
         {
-            this.setDead();
+            this.decreaseLife(20);
             System.out.println("Hit enemy with laser...enemy life left: " + this.getLife());
         }
     }
@@ -114,7 +114,7 @@ public class Boss extends Enemy
     @Override
     public void explode()
     {
-        int number = abs(theRandom.nextInt()) % 10 + 100;
+        int number = abs(theRandom.nextInt()) % 10 + 20;
 
         for (int i = 0; i < number; i++)
         {
