@@ -21,6 +21,10 @@ public class BossMainWeaponMissile extends Missile
     public BossMainWeaponMissile(String imagename)
     {
         super(imagename);
+
+        this.bCollisionDetect = true;
+        this.collisionCategory = Common.CATEGORY_FRIEND_SHIP;
+        this.collisionTargetCategory = Common.CATEGORY_ENEMY_SHIP;
     }
 
     @Override

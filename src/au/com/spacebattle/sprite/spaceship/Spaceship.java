@@ -17,7 +17,8 @@ import javax.imageio.ImageIO;
  */
 public class Spaceship extends MovingSprite
 {
-
+    int life = 100;
+    
     public Spaceship(double x, double y, double width, double height, double mass, double velocityX, double velocityY)
     {
         super(x, y, width, height, mass, velocityX, velocityY);
@@ -47,4 +48,23 @@ public class Spaceship extends MovingSprite
 
     }
 
+    public void increaseLife(int value)
+    {
+        this.life += value;
+    }
+    
+    public void decreaseLife(int value)
+    {
+        this.life -= value;
+        if (this.life <= 0) 
+        {
+            this.setDead();
+        }
+    }
+    
+    public void setLife(int life)
+    {
+        this.life = life;
+    }
+    
 }

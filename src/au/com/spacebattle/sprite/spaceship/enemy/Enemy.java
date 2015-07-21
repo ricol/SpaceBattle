@@ -9,11 +9,15 @@ import au.com.rmit.Game2dEngine.action.Action;
 import au.com.rmit.Game2dEngine.action.CountdownByAction;
 import au.com.rmit.Game2dEngine.action.MoveXByAction;
 import au.com.rmit.Game2dEngine.action.MoveYByAction;
+import au.com.rmit.Game2dEngine.node.Sprite;
 import au.com.spacebattle.common.Common;
 import au.com.spacebattle.sprite.missile.EnemyMissile;
+import au.com.spacebattle.sprite.missile.MainWeapanFriendMissile;
 import au.com.spacebattle.sprite.missile.Missile;
+import au.com.spacebattle.sprite.missile.NormalWeanponFriendMissile;
 import au.com.spacebattle.sprite.other.EnemyFire;
 import au.com.spacebattle.sprite.spaceship.Spaceship;
+import au.com.spacebattle.sprite.spaceship.friend.MySpaceship;
 import static java.lang.Math.abs;
 
 /**
@@ -25,11 +29,6 @@ public class Enemy extends Spaceship
 
     public Spaceship theTarget;
 
-    public Enemy(double x, double y, double width, double height, double mass, double velocityX, double velocityY)
-    {
-        super(x, y, width, height, mass, velocityX, velocityY);
-    }
-
     public Enemy(String imagename)
     {
         super(imagename);
@@ -38,7 +37,7 @@ public class Enemy extends Spaceship
         aAction.CountdownBy(abs(theRandom.nextFloat()));
         aAction.identifer = "ActionCountdownForFireing";
         this.addAction(aAction);
-        
+
         aAction = new CountdownByAction();
         aAction.CountdownBy(abs(theRandom.nextFloat()) * 3);
         aAction.identifer = "ActionCountdownForFireingBossWeapon";
@@ -48,6 +47,12 @@ public class Enemy extends Spaceship
         aAction.CountdownBy(abs(theRandom.nextFloat()) * 2);
         aAction.identifer = "ActionCountdownForChangingSpeed";
         this.addAction(aAction);
+
+        this.bCollisionDetect = true;
+        this.collisionCategory = Common.CATEGORY_ENEMY_SHIP;
+        this.collisionTargetCategory = Common.CATEGORY_FRIEND_SHIP;
+
+        this.layer = Common.LAYER_ENEMY_SHIP;
     }
 
     @Override
@@ -115,4 +120,20 @@ public class Enemy extends Spaceship
     {
         this.theTarget = null;
     }
+
+    @Override
+    public void onCollisionWith(Sprite target)
+    {
+        if (target instanceof MainWeapanFriendMissile)
+        {
+            this.setDead();
+        } else if (target instanceof NormalWeanponFriendMissile)
+        {
+            this.decreaseLife(100);
+        } else if (target instanceof MySpaceship)
+        {
+            this.setDead();
+        }
+    }
+
 }

@@ -21,6 +21,10 @@ public class EnemyMissile extends Missile
     public EnemyMissile(String imagename)
     {
         super(imagename);
+
+        this.bCollisionDetect = true;
+        this.collisionCategory = Common.CATEGORY_FRIEND_SHIP;
+        this.collisionTargetCategory = Common.CATEGORY_ENEMY_SHIP;
     }
 
     @Override

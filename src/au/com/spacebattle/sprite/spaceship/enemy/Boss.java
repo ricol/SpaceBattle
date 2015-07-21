@@ -8,10 +8,14 @@ package au.com.spacebattle.sprite.spaceship.enemy;
 import au.com.rmit.Game2dEngine.action.Action;
 import au.com.rmit.Game2dEngine.action.CountdownByAction;
 import au.com.rmit.Game2dEngine.action.ExpandByAction;
+import au.com.rmit.Game2dEngine.node.Sprite;
 import au.com.spacebattle.common.Common;
 import au.com.spacebattle.sprite.missile.BossMainWeaponMissile;
+import au.com.spacebattle.sprite.missile.MainWeapanFriendMissile;
 import au.com.spacebattle.sprite.missile.Missile;
+import au.com.spacebattle.sprite.missile.NormalWeanponFriendMissile;
 import au.com.spacebattle.sprite.other.EnemyFire;
+import au.com.spacebattle.sprite.spaceship.friend.MySpaceship;
 import static java.lang.Math.abs;
 
 /**
@@ -20,11 +24,6 @@ import static java.lang.Math.abs;
  */
 public class Boss extends Enemy
 {
-
-    public Boss(double x, double y, double width, double height, double mass, double velocityX, double velocityY)
-    {
-        super(x, y, width, height, mass, velocityX, velocityY);
-    }
 
     public Boss()
     {
@@ -39,7 +38,8 @@ public class Boss extends Enemy
         aAction.identifer = "ActionExpand";
         this.addAction(aAction);
 
-        this.layer = 4;
+        this.layer = Common.LAYER_BOSS_SHIP;
+        this.setLife(1000);
     }
 
     @Override
@@ -85,4 +85,18 @@ public class Boss extends Enemy
         }
     }
 
+    @Override
+    public void onCollisionWith(Sprite target)
+    {
+        if (target instanceof MainWeapanFriendMissile)
+        {
+            this.decreaseLife(100);
+        } else if (target instanceof NormalWeanponFriendMissile)
+        {
+            this.decreaseLife(20);
+        } else if (target instanceof MySpaceship)
+        {
+            this.decreaseLife(200);
+        }
+    }
 }

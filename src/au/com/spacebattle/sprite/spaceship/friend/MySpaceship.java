@@ -11,12 +11,16 @@ import au.com.rmit.Game2dEngine.action.MoveXByAction;
 import au.com.rmit.Game2dEngine.action.MoveYByAction;
 import au.com.rmit.Game2dEngine.node.Sprite;
 import au.com.spacebattle.common.Common;
+import au.com.spacebattle.sprite.missile.BossMainWeaponMissile;
+import au.com.spacebattle.sprite.missile.EnemyMissile;
 import au.com.spacebattle.sprite.missile.MainWeapanFriendMissile;
 import au.com.spacebattle.sprite.missile.Missile;
 import au.com.spacebattle.sprite.missile.NormalWeanponFriendMissile;
 import au.com.spacebattle.sprite.other.FriendFire;
 import au.com.spacebattle.sprite.other.Sheld;
 import au.com.spacebattle.sprite.spaceship.Spaceship;
+import au.com.spacebattle.sprite.spaceship.enemy.Boss;
+import au.com.spacebattle.sprite.spaceship.enemy.Enemy;
 
 /**
  *
@@ -31,6 +35,12 @@ public class MySpaceship extends Spaceship
     {
         super("my-spaceship.png");
         this.lifetime = Sprite.EVER;
+        this.bCollisionDetect = true;
+        this.collisionCategory = Common.CATEGORY_FRIEND_SHIP;
+        this.collisionTargetCategory = Common.CATEGORY_ENEMY_SHIP;
+        
+        this.layer = Common.LAYER_FRIEND_SHIP;
+        this.setLife(500);
     }
 
     public void fire()
@@ -110,6 +120,7 @@ public class MySpaceship extends Spaceship
         //sheld up
         Sheld aSheld = new Sheld(this.getCentreX(), this.getCentreY(), 0, 0, 0, 0, 0);
         aSheld.lifetime = 1;
+        aSheld.layer = this.layer;
 
         theScene.addSprite(aSheld);
     }
@@ -141,5 +152,23 @@ public class MySpaceship extends Spaceship
         MoveXByAction aAction = new MoveXByAction();
         aAction.moveXBy(value, duration);
         this.addAction(aAction);
+    }
+
+    @Override
+    public void onCollisionWith(Sprite target)
+    {
+        if (target instanceof BossMainWeaponMissile)
+        {
+            this.decreaseLife(100);
+        }else if (target instanceof EnemyMissile)
+        {
+            this.decreaseLife(10);
+        }else if (target instanceof Enemy)
+        {
+            this.decreaseLife(100);
+        }else if (target instanceof Boss)
+        {
+            this.setDead();
+        }
     }
 }

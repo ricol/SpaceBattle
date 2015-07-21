@@ -26,4 +26,12 @@ public class Common
     public static final float SPEED_ENEMY_BOSS_SHIP_CHANGE_X = 2;
     public static final float SPEED_ENEMY_BOSS_SHIP_Y = 10;
     public static final float SPEED_ENEMY_BOSS_SHIP_CHANGE_Y = 2;
+    
+    public static final int CATEGORY_FRIEND_SHIP = 100;
+    public static final int CATEGORY_ENEMY_SHIP = 101;
+    public static final int CATEGORY_MISSILE = 102;
+    
+    public static final int LAYER_FRIEND_SHIP = 2;
+    public static final int LAYER_ENEMY_SHIP = 0;
+    public static final int LAYER_BOSS_SHIP = 1;
 }

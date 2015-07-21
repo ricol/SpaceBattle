@@ -5,7 +5,6 @@
  */
 package au.com.spacebattle.scene;
 
-import au.com.rmit.Game2dEngine.allScenes.FountainScene;
 import au.com.rmit.Game2dEngine.node.Sprite;
 import au.com.rmit.Game2dEngine.scene.Scene;
 import au.com.spacebattle.common.Common;
@@ -15,12 +14,7 @@ import au.com.spacebattle.sprite.spaceship.friend.MySpaceship;
 import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 import static java.lang.Math.abs;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.Timer;
 
 /**
@@ -29,6 +23,7 @@ import javax.swing.Timer;
  */
 public class SpaceShipScene extends Scene implements ActionListener
 {
+
     boolean bUp;
     public MySpaceship theShip;
 
@@ -87,7 +82,6 @@ public class SpaceShipScene extends Scene implements ActionListener
 //            }
 //        });
 //        aTimer.start();
-
     }
 
     public void addABoss()
@@ -114,7 +108,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         aBoss.lifetime = 10;
 
         aBoss.theTarget = this.theShip;
-        this.addSprite(aBoss, 5);
+        this.addSprite(aBoss);
     }
 
     public void addAEnemy()
@@ -146,7 +140,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         aEnemy.lifetime = 10;
 
         aEnemy.theTarget = this.theShip;
-        this.addSprite(aEnemy, aEnemy.layer);
+        this.addSprite(aEnemy);
     }
 
     @Override
