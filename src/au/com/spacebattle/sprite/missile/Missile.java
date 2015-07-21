@@ -51,7 +51,7 @@ public class Missile extends MovingSprite
     {
         super.onDead(); //To change body of generated methods, choose Tools | Templates.
 
-        this.explode();
+//        this.explode();
     }
 
     public void explode()

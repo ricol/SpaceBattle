@@ -29,7 +29,7 @@ public class SpaceShipScene extends Scene implements ActionListener
 
     Timer timerForFire = new Timer(200, this);
     Timer timerForFirMainWeapon = new Timer(300, this);
-    Timer timerForEnemy = new Timer(400, this);
+    Timer timerForEnemy = new Timer(600, this);
 
     public SpaceShipScene()
     {

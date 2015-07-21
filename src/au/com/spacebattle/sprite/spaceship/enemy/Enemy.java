@@ -6,6 +6,7 @@
 package au.com.spacebattle.sprite.spaceship.enemy;
 
 import au.com.rmit.Game2dEngine.action.Action;
+import au.com.rmit.Game2dEngine.action.AlphaToAction;
 import au.com.rmit.Game2dEngine.action.CountdownByAction;
 import au.com.rmit.Game2dEngine.action.MoveXByAction;
 import au.com.rmit.Game2dEngine.action.MoveYByAction;
@@ -16,8 +17,10 @@ import au.com.spacebattle.sprite.missile.MainWeapanFriendMissile;
 import au.com.spacebattle.sprite.missile.Missile;
 import au.com.spacebattle.sprite.missile.NormalWeanponFriendMissile;
 import au.com.spacebattle.sprite.other.EnemyFire;
+import au.com.spacebattle.sprite.other.ExpodeParticle;
 import au.com.spacebattle.sprite.spaceship.Spaceship;
 import au.com.spacebattle.sprite.spaceship.friend.MySpaceship;
+import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
 import static java.lang.Math.abs;
 
 /**
@@ -118,6 +121,7 @@ public class Enemy extends Spaceship
     @Override
     public void onDead()
     {
+        super.onDead();
         this.theTarget = null;
     }
 
@@ -136,6 +140,34 @@ public class Enemy extends Spaceship
         {
             this.decreaseLife(300);
             System.out.println("Hit enemy with my space ship...enemy life left: " + this.getLife());
+        }
+    }
+    
+        @Override
+    public void explode()
+    {
+        int number = abs(theRandom.nextInt()) % 10 + 50;
+
+        for (int i = 0; i < number; i++)
+        {
+            double tmpX = power(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE;
+            double tmpY = power(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE;
+
+            ExpodeParticle aFire = new ExpodeParticle();
+            aFire.setX(this.getCentreX());
+            aFire.setY(this.getCentreY());
+            aFire.setVelocityX(tmpX);
+            aFire.setVelocityY(tmpY);
+            aFire.setRed(0);
+            aFire.setGreen(255);
+            aFire.setBlue(0);
+            aFire.bDeadIfNoActions = true;
+
+            AlphaToAction aAction = new AlphaToAction(aFire);
+            aAction.alphaTo(0, 0.2f);
+            aFire.addAction(aAction);
+
+            this.theScene.addSprite(aFire);
         }
     }
 
