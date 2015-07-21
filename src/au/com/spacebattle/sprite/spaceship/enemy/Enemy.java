@@ -122,17 +122,20 @@ public class Enemy extends Spaceship
     }
 
     @Override
-    public void onCollisionWith(Sprite target)
+    public void onCollideWith(Sprite target)
     {
         if (target instanceof MainWeapanFriendMissile)
         {
-            this.setDead();
+            this.decreaseLife(200);
+            System.out.println("Hit enemy with main weapon...enemy life left: " + this.getLife());
         } else if (target instanceof NormalWeanponFriendMissile)
         {
-            this.decreaseLife(100);
+            this.decreaseLife(20);
+            System.out.println("Hit enemy with normal weapon...enemy life left: " + this.getLife());
         } else if (target instanceof MySpaceship)
         {
-            this.setDead();
+            this.decreaseLife(300);
+            System.out.println("Hit enemy with my space ship...enemy life left: " + this.getLife());
         }
     }
 

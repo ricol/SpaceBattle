@@ -155,20 +155,24 @@ public class MySpaceship extends Spaceship
     }
 
     @Override
-    public void onCollisionWith(Sprite target)
+    public void onCollideWith(Sprite target)
     {
-        if (target instanceof BossMainWeaponMissile)
-        {
-            this.decreaseLife(100);
-        }else if (target instanceof EnemyMissile)
-        {
-            this.decreaseLife(10);
-        }else if (target instanceof Enemy)
-        {
-            this.decreaseLife(100);
-        }else if (target instanceof Boss)
-        {
-            this.setDead();
-        }
+//        if (target instanceof BossMainWeaponMissile)
+//        {
+////            this.decreaseLife(100);
+//            System.out.println("Collide with the boss main weapon...life left: " + this.getLife());
+//        }else if (target instanceof EnemyMissile)
+//        {
+////            this.decreaseLife(10);
+//            System.out.println("Collide with enemy missile...life left: " + this.getLife());
+//        }else if (target instanceof Enemy)
+//        {
+////            this.decreaseLife(100);
+//            System.out.println("Collide with Enemy...life left: " + this.getLife());
+//        }else if (target instanceof Boss)
+//        {
+////            this.setDead();
+//            System.out.println("Collide with Boss...life left: " + this.getLife());
+//        }
     }
 }

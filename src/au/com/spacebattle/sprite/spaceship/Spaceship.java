@@ -67,4 +67,8 @@ public class Spaceship extends MovingSprite
         this.life = life;
     }
     
+    public int getLife()
+    {
+        return life;
+    }
 }
