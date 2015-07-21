@@ -12,6 +12,7 @@ import au.com.rmit.Game2dEngine.action.ExpandByAction;
 import au.com.rmit.Game2dEngine.node.Sprite;
 import au.com.spacebattle.common.Common;
 import au.com.spacebattle.sprite.missile.BossMainWeaponMissile;
+import au.com.spacebattle.sprite.missile.FriendLaserWeapon;
 import au.com.spacebattle.sprite.missile.MainWeapanFriendMissile;
 import au.com.spacebattle.sprite.missile.Missile;
 import au.com.spacebattle.sprite.missile.NormalWeanponFriendMissile;
@@ -103,10 +104,14 @@ public class Boss extends Enemy
         {
             this.decreaseLife(200);
             System.out.println("Hit Boss with my space ship...enemy life left: " + this.getLife());
+        } else if (target instanceof FriendLaserWeapon)
+        {
+            this.setDead();
+            System.out.println("Hit enemy with laser...enemy life left: " + this.getLife());
         }
     }
-    
-        @Override
+
+    @Override
     public void explode()
     {
         int number = abs(theRandom.nextInt()) % 10 + 100;

@@ -132,9 +132,12 @@ public class FrameMain extends javax.swing.JFrame implements MouseListener, Mous
     @Override
     public void mouseClicked(MouseEvent e)
     {
-        if (bGameStart)
+        if (e.getButton() == MouseEvent.BUTTON1)
         {
-            theScene.theShip.bAutoshot = true;
+            if (bGameStart)
+            {
+                theScene.theShip.bAutoshot = true;
+            }
         }
     }
 
@@ -153,9 +156,12 @@ public class FrameMain extends javax.swing.JFrame implements MouseListener, Mous
     @Override
     public void mouseReleased(MouseEvent e)
     {
-        if (bGameStart)
+        if (e.getButton() == MouseEvent.BUTTON1)
         {
-            theScene.theShip.bAutoshot = false;
+            if (bGameStart)
+            {
+                theScene.theShip.bAutoshot = false;
+            }
         }
     }
 
