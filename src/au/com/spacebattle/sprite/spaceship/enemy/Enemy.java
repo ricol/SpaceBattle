@@ -12,6 +12,7 @@ import au.com.rmit.Game2dEngine.action.MoveXByAction;
 import au.com.rmit.Game2dEngine.action.MoveYByAction;
 import au.com.rmit.Game2dEngine.node.Sprite;
 import au.com.spacebattle.common.Common;
+import au.com.spacebattle.scene.SpaceShipScene;
 import au.com.spacebattle.sprite.missile.EnemyMissile;
 import au.com.spacebattle.sprite.missile.FriendLaserWeapon;
 import au.com.spacebattle.sprite.missile.MainWeapanFriendMissile;
@@ -122,8 +123,12 @@ public class Enemy extends Spaceship
     @Override
     public void onDead()
     {
-        super.onDead();
+        super.onDead(); //To change body of generated methods, choose Tools | Templates.
         this.theTarget = null;
+        if (this.theScene instanceof SpaceShipScene)
+        {
+            ((SpaceShipScene)this.theScene).killAEnemy();
+        }
     }
 
     @Override
@@ -132,19 +137,15 @@ public class Enemy extends Spaceship
         if (target instanceof MainWeapanFriendMissile)
         {
             this.decreaseLife(200);
-            System.out.println("Hit enemy with main weapon...enemy life left: " + this.getLife());
         } else if (target instanceof NormalWeanponFriendMissile)
         {
             this.decreaseLife(20);
-            System.out.println("Hit enemy with normal weapon...enemy life left: " + this.getLife());
         } else if (target instanceof MySpaceship)
         {
             this.decreaseLife(300);
-            System.out.println("Hit enemy with my space ship...enemy life left: " + this.getLife());
         } else if (target instanceof FriendLaserWeapon)
         {
             this.decreaseLife(20);
-            System.out.println("Hit enemy with laser...enemy life left: " + this.getLife());
         }
     }
 

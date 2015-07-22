@@ -5,6 +5,7 @@
  */
 package au.com.spacebattle.scene;
 
+import au.com.rmit.Game2dEngine.node.LabelSprite;
 import au.com.rmit.Game2dEngine.node.Sprite;
 import au.com.rmit.Game2dEngine.scene.Scene;
 import au.com.spacebattle.common.Common;
@@ -15,6 +16,7 @@ import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.lang.Math.abs;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 /**
@@ -26,6 +28,13 @@ public class SpaceShipScene extends Scene implements ActionListener
 
     boolean bUp;
     public MySpaceship theShip;
+    public LabelSprite lblEnemyKilled;
+    public LabelSprite lblBossKilled;
+    public LabelSprite lblMyLife;
+
+    int enemyKilled = 0;
+    int bossKilled = 0;
+    int mylife = 3;
 
     Timer timerForFire = new Timer(200, this);
     Timer timerForFirMainWeapon = new Timer(300, this);
@@ -41,47 +50,38 @@ public class SpaceShipScene extends Scene implements ActionListener
 //            Logger.getLogger(FountainScene.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 
-        this.theShip = new MySpaceship();
-        this.theShip.lifetime = Sprite.EVER;
+        theShip = new MySpaceship();
+        theShip.lifetime = Sprite.EVER;
 
-        this.theShip.setX(this.getWidth() / 2.0);
-        this.theShip.setY(this.getHeight() * (3 / 4.0));
+        theShip.setX(getWidth() / 2.0);
+        theShip.setY(getHeight() * (3 / 4.0));
 
-        this.addSprite(theShip);
+        addSprite(theShip);
 
         this.timerForEnemy.start();
         this.timerForFire.start();
         this.timerForFirMainWeapon.start();
 
-//        Timer aTimer = new Timer(100, new ActionListener()
-//        {
-//
-//            @Override
-//            public void actionPerformed(ActionEvent e)
-//            {
-//                int tmpBlue = getBlue();
-//                if (bUp)
-//                {
-//                    ++tmpBlue;
-//                    if (tmpBlue > 50)
-//                    {
-//                        tmpBlue = 50;
-//                        bUp = false;
-//                    }
-//                } else
-//                {
-//                    --tmpBlue;
-//                    if (tmpBlue < 0)
-//                    {
-//                        tmpBlue = 0;
-//                        bUp = true;
-//                    }
-//                }
-//
-//                setBlue(tmpBlue);
-//            }
-//        });
-//        aTimer.start();
+        new Thread()
+        {
+            public void run()
+            {
+                try
+                {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex)
+                {
+                }
+
+                SwingUtilities.invokeLater(new Runnable()
+                {
+                    public void run()
+                    {
+                        addLabels();
+                    }
+                });
+            }
+        }.start();
     }
 
     public void addABoss()
@@ -143,6 +143,42 @@ public class SpaceShipScene extends Scene implements ActionListener
         this.addSprite(aEnemy);
     }
 
+    private void addLabels()
+    {
+        int tmpY = 10;
+        int tmpMarginRight = 140;
+        int tmpWidth = 110;
+        int tmpHeight = 20;
+        int tmpGap = 1;
+
+        lblMyLife = new LabelSprite(this.getWidth() - tmpMarginRight, tmpY, "My Life: " + this.mylife, null);
+        lblMyLife.setWidth(tmpWidth);
+        lblMyLife.setHeight(tmpHeight);
+        lblMyLife.setRed(255);
+        lblMyLife.bTextFrame = false;
+        lblMyLife.layer = Common.LAYER_TEXT;
+
+        addSprite(lblMyLife);
+
+        lblEnemyKilled = new LabelSprite(this.getWidth() - tmpMarginRight, tmpY + tmpHeight + tmpGap, "Enemy Killed: " + this.enemyKilled, null);
+        lblEnemyKilled.setWidth(tmpWidth);
+        lblEnemyKilled.setHeight(tmpHeight);
+        lblEnemyKilled.setRed(255);
+        lblEnemyKilled.bTextFrame = false;
+        lblEnemyKilled.layer = Common.LAYER_TEXT;
+
+        addSprite(lblEnemyKilled);
+
+        lblBossKilled = new LabelSprite(this.getWidth() - tmpMarginRight, tmpY + (tmpHeight + tmpGap) * 2, "Boss Killed: " + this.bossKilled, null);
+        lblBossKilled.setWidth(tmpWidth);
+        lblBossKilled.setHeight(tmpHeight);
+        lblBossKilled.setRed(255);
+        lblBossKilled.bTextFrame = false;
+        lblBossKilled.layer = Common.LAYER_TEXT;
+
+        addSprite(lblBossKilled);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e)
     {
@@ -168,5 +204,23 @@ public class SpaceShipScene extends Scene implements ActionListener
                 this.theShip.fireMainWeapon();
             }
         }
+    }
+
+    public void killAEnemy()
+    {
+        this.enemyKilled++;
+        this.lblEnemyKilled.setText("Enemy Killed: " + this.enemyKilled);
+    }
+
+    public void killABoss()
+    {
+        this.bossKilled++;
+        this.lblBossKilled.setText("Boss Killed: " + this.bossKilled);
+    }
+
+    public void lostALife()
+    {
+        this.mylife--;
+        this.lblMyLife.setText("My Life: " + this.mylife);
     }
 }
