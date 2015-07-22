@@ -13,6 +13,7 @@ import au.com.spacebattle.sprite.spaceship.enemy.Boss;
 import au.com.spacebattle.sprite.spaceship.enemy.Enemy;
 import au.com.spacebattle.sprite.spaceship.friend.MySpaceship;
 import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.lang.Math.abs;
@@ -121,8 +122,8 @@ public class SpaceShipScene extends Scene implements ActionListener
         int index = abs(theRandom.nextInt()) % data.length;
         Enemy aEnemy = new Enemy(data[index]);
 //        if (index == 1) 
-            aEnemy.bAutoAdjustGesture = true;
-        
+        aEnemy.bAutoAdjustGesture = true;
+
         boolean b = theRandom.nextBoolean();
         index = b ? 1 : 0;
         index = (int) power(-1, index);
@@ -155,31 +156,66 @@ public class SpaceShipScene extends Scene implements ActionListener
         int tmpGap = 1;
 
         lblMyLife = new LabelSprite(this.getWidth() - tmpMarginRight, tmpY, "My Life: " + this.mylife, null);
+
         lblMyLife.setWidth(tmpWidth);
+
         lblMyLife.setHeight(tmpHeight);
-        lblMyLife.setRed(255);
+
+        lblMyLife.setRed(
+            255);
         lblMyLife.bTextFrame = false;
         lblMyLife.layer = Common.LAYER_TEXT;
 
         addSprite(lblMyLife);
 
         lblEnemyKilled = new LabelSprite(this.getWidth() - tmpMarginRight, tmpY + tmpHeight + tmpGap, "Enemy Killed: " + this.enemyKilled, null);
+
         lblEnemyKilled.setWidth(tmpWidth);
+
         lblEnemyKilled.setHeight(tmpHeight);
-        lblEnemyKilled.setRed(255);
+
+        lblEnemyKilled.setRed(
+            255);
         lblEnemyKilled.bTextFrame = false;
         lblEnemyKilled.layer = Common.LAYER_TEXT;
 
         addSprite(lblEnemyKilled);
 
         lblBossKilled = new LabelSprite(this.getWidth() - tmpMarginRight, tmpY + (tmpHeight + tmpGap) * 2, "Boss Killed: " + this.bossKilled, null);
+
         lblBossKilled.setWidth(tmpWidth);
+
         lblBossKilled.setHeight(tmpHeight);
-        lblBossKilled.setRed(255);
+
+        lblBossKilled.setRed(
+            255);
         lblBossKilled.bTextFrame = false;
         lblBossKilled.layer = Common.LAYER_TEXT;
 
         addSprite(lblBossKilled);
+    }
+
+    void adjustLabelPos()
+    {
+        int tmpY = 10;
+        int tmpMarginRight = 140;
+        int tmpHeight = 20;
+        int tmpGap = 1;
+        if (lblMyLife != null)
+        {
+            lblMyLife.setX(this.getWidth() - tmpMarginRight);
+            lblMyLife.setY(tmpY);
+        }
+        if (lblEnemyKilled != null)
+        {
+            lblEnemyKilled.setX(this.getWidth() - tmpMarginRight);
+            lblEnemyKilled.setY(tmpY + tmpHeight + tmpGap);
+        }
+        if (lblBossKilled != null)
+        {
+            lblBossKilled.setX(this.getWidth() - tmpMarginRight);
+            lblBossKilled.setY(tmpY + (tmpHeight + tmpGap) * 2);
+        }
     }
 
     @Override
@@ -226,4 +262,13 @@ public class SpaceShipScene extends Scene implements ActionListener
         this.mylife--;
         this.lblMyLife.setText("My Life: " + this.mylife);
     }
+
+    @Override
+    public void setSize(Dimension d)
+    {
+        super.setSize(d); //To change body of generated methods, choose Tools | Templates.
+
+        this.adjustLabelPos();
+    }
+
 }
