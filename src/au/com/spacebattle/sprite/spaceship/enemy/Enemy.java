@@ -125,10 +125,6 @@ public class Enemy extends Spaceship
     {
         super.onDead(); //To change body of generated methods, choose Tools | Templates.
         this.theTarget = null;
-        if (this.theScene instanceof SpaceShipScene)
-        {
-            ((SpaceShipScene)this.theScene).killAEnemy();
-        }
     }
 
     @Override
@@ -146,6 +142,14 @@ public class Enemy extends Spaceship
         } else if (target instanceof FriendLaserWeapon)
         {
             this.decreaseLife(20);
+        }
+        
+        if (this.isAlive() == false)
+        {
+            if (this.theScene instanceof SpaceShipScene)
+            {
+                ((SpaceShipScene) this.theScene).killAEnemy();
+            }
         }
     }
 

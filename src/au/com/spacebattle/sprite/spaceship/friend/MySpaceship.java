@@ -240,6 +240,7 @@ public class MySpaceship extends Spaceship implements ActionListener
     public void onDead()
     {
         super.onDead(); //To change body of generated methods, choose Tools | Templates.
+        
         if (this.theScene instanceof SpaceShipScene)
         {
             ((SpaceShipScene) this.theScene).lostALife();

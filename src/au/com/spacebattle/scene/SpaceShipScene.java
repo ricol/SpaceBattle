@@ -55,6 +55,8 @@ public class SpaceShipScene extends Scene implements ActionListener
 
         theShip.setX(getWidth() / 2.0);
         theShip.setY(getHeight() * (3 / 4.0));
+        
+        this.setBlue(100);
 
         addSprite(theShip);
 
@@ -147,7 +149,7 @@ public class SpaceShipScene extends Scene implements ActionListener
     {
         int tmpY = 10;
         int tmpMarginRight = 140;
-        int tmpWidth = 110;
+        int tmpWidth = 150;
         int tmpHeight = 20;
         int tmpGap = 1;
 

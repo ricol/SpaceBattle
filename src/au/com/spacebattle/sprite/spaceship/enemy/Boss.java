@@ -106,16 +106,13 @@ public class Boss extends Enemy
         {
             this.decreaseLife(20);
         }
-    }
 
-    @Override
-    public void onDead()
-    {
-        super.onDead(); //To change body of generated methods, choose Tools | Templates.
-        
-        if (this.theScene instanceof SpaceShipScene)
+        if (this.isAlive() == false)
         {
-            ((SpaceShipScene)this.theScene).killABoss();
+            if (this.theScene instanceof SpaceShipScene)
+            {
+                ((SpaceShipScene) this.theScene).killABoss();
+            }
         }
     }
 
