@@ -47,7 +47,6 @@ public class SpaceShipScene extends Scene implements ActionListener
 //            this.theImageBackground = ImageIO.read(new File("space.jpg"));
 //        } catch (IOException ex)
 //        {
-//            Logger.getLogger(FountainScene.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 
         theShip = new MySpaceship();
@@ -55,8 +54,6 @@ public class SpaceShipScene extends Scene implements ActionListener
 
         theShip.setX(getWidth() / 2.0);
         theShip.setY(getHeight() * (3 / 4.0));
-        
-        this.setBlue(100);
 
         addSprite(theShip);
 
