@@ -55,7 +55,7 @@ public class EnemyFire extends MovingSprite
         {
             0, (int) getHeight() - 2, 0
         }, 3);
-        
+
         theGraphics2D.drawPolygon(p);
     }
 }

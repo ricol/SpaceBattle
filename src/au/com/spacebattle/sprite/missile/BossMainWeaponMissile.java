@@ -54,7 +54,7 @@ public class BossMainWeaponMissile extends Missile
             this.theScene.addSprite(aFire);
         }
     }
-    
+
     @Override
     public void onDead()
     {

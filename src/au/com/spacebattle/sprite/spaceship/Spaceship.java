@@ -25,12 +25,13 @@ public class Spaceship extends MovingSprite
     public Spaceship(double x, double y, double width, double height, double mass, double velocityX, double velocityY)
     {
         super(x, y, width, height, mass, velocityX, velocityY);
+        this.lifetime = 20;
     }
 
     public Spaceship(String imagename)
     {
         super(0, 0, 0, 0, 0, 0, 0);
-
+        this.lifetime = 20;
         BufferedImage aImage;
 
         try
@@ -46,7 +47,7 @@ public class Spaceship extends MovingSprite
         }
     }
 
-    public void fire(String imagename)
+    public void fire()
     {
 
     }

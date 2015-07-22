@@ -34,8 +34,13 @@ public class Missile extends MovingSprite
         try
         {
             aImage = ImageIO.read(new File(imagename));
-            this.setWidth(aImage.getWidth());
-            this.setHeight(aImage.getHeight());
+            int max = aImage.getWidth();
+            if (aImage.getWidth() < aImage.getHeight())
+            {
+                max = aImage.getHeight();
+            }
+            this.setWidth(max);
+            this.setHeight(max);
 
             this.setImage(imagename);
         } catch (IOException e)
@@ -56,7 +61,7 @@ public class Missile extends MovingSprite
 
     public void explode()
     {
-        
+
     }
 
     @Override

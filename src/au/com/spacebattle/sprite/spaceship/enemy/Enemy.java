@@ -7,12 +7,10 @@ package au.com.spacebattle.sprite.spaceship.enemy;
 
 import au.com.rmit.Game2dEngine.action.Action;
 import au.com.rmit.Game2dEngine.action.AlphaToAction;
-import au.com.rmit.Game2dEngine.action.CountdownByAction;
-import au.com.rmit.Game2dEngine.action.MoveXByAction;
-import au.com.rmit.Game2dEngine.action.MoveYByAction;
 import au.com.rmit.Game2dEngine.node.Sprite;
 import au.com.spacebattle.common.Common;
 import au.com.spacebattle.scene.SpaceShipScene;
+import au.com.spacebattle.sprite.missile.EnemyAutoFollowMissile;
 import au.com.spacebattle.sprite.missile.EnemyMissile;
 import au.com.spacebattle.sprite.missile.FriendLaserWeapon;
 import au.com.spacebattle.sprite.missile.MainWeapanFriendMissile;
@@ -23,14 +21,23 @@ import au.com.spacebattle.sprite.other.ExpodeParticle;
 import au.com.spacebattle.sprite.spaceship.Spaceship;
 import au.com.spacebattle.sprite.spaceship.friend.MySpaceship;
 import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import static java.lang.Math.abs;
+import javax.swing.Timer;
 
 /**
  *
  * @author ricolwang
  */
-public class Enemy extends Spaceship
+public class Enemy extends Spaceship implements ActionListener
 {
+
+    public boolean bAutoAdjustGesture = false;
+
+    protected Timer theTimerAutoadjust = new Timer(100, this);
+    protected Timer theTimerFire = new Timer(3000, this);
+    protected Timer theTimerForAutoFollowMissile = new Timer(5000, this);
 
     public Spaceship theTarget;
 
@@ -38,92 +45,27 @@ public class Enemy extends Spaceship
     {
         super(imagename);
 
-        CountdownByAction aAction = new CountdownByAction();
-        aAction.CountdownBy(abs(theRandom.nextFloat()));
-        aAction.identifer = "ActionCountdownForFireing";
-        this.addAction(aAction);
-
-        aAction = new CountdownByAction();
-        aAction.CountdownBy(abs(theRandom.nextFloat()) * 3);
-        aAction.identifer = "ActionCountdownForFireingBossWeapon";
-        this.addAction(aAction);
-
-        aAction = new CountdownByAction();
-        aAction.CountdownBy(abs(theRandom.nextFloat()) * 2);
-        aAction.identifer = "ActionCountdownForChangingSpeed";
-        this.addAction(aAction);
-
         this.bCollisionDetect = true;
         this.collisionCategory = Common.CATEGORY_ENEMY_SHIP;
         this.collisionTargetCategory = Common.CATEGORY_FRIEND_SHIP;
 
         this.layer = Common.LAYER_ENEMY_SHIP;
+        this.theTimerAutoadjust.start();
+        this.theTimerFire.start();
+        this.theTimerForAutoFollowMissile.start();
     }
 
     @Override
     public void onActionComplete(Action theAction)
     {
-        if (theAction.identifer.equals("ActionCountdownForFireing"))
-        {
-            //fire
-            Missile aMissile = new EnemyMissile("enemy-missile.png");
-            aMissile.setX(this.getCentreX() - aMissile.getWidth() / 2);
-            aMissile.setY(this.getCentreY() + this.getHeight() / 2);
-//            aMissile.setVelocityX(abs(theRandom.nextInt()) % 50 + 50);
-            aMissile.setVelocityY(Common.SPEED_MISSILE_ENEMY);
-            aMissile.layer = this.layer;
-            this.theScene.addSprite(aMissile);
-
-            EnemyFire aFire = new EnemyFire();
-            aFire.setCentreX(aMissile.getCentreX());
-            aFire.setCentreY(aMissile.getCentreY() + aMissile.getHeight() / 2);
-            aFire.layer = this.layer;
-            aFire.setVelocityX(this.velocityX);
-            aFire.setVelocityY(this.velocityY);
-
-            this.theScene.addSprite(aFire);
-
-            CountdownByAction aNewAction = new CountdownByAction();
-            aNewAction.CountdownBy(abs(theRandom.nextFloat()) * 2);
-            aNewAction.identifer = "ActionCountdownForFireing";
-            this.addAction(aNewAction);
-        } else if (theAction.identifer.equals("ActionCountdownForChangingSpeed"))
-        {
-            //change speed
-            float time = abs(theRandom.nextInt()) % 2 + 15;
-            float valueX = abs(theRandom.nextInt()) % Common.SPEED_ENEMY_SHIP_CHANGE_X + Common.SPEED_ENEMY_SHIP_X;
-            if (this.theTarget != null)
-            {
-                float x = (float) this.theTarget.getX();
-                valueX = (float) (x - this.getX());
-            }
-
-            MoveXByAction aMoveXByAction = new MoveXByAction();
-            aMoveXByAction.moveXBy(valueX, time);
-            this.addAction(aMoveXByAction);
-
-            float valueY = abs(theRandom.nextInt()) % Common.SPEED_ENEMY_SHIP_CHANGE_Y + Common.SPEED_ENEMY_SHIP_Y;
-            if (this.theTarget != null)
-            {
-                float y = (float) this.theTarget.getY();
-                valueY = (float) (y - this.getY());
-            }
-
-            MoveYByAction aMoveYByAction = new MoveYByAction();
-            aMoveYByAction.moveYBy(valueY, time);
-            this.addAction(aMoveYByAction);
-
-            CountdownByAction aCountdownByAction = new CountdownByAction();
-            aCountdownByAction.CountdownBy(time + abs(theRandom.nextFloat()) * 2);
-            aCountdownByAction.identifer = "ActionCountdownForChangingSpeed";
-            this.addAction(aCountdownByAction);
-        }
     }
 
     @Override
     public void onDead()
     {
         super.onDead(); //To change body of generated methods, choose Tools | Templates.
+        this.theTimerAutoadjust.stop();
+        this.theTimerFire.stop();
         this.theTarget = null;
     }
 
@@ -143,7 +85,7 @@ public class Enemy extends Spaceship
         {
             this.decreaseLife(20);
         }
-        
+
         if (this.isAlive() == false)
         {
             if (this.theScene instanceof SpaceShipScene)
@@ -181,4 +123,94 @@ public class Enemy extends Spaceship
         }
     }
 
+    public void adjustGesture(Spaceship theShip)
+    {
+        if (theShip == null)
+        {
+            return;
+        }
+
+        double targetCentreX = theShip.getCentreX();
+        double targetCentreY = theShip.getCentreY();
+        double changeX = targetCentreX - this.getCentreX();
+        double changeY = targetCentreY - this.getCentreY();
+        double distance = Math.sqrt(changeX * changeX + changeY * changeY);
+        double delta = Math.asin(changeX / distance);
+
+        this.angle = -delta;
+    }
+
+    @Override
+    public void fire()
+    {
+        Missile aMissile = new EnemyMissile("enemy-missile.png");
+//        aMissile.bDrawFrame = true;
+        aMissile.setX(this.getCentreX() - aMissile.getWidth() / 2);
+        aMissile.setY(this.getCentreY() + this.getHeight() / 2);
+//        aMissile.setAngle(this.angle);
+
+//        aMissile.setVelocityX(Common.SPEED_MISSILE_ENEMY * Math.sin(-aMissile.getAngle()));
+        aMissile.setVelocityY(Common.SPEED_MISSILE_ENEMY);
+
+        aMissile.layer = this.layer;
+
+        this.theScene.addSprite(aMissile);
+
+        EnemyFire aFire = new EnemyFire();
+        aFire.setCentreX(aMissile.getCentreX());
+        aFire.setCentreY(aMissile.getCentreY() + aMissile.getHeight() / 2);
+        aFire.layer = this.layer;
+        aFire.setVelocityX(this.velocityX);
+        aFire.setVelocityY(this.velocityY);
+
+        this.theScene.addSprite(aFire);
+    }
+
+    public void fireAutoFollowMissile()
+    {
+        EnemyAutoFollowMissile aMissile = new EnemyAutoFollowMissile();
+        aMissile.theTarget = this.theTarget;
+//        aMissile.bDrawFrame = true;
+        aMissile.setX(this.getCentreX() - aMissile.getWidth() / 2);
+        aMissile.setY(this.getCentreY() + this.getHeight() / 2);
+        aMissile.setAngle(this.angle);
+
+        aMissile.setVelocityX(Common.SPEED_MISSILE_ENEMY * Math.sin(-aMissile.getAngle()));
+        aMissile.setVelocityY(Common.SPEED_MISSILE_ENEMY * Math.cos(-aMissile.getAngle()));
+
+        aMissile.layer = this.layer;
+        aMissile.fire();
+
+        this.theScene.addSprite(aMissile);
+
+        EnemyFire aFire = new EnemyFire();
+        aFire.setCentreX(aMissile.getCentreX());
+        aFire.setCentreY(aMissile.getCentreY() + aMissile.getHeight() / 2);
+        aFire.layer = this.layer;
+        aFire.setVelocityX(this.velocityX);
+        aFire.setVelocityY(this.velocityY);
+
+        this.theScene.addSprite(aFire);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e)
+    {
+        if (e.getSource().equals(this.theTimerAutoadjust))
+        {
+            if (bAutoAdjustGesture)
+            {
+                adjustGesture(theTarget);
+            }
+        } else if (e.getSource().equals(this.theTimerFire))
+        {
+            fire();
+        } else if (e.getSource().equals(this.theTimerForAutoFollowMissile))
+        {
+            if (abs(theRandom.nextInt()) % 100 > 80)
+            {
+                fireAutoFollowMissile();
+            }
+        }
+    }
 }

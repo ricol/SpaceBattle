@@ -17,9 +17,9 @@ public class ExpodeParticle extends MovingSprite
     public ExpodeParticle(double x, double y, double width, double height, double mass, double velocityX, double velocityY)
     {
         super(x, y, width, height, mass, velocityX, velocityY);
-        
+
     }
-    
+
     public ExpodeParticle()
     {
         this(0, 0, 7, 7, 0, 0, 0);

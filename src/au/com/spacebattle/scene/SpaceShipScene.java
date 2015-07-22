@@ -107,6 +107,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         aBoss.lifetime = 10;
 
         aBoss.theTarget = this.theShip;
+        aBoss.bAutoAdjustGesture = true;
         this.addSprite(aBoss);
     }
 
@@ -119,6 +120,9 @@ public class SpaceShipScene extends Scene implements ActionListener
 
         int index = abs(theRandom.nextInt()) % data.length;
         Enemy aEnemy = new Enemy(data[index]);
+//        if (index == 1) 
+            aEnemy.bAutoAdjustGesture = true;
+        
         boolean b = theRandom.nextBoolean();
         index = b ? 1 : 0;
         index = (int) power(-1, index);

@@ -15,18 +15,24 @@ import static java.lang.Math.abs;
  *
  * @author ricolwang
  */
-public class MainWeapanFriendMissile extends FriendMissile
+public class EnemyAutoFollowMissile extends AutoFollowMissile
 {
 
-    public MainWeapanFriendMissile(String imagename)
+    public EnemyAutoFollowMissile()
     {
-        super(imagename);
+        super("enemy-auto-follow-missile.png");
+
+        this.lifetime = 5;
+        this.times = 20;
+        this.bCollisionDetect = true;
+        this.collisionCategory = Common.CATEGORY_ENEMY_SHIP;
+        this.collisionTargetCategory = Common.CATEGORY_FRIEND_SHIP;
     }
 
     @Override
     public void explode()
     {
-        int number = abs(theRandom.nextInt()) % 10 + 20;
+        int number = abs(theRandom.nextInt()) % 10 + 30;
 
         for (int i = 0; i < number; i++)
         {
@@ -40,23 +46,14 @@ public class MainWeapanFriendMissile extends FriendMissile
             aFire.setVelocityY(tmpY);
             aFire.setRed(255);
             aFire.setGreen(255);
-            aFire.setBlue(255);
+            aFire.setBlue(0);
             aFire.bDeadIfNoActions = true;
 
             AlphaToAction aAction = new AlphaToAction(aFire);
-            aAction.alphaTo(0, 0.3f);
+            aAction.alphaTo(0, 0.5f);
             aFire.addAction(aAction);
 
             this.theScene.addSprite(aFire);
         }
     }
-
-    @Override
-    public void onDead()
-    {
-        super.onDead(); //To change body of generated methods, choose Tools | Templates.
-
-        this.explode();
-    }
-
 }

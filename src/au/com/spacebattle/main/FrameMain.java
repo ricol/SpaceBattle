@@ -2,7 +2,6 @@ package au.com.spacebattle.main;
 
 import au.com.rmit.Game2dEngine.director.Director;
 import au.com.spacebattle.scene.SpaceShipScene;
-import au.com.rmit.Game2dEngine.allScenes.TestScene;
 import java.awt.Dimension;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
