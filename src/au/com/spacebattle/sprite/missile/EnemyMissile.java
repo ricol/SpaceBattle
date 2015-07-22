@@ -30,7 +30,7 @@ public class EnemyMissile extends Missile
     @Override
     public void explode()
     {
-        int number = abs(theRandom.nextInt()) % 10 + 30;
+        int number = abs(theRandom.nextInt()) % 10 + 10;
 
         for (int i = 0; i < number; i++)
         {

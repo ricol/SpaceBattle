@@ -11,6 +11,7 @@ import au.com.rmit.Game2dEngine.action.CountdownByAction;
 import au.com.rmit.Game2dEngine.action.ExpandByAction;
 import au.com.rmit.Game2dEngine.node.Sprite;
 import au.com.spacebattle.common.Common;
+import au.com.spacebattle.scene.SpaceShipScene;
 import au.com.spacebattle.sprite.missile.BossMainWeaponMissile;
 import au.com.spacebattle.sprite.missile.FriendLaserWeapon;
 import au.com.spacebattle.sprite.missile.MainWeapanFriendMissile;
@@ -95,19 +96,23 @@ public class Boss extends Enemy
         if (target instanceof MainWeapanFriendMissile)
         {
             this.decreaseLife(100);
-            System.out.println("Hit Boss with main weapon...enemy life left: " + this.getLife());
         } else if (target instanceof NormalWeanponFriendMissile)
         {
             this.decreaseLife(20);
-            System.out.println("Hit Boss with normal weapon...enemy life left: " + this.getLife());
         } else if (target instanceof MySpaceship)
         {
             this.decreaseLife(200);
-            System.out.println("Hit Boss with my space ship...enemy life left: " + this.getLife());
         } else if (target instanceof FriendLaserWeapon)
         {
             this.decreaseLife(20);
-            System.out.println("Hit enemy with laser...enemy life left: " + this.getLife());
+        }
+
+        if (this.isAlive() == false)
+        {
+            if (this.theScene instanceof SpaceShipScene)
+            {
+                ((SpaceShipScene) this.theScene).killABoss();
+            }
         }
     }
 

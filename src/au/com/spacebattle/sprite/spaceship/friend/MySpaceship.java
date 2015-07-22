@@ -12,6 +12,7 @@ import au.com.rmit.Game2dEngine.action.MoveXByAction;
 import au.com.rmit.Game2dEngine.action.MoveYByAction;
 import au.com.rmit.Game2dEngine.node.Sprite;
 import au.com.spacebattle.common.Common;
+import au.com.spacebattle.scene.SpaceShipScene;
 import au.com.spacebattle.sprite.missile.MainWeapanFriendMissile;
 import au.com.spacebattle.sprite.missile.Missile;
 import au.com.spacebattle.sprite.missile.NormalWeanponFriendMissile;
@@ -228,10 +229,21 @@ public class MySpaceship extends Spaceship implements ActionListener
                 FriendLaserWeapon laserWeapon = new FriendLaserWeapon(this);
                 theScene.addSprite(laserWeapon);
             }
-        }else if (e.getSource().equals(this.timerForStop))
+        } else if (e.getSource().equals(this.timerForStop))
         {
             bLaser = false;
             this.timerForStop.stop();
+        }
+    }
+
+    @Override
+    public void onDead()
+    {
+        super.onDead(); //To change body of generated methods, choose Tools | Templates.
+        
+        if (this.theScene instanceof SpaceShipScene)
+        {
+            ((SpaceShipScene) this.theScene).lostALife();
         }
     }
 }

@@ -5,16 +5,14 @@
  */
 package au.com.spacebattle.scene;
 
-import au.com.rmit.Game2dEngine.action.CountdownByAction;
 import au.com.rmit.Game2dEngine.gravity.Gravity;
-import au.com.rmit.Game2dEngine.node.Sprite;
+import au.com.rmit.Game2dEngine.node.LabelSprite;
 import au.com.rmit.Game2dEngine.scene.Scene;
-import au.com.spacebattle.sprite.other.TestSpaceship;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import static java.lang.Math.abs;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import javax.swing.Timer;
@@ -59,6 +57,17 @@ public class TestScene extends Scene
             @Override
             public void mousePressed(MouseEvent e)
             {
+                LabelSprite aLabel = new LabelSprite(0, 0, "This is a text", null);
+                addSprite(aLabel);
+                aLabel.setWidth(100);
+                aLabel.setHeight(20);
+                aLabel.setRed(255);
+                aLabel.bTextFrame = false;
+                
+                aLabel.setCentreX(e.getX());
+                aLabel.setCentreY(e.getY());
+                
+                /*
                 TestSpaceship aObject;
 
                 int width = 100;
@@ -223,7 +232,7 @@ public class TestScene extends Scene
 //                    aAction.MoveCentreYTo(randomY, timeY);
 //                    aObject.addAction(aAction);
 //                }
-                addSprite(aObject);
+                addSprite(aObject);*/
             }
 
             @Override

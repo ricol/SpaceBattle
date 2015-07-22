@@ -26,7 +26,7 @@ public class NormalWeanponFriendMissile extends FriendMissile
     @Override
     public void explode()
     {
-        int number = abs(theRandom.nextInt()) % 10 + 5;
+        int number = abs(theRandom.nextInt()) % 10 + 10;
 
         for (int i = 0; i < number; i++)
         {
