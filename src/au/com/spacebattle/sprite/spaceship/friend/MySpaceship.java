@@ -59,10 +59,9 @@ public class MySpaceship extends Spaceship implements ActionListener
     public void fire()
     {
         //fire
-        float delta = 15;
         float speed = Common.SPEED_MISSILE_FRIEND;
         Missile aMissile = new NormalWeanponFriendMissile("red-missile.png");
-        aMissile.setX(this.getX() - delta + 20);
+        aMissile.setX(this.getX() - aMissile.getWidth() / 2);
         aMissile.setY(this.getY() + 20);
         aMissile.setVelocityY(-speed);
 
@@ -78,7 +77,7 @@ public class MySpaceship extends Spaceship implements ActionListener
         this.theScene.addSprite(aLeftFire);
 
         aMissile = new NormalWeanponFriendMissile("red-missile.png");
-        aMissile.setX(this.getX() + this.getWidth() - delta - 10);
+        aMissile.setX(this.getX() + this.getWidth() - aMissile.getWidth() / 2);
         aMissile.setY(this.getY() + 20);
         aMissile.setVelocityY(-speed);
 
@@ -96,11 +95,11 @@ public class MySpaceship extends Spaceship implements ActionListener
 
     public void fireMainWeapon()
     {
-        float delta = 12;
         float speed = Common.SPEED_MISSILE_FRIEND;
         Missile aMissile = new MainWeapanFriendMissile("blue-missile.png");
-        aMissile.setX(this.getX() + this.getWidth() / 2 - delta);
-        aMissile.setY(this.getY() - delta * 5);
+        aMissile.setCentreX(this.getCentreX());
+        aMissile.setCentreY(this.getCentreY() - aMissile.getHeight());
+            
         aMissile.setVelocityY(-speed * 1.2);
         this.theScene.addSprite(aMissile);
 
