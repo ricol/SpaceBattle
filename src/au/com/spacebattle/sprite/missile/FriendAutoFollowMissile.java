@@ -7,8 +7,9 @@ package au.com.spacebattle.sprite.missile;
 
 import au.com.rmit.Game2dEngine.action.AlphaToAction;
 import au.com.spacebattle.common.Common;
+import au.com.spacebattle.common.MovingObject;
+import au.com.spacebattle.scene.SpaceShipScene;
 import au.com.spacebattle.sprite.other.ExpodeParticle;
-import au.com.spacebattle.sprite.spaceship.Spaceship;
 import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
 import static java.lang.Math.abs;
 
@@ -28,6 +29,12 @@ public class FriendAutoFollowMissile extends AutoFollowMissile
         this.bCollisionDetect = true;
         this.collisionCategory = Common.CATEGORY_FRIEND_SHIP;
         this.collisionTargetCategory = Common.CATEGORY_ENEMY_SHIP;
+    }
+
+    @Override
+    public void onDead()
+    {
+        super.onDead(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -57,10 +64,24 @@ public class FriendAutoFollowMissile extends AutoFollowMissile
             this.theScene.addSprite(aFire);
         }
     }
-    
+
     @Override
-    public void adjustGesture(Spaceship theShip)
+    public void adjustGesture(MovingObject theShip)
     {
+        if (theShip == null)
+        {
+            return;
+        }
+
+        if (!theShip.isAlive())
+        {
+            if (theScene instanceof SpaceShipScene)
+            {
+                SpaceShipScene theSpaceScene = (SpaceShipScene) this.theScene;
+                this.theTarget = theSpaceScene.getARandomTarget();
+            }
+        }
+
         if (theShip == null)
         {
             return;
@@ -80,4 +101,5 @@ public class FriendAutoFollowMissile extends AutoFollowMissile
         this.setVelocityX(Common.SPEED_MISSILE_FRIEND * Math.sin(this.getAngle()));
         this.setVelocityY(-Common.SPEED_MISSILE_FRIEND * Math.cos(this.getAngle()));
     }
+
 }

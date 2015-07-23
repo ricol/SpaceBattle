@@ -7,8 +7,8 @@ package au.com.spacebattle.sprite.missile;
 
 import au.com.rmit.Game2dEngine.action.AlphaToAction;
 import au.com.spacebattle.common.Common;
+import au.com.spacebattle.common.MovingObject;
 import au.com.spacebattle.sprite.other.ExpodeParticle;
-import au.com.spacebattle.sprite.spaceship.Spaceship;
 import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +22,7 @@ import javax.swing.Timer;
 public class AutoFollowMissile extends Missile implements ActionListener
 {
 
-    public Spaceship theTarget;
+    public MovingObject theTarget;
     int times = 10;
     int currentTimers = 0;
     Timer theTimer = new Timer(200, this);
@@ -52,26 +52,29 @@ public class AutoFollowMissile extends Missile implements ActionListener
         }
     }
 
-    public void adjustGesture(Spaceship theShip)
+    public void adjustGesture(MovingObject theShip)
     {
         if (theShip == null)
         {
             return;
         }
 
-        //adjust gesture
-        double targetCentreX = theShip.getCentreX();
-        double targetCentreY = theShip.getCentreY();
-        double changeX = targetCentreX - this.getCentreX();
-        double changeY = targetCentreY - this.getCentreY();
-        double distance = Math.sqrt(changeX * changeX + changeY * changeY);
-        double delta = Math.asin(changeX / distance);
+        if (theShip.isAlive())
+        {
+            //adjust gesture
+            double targetCentreX = theShip.getCentreX();
+            double targetCentreY = theShip.getCentreY();
+            double changeX = targetCentreX - this.getCentreX();
+            double changeY = targetCentreY - this.getCentreY();
+            double distance = Math.sqrt(changeX * changeX + changeY * changeY);
+            double delta = Math.asin(changeX / distance);
 
-        this.angle = -delta;
+            this.angle = -delta;
 
-        //adjust velocity
-        this.setVelocityX(Common.SPEED_MISSILE_ENEMY * Math.sin(-this.getAngle()));
-        this.setVelocityY(Common.SPEED_MISSILE_ENEMY * Math.cos(-this.getAngle()));
+            //adjust velocity
+            this.setVelocityX(Common.SPEED_MISSILE_ENEMY * Math.sin(-this.getAngle()));
+            this.setVelocityY(Common.SPEED_MISSILE_ENEMY * Math.cos(-this.getAngle()));
+        }
     }
 
     public void fire()

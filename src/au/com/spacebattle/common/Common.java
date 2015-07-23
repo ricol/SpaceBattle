@@ -36,4 +36,7 @@ public class Common
     public static final int LAYER_ENEMY_SHIP = 0;
     public static final int LAYER_BOSS_SHIP = 1;
     public static final int LAYER_TEXT = 3;
+    
+    public static final float SPEED_ENGINE_X = 20;
+    public static final float SPEED_ENGINE_Y = 100;
 }

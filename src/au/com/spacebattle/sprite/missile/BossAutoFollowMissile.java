@@ -7,6 +7,7 @@ package au.com.spacebattle.sprite.missile;
 
 import au.com.rmit.Game2dEngine.action.AlphaToAction;
 import au.com.spacebattle.common.Common;
+import au.com.spacebattle.scene.SpaceShipScene;
 import au.com.spacebattle.sprite.other.ExpodeParticle;
 import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
 import static java.lang.Math.abs;
@@ -32,7 +33,7 @@ public class BossAutoFollowMissile extends AutoFollowMissile
     @Override
     public void explode()
     {
-        int number = abs(theRandom.nextInt()) % 10 + 30;
+        int number = abs(theRandom.nextInt()) % 10 + 50;
 
         for (int i = 0; i < number; i++)
         {
@@ -44,7 +45,7 @@ public class BossAutoFollowMissile extends AutoFollowMissile
             aFire.setY(this.getCentreY());
             aFire.setVelocityX(tmpX);
             aFire.setVelocityY(tmpY);
-            aFire.setRed(0);
+            aFire.setRed(255);
             aFire.setGreen(0);
             aFire.setBlue(255);
             aFire.bDeadIfNoActions = true;
@@ -55,5 +56,12 @@ public class BossAutoFollowMissile extends AutoFollowMissile
 
             this.theScene.addSprite(aFire);
         }
+    }
+
+    @Override
+    public void onDead()
+    {
+        super.onDead(); //To change body of generated methods, choose Tools | Templates.
+        ((SpaceShipScene) this.theScene).deleteABossMissile(this);
     }
 }

@@ -7,6 +7,7 @@ package au.com.spacebattle.sprite.missile;
 
 import au.com.rmit.Game2dEngine.action.AlphaToAction;
 import au.com.spacebattle.common.Common;
+import au.com.spacebattle.scene.SpaceShipScene;
 import au.com.spacebattle.sprite.other.ExpodeParticle;
 import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
 import static java.lang.Math.abs;
@@ -55,5 +56,12 @@ public class EnemyAutoFollowMissile extends AutoFollowMissile
 
             this.theScene.addSprite(aFire);
         }
+    }
+
+    @Override
+    public void onDead()
+    {
+        super.onDead(); //To change body of generated methods, choose Tools | Templates.
+        ((SpaceShipScene) this.theScene).deleteAEnemyMissile(this);
     }
 }

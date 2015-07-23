@@ -13,7 +13,6 @@ import au.com.spacebattle.common.Common;
 import au.com.spacebattle.scene.SpaceShipScene;
 import au.com.spacebattle.sprite.missile.BossAutoFollowMissile;
 import au.com.spacebattle.sprite.missile.BossMainWeaponMissile;
-import au.com.spacebattle.sprite.missile.EnemyAutoFollowMissile;
 import au.com.spacebattle.sprite.missile.FriendAutoFollowMissile;
 import au.com.spacebattle.sprite.missile.FriendLaserWeapon;
 import au.com.spacebattle.sprite.missile.MainWeapanFriendMissile;
@@ -34,7 +33,7 @@ import javax.swing.Timer;
 public class Boss extends Enemy
 {
 
-    protected Timer theTimerForMainWealpon = new Timer(3000, this);
+    protected Timer theTimerForMainWealpon = new Timer(2000, this);
 
     public Boss()
     {
@@ -179,6 +178,7 @@ public class Boss extends Enemy
         aMissile.fire();
 
         this.theScene.addSprite(aMissile);
+        ((SpaceShipScene) this.theScene).addABossMissile(aMissile);
 
         EnemyFire aFire = new EnemyFire();
         aFire.setCentreX(aMissile.getCentreX());
@@ -188,12 +188,22 @@ public class Boss extends Enemy
         aFire.setVelocityY(this.velocityY);
 
         this.theScene.addSprite(aFire);
+
     }
 
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        super.actionPerformed(e); //To change body of generated methods, choose Tools | Templates.
+        if (e.getSource().equals(this.theTimerFire))
+        {
+            fire();
+        } else if (e.getSource().equals(this.theTimerForAutoFollowMissile))
+        {
+            if (abs(theRandom.nextInt()) % 100 > 80)
+            {
+                fireAutoFollowMissile();
+            }
+        }
 
         if (e.getSource().equals(this.theTimerForMainWealpon))
         {

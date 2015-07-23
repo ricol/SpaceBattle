@@ -9,6 +9,8 @@ import au.com.rmit.Game2dEngine.node.LabelSprite;
 import au.com.rmit.Game2dEngine.node.Sprite;
 import au.com.rmit.Game2dEngine.scene.Scene;
 import au.com.spacebattle.common.Common;
+import au.com.spacebattle.sprite.missile.BossAutoFollowMissile;
+import au.com.spacebattle.sprite.missile.EnemyAutoFollowMissile;
 import au.com.spacebattle.sprite.spaceship.enemy.Boss;
 import au.com.spacebattle.sprite.spaceship.enemy.Enemy;
 import au.com.spacebattle.sprite.spaceship.friend.MySpaceship;
@@ -42,7 +44,10 @@ public class SpaceShipScene extends Scene implements ActionListener
     Timer timerForFirMainWeapon = new Timer(300, this);
     Timer timerForEnemy = new Timer(600, this);
 
+    ArrayList<Boss> allBosses = new ArrayList<>();
     ArrayList<Enemy> allEnemies = new ArrayList<>();
+    ArrayList<BossAutoFollowMissile> allBossMissiles = new ArrayList<>();
+    ArrayList<EnemyAutoFollowMissile> allEnemyMissiles = new ArrayList<>();
 
     public SpaceShipScene()
     {
@@ -113,8 +118,8 @@ public class SpaceShipScene extends Scene implements ActionListener
         aBoss.theTarget = this.theShip;
         aBoss.bAutoAdjustGesture = true;
         this.addSprite(aBoss);
-        
-        this.addAEnemy(aBoss);
+
+        this.addABoss(aBoss);
     }
 
     public void addAEnemy()
@@ -169,7 +174,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         lblMyLife.setHeight(tmpHeight);
 
         lblMyLife.setRed(
-                255);
+            255);
         lblMyLife.bTextFrame = false;
         lblMyLife.layer = Common.LAYER_TEXT;
 
@@ -182,7 +187,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         lblEnemyKilled.setHeight(tmpHeight);
 
         lblEnemyKilled.setRed(
-                255);
+            255);
         lblEnemyKilled.bTextFrame = false;
         lblEnemyKilled.layer = Common.LAYER_TEXT;
 
@@ -195,7 +200,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         lblBossKilled.setHeight(tmpHeight);
 
         lblBossKilled.setRed(
-                255);
+            255);
         lblBossKilled.bTextFrame = false;
         lblBossKilled.layer = Common.LAYER_TEXT;
 
@@ -288,17 +293,99 @@ public class SpaceShipScene extends Scene implements ActionListener
         {
             return null;
         }
-
     }
-    
+
+    public Boss getARandomBoss()
+    {
+        if (this.allBosses.size() > 0)
+        {
+            int index = abs(theRandom.nextInt()) % this.allBosses.size();
+            return this.allBosses.get(index);
+        } else
+        {
+            return null;
+        }
+    }
+
+    public EnemyAutoFollowMissile getARandomEnemyMissile()
+    {
+        if (this.allEnemyMissiles.size() > 0)
+        {
+            int index = abs(theRandom.nextInt()) % this.allEnemyMissiles.size();
+            return this.allEnemyMissiles.get(index);
+        } else
+        {
+            return null;
+        }
+    }
+
+    public BossAutoFollowMissile getARandomBossMissile()
+    {
+        if (this.allBossMissiles.size() > 0)
+        {
+            int index = abs(theRandom.nextInt()) % this.allBossMissiles.size();
+            return this.allBossMissiles.get(index);
+        } else
+        {
+            return null;
+        }
+    }
+
+    public void addABoss(Boss aBoss)
+    {
+        this.allBosses.add(aBoss);
+    }
+
+    public void deleteABoss(Boss aBoss)
+    {
+        this.allBosses.remove(aBoss);
+    }
+
     public void addAEnemy(Enemy aEnemy)
     {
         this.allEnemies.add(aEnemy);
     }
-    
+
     public void deleteAEnemy(Enemy aEnemy)
     {
         this.allEnemies.remove(aEnemy);
+    }
+
+    public void addAEnemyMissile(EnemyAutoFollowMissile aMissile)
+    {
+        this.allEnemyMissiles.add(aMissile);
+    }
+
+    public void deleteAEnemyMissile(EnemyAutoFollowMissile aMissile)
+    {
+        this.allEnemyMissiles.remove(aMissile);
+    }
+
+    public void addABossMissile(BossAutoFollowMissile aMissile)
+    {
+        this.allBossMissiles.add(aMissile);
+    }
+
+    public void deleteABossMissile(BossAutoFollowMissile aMissile)
+    {
+        this.allBossMissiles.remove(aMissile);
+    }
+
+    public Enemy getARandomTarget()
+    {
+        ArrayList<Enemy> tmpAllEnemies = new ArrayList<>();
+        tmpAllEnemies.addAll(this.allBosses);
+        tmpAllEnemies.addAll(this.allEnemies);
+
+        Enemy aEnemy = null;
+        if (tmpAllEnemies.size() > 0)
+        {
+            int index = abs(theRandom.nextInt()) % tmpAllEnemies.size();
+            aEnemy = tmpAllEnemies.get(index);
+            tmpAllEnemies.clear();
+        }
+        
+        return aEnemy;
     }
 
 }

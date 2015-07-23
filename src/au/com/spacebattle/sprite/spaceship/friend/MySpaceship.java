@@ -227,6 +227,8 @@ public class MySpaceship extends Spaceship implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
+        super.actionPerformed(e);
+        
         if (e.getSource().equals(this.timerForLaser))
         {
             if (bLaser)
@@ -264,7 +266,8 @@ public class MySpaceship extends Spaceship implements ActionListener
         FriendAutoFollowMissile aMissile = new FriendAutoFollowMissile();
         if (theScene instanceof SpaceShipScene)
         {
-            aMissile.theTarget = ((SpaceShipScene)this.theScene).getARandomEnemy();
+            SpaceShipScene theSpaceScene = (SpaceShipScene) this.theScene;
+            aMissile.theTarget = theSpaceScene.getARandomTarget();
         }
 //        aMissile.bDrawFrame = true;
         aMissile.setCentreX(this.getCentreX());

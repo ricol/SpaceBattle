@@ -38,7 +38,7 @@ public class Enemy extends Spaceship implements ActionListener
 
     protected Timer theTimerAutoadjust = new Timer(100, this);
     protected Timer theTimerFire = new Timer(3000, this);
-    protected Timer theTimerForAutoFollowMissile = new Timer(5000, this);
+    protected Timer theTimerForAutoFollowMissile = new Timer(3000, this);
 
     public Spaceship theTarget;
 
@@ -193,6 +193,7 @@ public class Enemy extends Spaceship implements ActionListener
         aMissile.fire();
 
         this.theScene.addSprite(aMissile);
+        ((SpaceShipScene) this.theScene).addAEnemyMissile(aMissile);
 
         EnemyFire aFire = new EnemyFire();
         aFire.setCentreX(aMissile.getCentreX());
