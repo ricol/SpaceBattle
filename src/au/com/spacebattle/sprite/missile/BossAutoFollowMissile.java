@@ -7,6 +7,7 @@ package au.com.spacebattle.sprite.missile;
 
 import au.com.rmit.Game2dEngine.action.AlphaToAction;
 import au.com.spacebattle.common.Common;
+import au.com.spacebattle.scene.SpaceShipScene;
 import au.com.spacebattle.sprite.other.ExpodeParticle;
 import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
 import static java.lang.Math.abs;
@@ -15,30 +16,24 @@ import static java.lang.Math.abs;
  *
  * @author ricolwang
  */
-public class BossMainWeaponMissile extends Missile
+public class BossAutoFollowMissile extends AutoFollowMissile
 {
 
-    public BossMainWeaponMissile(String imagename)
+    public BossAutoFollowMissile()
     {
-        super(imagename);
+        super("nuclear-enemy-missile.png");
 
+        this.lifetime = 5;
+        this.times = 30;
         this.bCollisionDetect = true;
         this.collisionCategory = Common.CATEGORY_ENEMY_SHIP;
         this.collisionTargetCategory = Common.CATEGORY_FRIEND_SHIP;
-    }
-    
-    @Override
-    public void onDead()
-    {
-        super.onDead(); //To change body of generated methods, choose Tools | Templates.
-
-        this.explode();
     }
 
     @Override
     public void explode()
     {
-        int number = abs(theRandom.nextInt()) % 10 + 30;
+        int number = abs(theRandom.nextInt()) % 10 + 50;
 
         for (int i = 0; i < number; i++)
         {
@@ -52,7 +47,7 @@ public class BossMainWeaponMissile extends Missile
             aFire.setVelocityY(tmpY);
             aFire.setRed(255);
             aFire.setGreen(0);
-            aFire.setBlue(0);
+            aFire.setBlue(255);
             aFire.bDeadIfNoActions = true;
 
             AlphaToAction aAction = new AlphaToAction(aFire);
@@ -61,5 +56,12 @@ public class BossMainWeaponMissile extends Missile
 
             this.theScene.addSprite(aFire);
         }
+    }
+
+    @Override
+    public void onDead()
+    {
+        super.onDead(); //To change body of generated methods, choose Tools | Templates.
+        ((SpaceShipScene) this.theScene).deleteABossMissile(this);
     }
 }

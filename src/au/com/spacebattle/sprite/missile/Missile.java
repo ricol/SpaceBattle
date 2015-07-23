@@ -5,8 +5,8 @@
  */
 package au.com.spacebattle.sprite.missile;
 
-import au.com.rmit.Game2dEngine.node.MovingSprite;
 import au.com.rmit.Game2dEngine.node.Sprite;
+import au.com.spacebattle.common.MovingObject;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +16,7 @@ import javax.imageio.ImageIO;
  *
  * @author ricolwang
  */
-public class Missile extends MovingSprite
+public class Missile extends MovingObject
 {
 
     public Missile(double x, double y, double width, double height, double mass, double velocityX, double velocityY)
@@ -34,8 +34,13 @@ public class Missile extends MovingSprite
         try
         {
             aImage = ImageIO.read(new File(imagename));
-            this.setWidth(aImage.getWidth());
-            this.setHeight(aImage.getHeight());
+            int max = aImage.getWidth();
+            if (aImage.getWidth() < aImage.getHeight())
+            {
+                max = aImage.getHeight();
+            }
+            this.setWidth(max);
+            this.setHeight(max);
 
             this.setImage(imagename);
         } catch (IOException e)
@@ -56,7 +61,7 @@ public class Missile extends MovingSprite
 
     public void explode()
     {
-        
+
     }
 
     @Override
@@ -64,4 +69,5 @@ public class Missile extends MovingSprite
     {
         this.setDead();
     }
+
 }

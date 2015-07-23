@@ -7,11 +7,13 @@ package au.com.spacebattle.sprite.spaceship.enemy;
 
 import au.com.rmit.Game2dEngine.action.Action;
 import au.com.rmit.Game2dEngine.action.AlphaToAction;
-import au.com.rmit.Game2dEngine.action.CountdownByAction;
 import au.com.rmit.Game2dEngine.action.ExpandByAction;
 import au.com.rmit.Game2dEngine.node.Sprite;
 import au.com.spacebattle.common.Common;
+import au.com.spacebattle.scene.SpaceShipScene;
+import au.com.spacebattle.sprite.missile.BossAutoFollowMissile;
 import au.com.spacebattle.sprite.missile.BossMainWeaponMissile;
+import au.com.spacebattle.sprite.missile.FriendAutoFollowMissile;
 import au.com.spacebattle.sprite.missile.FriendLaserWeapon;
 import au.com.spacebattle.sprite.missile.MainWeapanFriendMissile;
 import au.com.spacebattle.sprite.missile.Missile;
@@ -20,7 +22,9 @@ import au.com.spacebattle.sprite.other.EnemyFire;
 import au.com.spacebattle.sprite.other.ExpodeParticle;
 import au.com.spacebattle.sprite.spaceship.friend.MySpaceship;
 import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
+import java.awt.event.ActionEvent;
 import static java.lang.Math.abs;
+import javax.swing.Timer;
 
 /**
  *
@@ -29,11 +33,11 @@ import static java.lang.Math.abs;
 public class Boss extends Enemy
 {
 
+    protected Timer theTimerForMainWealpon = new Timer(2000, this);
+
     public Boss()
     {
         super("PlaneBoss.png");
-
-        this.lifetime = abs(theRandom.nextInt()) % 5 + 20;
 
         float num = abs(theRandom.nextInt()) % 50;
         float time = abs(theRandom.nextInt()) % 2 + 1;
@@ -44,6 +48,7 @@ public class Boss extends Enemy
 
         this.layer = Common.LAYER_BOSS_SHIP;
         this.resetTotalLife(500);
+        this.theTimerForMainWealpon.start();
     }
 
     @Override
@@ -63,29 +68,6 @@ public class Boss extends Enemy
                 aAction.identifer = "ActionExpandBack";
                 this.addAction(aAction);
             }
-        } else if (theAction.identifer.equals("ActionCountdownForFireingBossWeapon"))
-        {
-            Missile aMissile = new BossMainWeaponMissile("red-enemy-missile.png");
-            aMissile.setX(this.getCentreX());
-            aMissile.setY(this.getCentreY() + this.getHeight() / 2);
-//            aMissile.setVelocityX(abs(theRandom.nextInt()) % 50 + 50);
-            aMissile.setVelocityY(Common.SPEED_MAIN_MISSILE_ENEMY);
-            aMissile.layer = this.layer;
-            this.theScene.addSprite(aMissile);
-
-            EnemyFire aFire = new EnemyFire();
-            aFire.setCentreX(aMissile.getCentreX());
-            aFire.setCentreY(aMissile.getCentreY() + aMissile.getHeight() / 2);
-            aFire.layer = this.layer;
-            aFire.setVelocityX(this.velocityX);
-            aFire.setVelocityY(this.velocityY);
-
-            this.theScene.addSprite(aFire);
-
-            CountdownByAction aAction = new CountdownByAction();
-            aAction.CountdownBy(abs(theRandom.nextFloat()) * 3);
-            aAction.identifer = "ActionCountdownForFireingBossWeapon";
-            this.addAction(aAction);
         }
     }
 
@@ -95,19 +77,39 @@ public class Boss extends Enemy
         if (target instanceof MainWeapanFriendMissile)
         {
             this.decreaseLife(100);
-            System.out.println("Hit Boss with main weapon...enemy life left: " + this.getLife());
         } else if (target instanceof NormalWeanponFriendMissile)
         {
             this.decreaseLife(20);
-            System.out.println("Hit Boss with normal weapon...enemy life left: " + this.getLife());
         } else if (target instanceof MySpaceship)
         {
             this.decreaseLife(200);
-            System.out.println("Hit Boss with my space ship...enemy life left: " + this.getLife());
         } else if (target instanceof FriendLaserWeapon)
         {
             this.decreaseLife(20);
-            System.out.println("Hit enemy with laser...enemy life left: " + this.getLife());
+        } else if (target instanceof FriendAutoFollowMissile)
+        {
+            this.decreaseLife(100);
+        }
+
+        if (this.isAlive() == false)
+        {
+            if (this.theScene instanceof SpaceShipScene)
+            {
+                ((SpaceShipScene) this.theScene).killABoss();
+            }
+        }
+    }
+
+    @Override
+    public void onDead()
+    {
+        super.onDead(); //To change body of generated methods, choose Tools | Templates.
+        this.theTimerForMainWealpon.stop();
+        
+        if (this.theScene instanceof SpaceShipScene)
+        {
+            SpaceShipScene theSpaceShipScene = (SpaceShipScene) this.theScene;
+            theSpaceShipScene.deleteABoss(this);
         }
     }
 
@@ -136,6 +138,85 @@ public class Boss extends Enemy
             aFire.addAction(aAction);
 
             this.theScene.addSprite(aFire);
+        }
+    }
+
+    void fireMainWeapon()
+    {
+        Missile aMissile = new BossMainWeaponMissile("red-enemy-missile.png");
+//        aMissile.bDrawFrame = true;
+
+        aMissile.setCentreX(this.getCentreX());
+        aMissile.setY(this.getCentreY() + this.getHeight() / 2);
+
+//        aMissile.setAngle(this.getAngle());
+//        aMissile.setVelocityX(Common.SPEED_MAIN_MISSILE_ENEMY * Math.sin(-aMissile.getAngle()));
+        aMissile.setVelocityY(Common.SPEED_MAIN_MISSILE_ENEMY);
+
+        aMissile.layer = this.layer;
+
+        this.theScene.addSprite(aMissile);
+
+        EnemyFire aFire = new EnemyFire();
+        aFire.setCentreX(aMissile.getCentreX());
+        aFire.setCentreY(aMissile.getCentreY() + aMissile.getHeight() / 2);
+        aFire.layer = this.layer;
+        aFire.setVelocityX(this.velocityX);
+        aFire.setVelocityY(this.velocityY);
+
+        this.theScene.addSprite(aFire);
+    }
+
+    @Override
+    public void fireAutoFollowMissile()
+    {
+        BossAutoFollowMissile aMissile = new BossAutoFollowMissile();
+        aMissile.theTarget = this.theTarget;
+//        aMissile.bDrawFrame = true;
+        aMissile.setX(this.getCentreX() - aMissile.getWidth() / 2);
+        aMissile.setY(this.getCentreY() + this.getHeight() / 2);
+        aMissile.setAngle(this.angle);
+
+        aMissile.setVelocityX(Common.SPEED_MISSILE_ENEMY * Math.sin(-aMissile.getAngle()));
+        aMissile.setVelocityY(Common.SPEED_MISSILE_ENEMY * Math.cos(-aMissile.getAngle()));
+
+        aMissile.layer = this.layer;
+        aMissile.fire();
+
+        this.theScene.addSprite(aMissile);
+        ((SpaceShipScene) this.theScene).addABossMissile(aMissile);
+
+        EnemyFire aFire = new EnemyFire();
+        aFire.setCentreX(aMissile.getCentreX());
+        aFire.setCentreY(aMissile.getCentreY() + aMissile.getHeight() / 2);
+        aFire.layer = this.layer;
+        aFire.setVelocityX(this.velocityX);
+        aFire.setVelocityY(this.velocityY);
+
+        this.theScene.addSprite(aFire);
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e)
+    {
+        if (e.getSource().equals(this.theTimerFire))
+        {
+            fire();
+        } else if (e.getSource().equals(this.theTimerForAutoFollowMissile))
+        {
+            if (abs(theRandom.nextInt()) % 100 > 80)
+            {
+                fireAutoFollowMissile();
+            }
+        }
+
+        if (e.getSource().equals(this.theTimerForMainWealpon))
+        {
+            if (theRandom.nextBoolean())
+            {
+                this.fireMainWeapon();
+            }
         }
     }
 }

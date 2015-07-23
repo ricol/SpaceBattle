@@ -2,7 +2,6 @@ package au.com.spacebattle.main;
 
 import au.com.rmit.Game2dEngine.director.Director;
 import au.com.spacebattle.scene.SpaceShipScene;
-import au.com.spacebattle.scene.TestScene;
 import java.awt.Dimension;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -18,7 +17,7 @@ import java.util.Random;
  */
 /**
  *
- * @author Philology
+ * @author ricolwang
  */
 public class FrameMain extends javax.swing.JFrame implements MouseListener, MouseMotionListener
 {
@@ -99,7 +98,6 @@ public class FrameMain extends javax.swing.JFrame implements MouseListener, Mous
     private void formWindowActivated(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowActivated
     {//GEN-HEADEREND:event_formWindowActivated
         // TODO add your handling code here:
-//        this.launchTest();
         this.launchGame();
 
     }//GEN-LAST:event_formWindowActivated
@@ -120,13 +118,6 @@ public class FrameMain extends javax.swing.JFrame implements MouseListener, Mous
         Director.getSharedInstance().setParent(this.panelGame);
         Director.getSharedInstance().showScene(theScene);
         bGameStart = true;
-    }
-
-    void launchTest()
-    {
-        Director.getSharedInstance().setParent(this.panelGame);
-        Director.getSharedInstance().showScene(new TestScene());
-        bGameStart = false;
     }
 
     @Override

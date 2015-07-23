@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package au.com.spacebattle.sprite.other;
+package au.com.spacebattle.common;
 
 import au.com.rmit.Game2dEngine.node.MovingSprite;
 
@@ -11,18 +11,14 @@ import au.com.rmit.Game2dEngine.node.MovingSprite;
  *
  * @author ricolwang
  */
-public class ExpodeParticle extends MovingSprite
+public class MovingObject extends MovingSprite
 {
 
-    public ExpodeParticle(double x, double y, double width, double height, double mass, double velocityX, double velocityY)
+    public MovingObject(double x, double y, double width, double height, double mass, double velocityX, double velocityY)
     {
         super(x, y, width, height, mass, velocityX, velocityY);
-
+        
+//        this.bDrawFrame = true;
     }
-
-    public ExpodeParticle()
-    {
-        this(0, 0, 7, 7, 0, 0, 0);
-    }
-
+    
 }

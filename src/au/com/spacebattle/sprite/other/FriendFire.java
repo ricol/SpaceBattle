@@ -35,7 +35,7 @@ public class FriendFire extends MovingSprite
     public FriendFire()
     {
         this(0, 0, 0, 0, 0, 0, 0);
-    } 
+    }
 
     @Override
     public void onCustomDraw(Graphics2D theGraphics2D)
@@ -56,7 +56,7 @@ public class FriendFire extends MovingSprite
         {
             0, (int) getHeight() - 1, (int) getHeight() - 2
         }, 3);
-        
+
         theGraphics2D.drawPolygon(p);
     }
 }

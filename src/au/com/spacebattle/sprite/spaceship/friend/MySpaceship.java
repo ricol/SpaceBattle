@@ -12,6 +12,8 @@ import au.com.rmit.Game2dEngine.action.MoveXByAction;
 import au.com.rmit.Game2dEngine.action.MoveYByAction;
 import au.com.rmit.Game2dEngine.node.Sprite;
 import au.com.spacebattle.common.Common;
+import au.com.spacebattle.scene.SpaceShipScene;
+import au.com.spacebattle.sprite.missile.FriendAutoFollowMissile;
 import au.com.spacebattle.sprite.missile.MainWeapanFriendMissile;
 import au.com.spacebattle.sprite.missile.Missile;
 import au.com.spacebattle.sprite.missile.NormalWeanponFriendMissile;
@@ -34,6 +36,8 @@ public class MySpaceship extends Spaceship implements ActionListener
 
     Timer timerForLaser = new Timer(10, this);
     Timer timerForStop = new Timer(3000, this);
+    Timer theTimerForAutoFollowMissile = new Timer(400, this);
+
     boolean bLaser = false;
     public boolean bAutoshot;
 
@@ -48,15 +52,16 @@ public class MySpaceship extends Spaceship implements ActionListener
         this.layer = Common.LAYER_FRIEND_SHIP;
         this.resetTotalLife(500);
         this.timerForLaser.start();
+        theTimerForAutoFollowMissile.start();
     }
 
+    @Override
     public void fire()
     {
         //fire
-        float delta = 15;
         float speed = Common.SPEED_MISSILE_FRIEND;
         Missile aMissile = new NormalWeanponFriendMissile("red-missile.png");
-        aMissile.setX(this.getX() - delta + 20);
+        aMissile.setX(this.getX() - aMissile.getWidth() / 2);
         aMissile.setY(this.getY() + 20);
         aMissile.setVelocityY(-speed);
 
@@ -72,7 +77,7 @@ public class MySpaceship extends Spaceship implements ActionListener
         this.theScene.addSprite(aLeftFire);
 
         aMissile = new NormalWeanponFriendMissile("red-missile.png");
-        aMissile.setX(this.getX() + this.getWidth() - delta - 10);
+        aMissile.setX(this.getX() + this.getWidth() - aMissile.getWidth() / 2);
         aMissile.setY(this.getY() + 20);
         aMissile.setVelocityY(-speed);
 
@@ -90,11 +95,11 @@ public class MySpaceship extends Spaceship implements ActionListener
 
     public void fireMainWeapon()
     {
-        float delta = 12;
         float speed = Common.SPEED_MISSILE_FRIEND;
         Missile aMissile = new MainWeapanFriendMissile("blue-missile.png");
-        aMissile.setX(this.getX() + this.getWidth() / 2 - delta);
-        aMissile.setY(this.getY() - delta * 5);
+        aMissile.setCentreX(this.getCentreX());
+        aMissile.setCentreY(this.getCentreY() - aMissile.getHeight());
+            
         aMissile.setVelocityY(-speed * 1.2);
         this.theScene.addSprite(aMissile);
 
@@ -221,6 +226,8 @@ public class MySpaceship extends Spaceship implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
+        super.actionPerformed(e);
+        
         if (e.getSource().equals(this.timerForLaser))
         {
             if (bLaser)
@@ -228,10 +235,59 @@ public class MySpaceship extends Spaceship implements ActionListener
                 FriendLaserWeapon laserWeapon = new FriendLaserWeapon(this);
                 theScene.addSprite(laserWeapon);
             }
-        }else if (e.getSource().equals(this.timerForStop))
+        } else if (e.getSource().equals(this.timerForStop))
         {
             bLaser = false;
             this.timerForStop.stop();
+        } else if (e.getSource().equals(this.theTimerForAutoFollowMissile))
+        {
+            this.fireAutoFollowMissile();
         }
+    }
+
+    @Override
+    public void onDead()
+    {
+        super.onDead(); //To change body of generated methods, choose Tools | Templates.
+
+        this.timerForLaser.stop();
+        this.timerForStop.stop();
+
+        if (this.theScene instanceof SpaceShipScene)
+        {
+            ((SpaceShipScene) this.theScene).lostALife();
+        }
+    }
+
+    @Override
+    public void fireAutoFollowMissile()
+    {
+        FriendAutoFollowMissile aMissile = new FriendAutoFollowMissile();
+        if (theScene instanceof SpaceShipScene)
+        {
+            SpaceShipScene theSpaceScene = (SpaceShipScene) this.theScene;
+            aMissile.theTarget = theSpaceScene.getARandomTarget();
+        }
+//        aMissile.bDrawFrame = true;
+        aMissile.setCentreX(this.getCentreX());
+        aMissile.setCentreY(this.getCentreY() - aMissile.getHeight());
+        aMissile.setAngle(this.angle);
+
+//        aMissile.setVelocityX(Common.SPEED_MISSILE_FRIEND * Math.sin(aMissile.getAngle()));
+        aMissile.setVelocityY(-Common.SPEED_MISSILE_FRIEND);
+
+        aMissile.layer = this.layer;
+        aMissile.fire();
+
+        this.theScene.addSprite(aMissile);
+
+        FriendFire aFire = new FriendFire();
+        aFire.setCentreX(aMissile.getCentreX());
+        aFire.setCentreY(aMissile.getCentreY() + aMissile.getHeight() / 2);
+        aFire.layer = this.layer;
+        aFire.setVelocityX(this.getVelocityX());
+        aFire.setVelocityY(this.getVelocityY());
+
+        this.theScene.addSprite(aFire);
     }
 }
