@@ -17,6 +17,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.lang.Math.abs;
+import java.util.ArrayList;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
@@ -40,6 +41,8 @@ public class SpaceShipScene extends Scene implements ActionListener
     Timer timerForFire = new Timer(200, this);
     Timer timerForFirMainWeapon = new Timer(300, this);
     Timer timerForEnemy = new Timer(600, this);
+
+    ArrayList<Enemy> allEnemies = new ArrayList<>();
 
     public SpaceShipScene()
     {
@@ -110,6 +113,8 @@ public class SpaceShipScene extends Scene implements ActionListener
         aBoss.theTarget = this.theShip;
         aBoss.bAutoAdjustGesture = true;
         this.addSprite(aBoss);
+        
+        this.addAEnemy(aBoss);
     }
 
     public void addAEnemy()
@@ -145,6 +150,8 @@ public class SpaceShipScene extends Scene implements ActionListener
 
         aEnemy.theTarget = this.theShip;
         this.addSprite(aEnemy);
+
+        this.addAEnemy(aEnemy);
     }
 
     private void addLabels()
@@ -162,7 +169,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         lblMyLife.setHeight(tmpHeight);
 
         lblMyLife.setRed(
-            255);
+                255);
         lblMyLife.bTextFrame = false;
         lblMyLife.layer = Common.LAYER_TEXT;
 
@@ -175,7 +182,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         lblEnemyKilled.setHeight(tmpHeight);
 
         lblEnemyKilled.setRed(
-            255);
+                255);
         lblEnemyKilled.bTextFrame = false;
         lblEnemyKilled.layer = Common.LAYER_TEXT;
 
@@ -188,7 +195,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         lblBossKilled.setHeight(tmpHeight);
 
         lblBossKilled.setRed(
-            255);
+                255);
         lblBossKilled.bTextFrame = false;
         lblBossKilled.layer = Common.LAYER_TEXT;
 
@@ -269,6 +276,29 @@ public class SpaceShipScene extends Scene implements ActionListener
         super.setSize(d); //To change body of generated methods, choose Tools | Templates.
 
         this.adjustLabelPos();
+    }
+
+    public Enemy getARandomEnemy()
+    {
+        if (this.allEnemies.size() > 0)
+        {
+            int index = abs(theRandom.nextInt()) % this.allEnemies.size();
+            return this.allEnemies.get(index);
+        } else
+        {
+            return null;
+        }
+
+    }
+    
+    public void addAEnemy(Enemy aEnemy)
+    {
+        this.allEnemies.add(aEnemy);
+    }
+    
+    public void deleteAEnemy(Enemy aEnemy)
+    {
+        this.allEnemies.remove(aEnemy);
     }
 
 }

@@ -7,6 +7,9 @@ package au.com.spacebattle.sprite.spaceship;
 
 import au.com.rmit.Game2dEngine.action.AlphaToAction;
 import au.com.rmit.Game2dEngine.node.MovingSprite;
+import au.com.spacebattle.common.Common;
+import au.com.spacebattle.sprite.missile.BossAutoFollowMissile;
+import au.com.spacebattle.sprite.other.EnemyFire;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -50,6 +53,11 @@ public class Spaceship extends MovingSprite
     public void fire()
     {
 
+    }
+    
+    public void fireAutoFollowMissile()
+    {
+        
     }
 
     public void decreaseLife(int value)

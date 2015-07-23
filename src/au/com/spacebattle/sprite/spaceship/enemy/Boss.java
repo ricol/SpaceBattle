@@ -14,6 +14,7 @@ import au.com.spacebattle.scene.SpaceShipScene;
 import au.com.spacebattle.sprite.missile.BossAutoFollowMissile;
 import au.com.spacebattle.sprite.missile.BossMainWeaponMissile;
 import au.com.spacebattle.sprite.missile.EnemyAutoFollowMissile;
+import au.com.spacebattle.sprite.missile.FriendAutoFollowMissile;
 import au.com.spacebattle.sprite.missile.FriendLaserWeapon;
 import au.com.spacebattle.sprite.missile.MainWeapanFriendMissile;
 import au.com.spacebattle.sprite.missile.Missile;
@@ -86,6 +87,9 @@ public class Boss extends Enemy
         } else if (target instanceof FriendLaserWeapon)
         {
             this.decreaseLife(20);
+        } else if (target instanceof FriendAutoFollowMissile)
+        {
+            this.decreaseLife(100);
         }
 
         if (this.isAlive() == false)

@@ -12,6 +12,7 @@ import au.com.spacebattle.common.Common;
 import au.com.spacebattle.scene.SpaceShipScene;
 import au.com.spacebattle.sprite.missile.EnemyAutoFollowMissile;
 import au.com.spacebattle.sprite.missile.EnemyMissile;
+import au.com.spacebattle.sprite.missile.FriendAutoFollowMissile;
 import au.com.spacebattle.sprite.missile.FriendLaserWeapon;
 import au.com.spacebattle.sprite.missile.MainWeapanFriendMissile;
 import au.com.spacebattle.sprite.missile.Missile;
@@ -67,6 +68,12 @@ public class Enemy extends Spaceship implements ActionListener
         this.theTimerAutoadjust.stop();
         this.theTimerFire.stop();
         this.theTarget = null;
+
+        if (this.theScene instanceof SpaceShipScene)
+        {
+            SpaceShipScene theSpaceShipScene = (SpaceShipScene) this.theScene;
+            theSpaceShipScene.deleteAEnemy(this);
+        }
     }
 
     @Override
@@ -84,6 +91,9 @@ public class Enemy extends Spaceship implements ActionListener
         } else if (target instanceof FriendLaserWeapon)
         {
             this.decreaseLife(20);
+        } else if (target instanceof FriendAutoFollowMissile)
+        {
+            this.decreaseLife(300);
         }
 
         if (this.isAlive() == false)
@@ -166,6 +176,7 @@ public class Enemy extends Spaceship implements ActionListener
         this.theScene.addSprite(aFire);
     }
 
+    @Override
     public void fireAutoFollowMissile()
     {
         EnemyAutoFollowMissile aMissile = new EnemyAutoFollowMissile();

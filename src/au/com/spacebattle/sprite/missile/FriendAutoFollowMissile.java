@@ -8,6 +8,7 @@ package au.com.spacebattle.sprite.missile;
 import au.com.rmit.Game2dEngine.action.AlphaToAction;
 import au.com.spacebattle.common.Common;
 import au.com.spacebattle.sprite.other.ExpodeParticle;
+import au.com.spacebattle.sprite.spaceship.Spaceship;
 import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
 import static java.lang.Math.abs;
 
@@ -15,16 +16,18 @@ import static java.lang.Math.abs;
  *
  * @author ricolwang
  */
-public class BossMainWeaponMissile extends Missile
+public class FriendAutoFollowMissile extends AutoFollowMissile
 {
 
-    public BossMainWeaponMissile(String imagename)
+    public FriendAutoFollowMissile()
     {
-        super(imagename);
+        super("nuclear.png");
 
+        this.lifetime = 5;
+        this.times = 50;
         this.bCollisionDetect = true;
-        this.collisionCategory = Common.CATEGORY_ENEMY_SHIP;
-        this.collisionTargetCategory = Common.CATEGORY_FRIEND_SHIP;
+        this.collisionCategory = Common.CATEGORY_FRIEND_SHIP;
+        this.collisionTargetCategory = Common.CATEGORY_ENEMY_SHIP;
     }
 
     @Override
@@ -43,7 +46,7 @@ public class BossMainWeaponMissile extends Missile
             aFire.setVelocityX(tmpX);
             aFire.setVelocityY(tmpY);
             aFire.setRed(255);
-            aFire.setGreen(0);
+            aFire.setGreen(255);
             aFire.setBlue(0);
             aFire.bDeadIfNoActions = true;
 
@@ -53,5 +56,28 @@ public class BossMainWeaponMissile extends Missile
 
             this.theScene.addSprite(aFire);
         }
+    }
+    
+    @Override
+    public void adjustGesture(Spaceship theShip)
+    {
+        if (theShip == null)
+        {
+            return;
+        }
+
+        //adjust gesture
+        double targetCentreX = theShip.getCentreX();
+        double targetCentreY = theShip.getCentreY();
+        double changeX = targetCentreX - this.getCentreX();
+        double changeY = targetCentreY - this.getCentreY();
+        double distance = Math.sqrt(changeX * changeX + changeY * changeY);
+        double delta = Math.asin(changeX / distance);
+
+        this.angle = delta;
+
+        //adjust velocity
+        this.setVelocityX(Common.SPEED_MISSILE_FRIEND * Math.sin(this.getAngle()));
+        this.setVelocityY(-Common.SPEED_MISSILE_FRIEND * Math.cos(this.getAngle()));
     }
 }
