@@ -105,6 +105,12 @@ public class Boss extends Enemy
     {
         super.onDead(); //To change body of generated methods, choose Tools | Templates.
         this.theTimerForMainWealpon.stop();
+        
+        if (this.theScene instanceof SpaceShipScene)
+        {
+            SpaceShipScene theSpaceShipScene = (SpaceShipScene) this.theScene;
+            theSpaceShipScene.deleteABoss(this);
+        }
     }
 
     @Override
@@ -140,7 +146,7 @@ public class Boss extends Enemy
         Missile aMissile = new BossMainWeaponMissile("red-enemy-missile.png");
 //        aMissile.bDrawFrame = true;
 
-        aMissile.setX(this.getCentreX());
+        aMissile.setCentreX(this.getCentreX());
         aMissile.setY(this.getCentreY() + this.getHeight() / 2);
 
 //        aMissile.setAngle(this.getAngle());

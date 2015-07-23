@@ -67,6 +67,7 @@ public class Enemy extends Spaceship implements ActionListener
         super.onDead(); //To change body of generated methods, choose Tools | Templates.
         this.theTimerAutoadjust.stop();
         this.theTimerFire.stop();
+        this.theTimerForAutoFollowMissile.stop();
         this.theTarget = null;
 
         if (this.theScene instanceof SpaceShipScene)
