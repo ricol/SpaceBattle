@@ -20,13 +20,13 @@ public class Common
 
     public static final float SPEED_ENEMY_SHIP_X = 10;
     public static final float SPEED_ENEMY_SHIP_CHANGE_X = 5;
-    public static final float SPEED_ENEMY_SHIP_Y = 20;
-    public static final float SPEED_ENEMY_SHIP_CHANGE_Y = 10;
+    public static final float SPEED_ENEMY_SHIP_Y = 100;
+    public static final float SPEED_ENEMY_SHIP_CHANGE_Y = 20;
 
     public static final float SPEED_ENEMY_BOSS_SHIP_X = 2;
     public static final float SPEED_ENEMY_BOSS_SHIP_CHANGE_X = 2;
-    public static final float SPEED_ENEMY_BOSS_SHIP_Y = 10;
-    public static final float SPEED_ENEMY_BOSS_SHIP_CHANGE_Y = 2;
+    public static final float SPEED_ENEMY_BOSS_SHIP_Y = 100;
+    public static final float SPEED_ENEMY_BOSS_SHIP_CHANGE_Y = 20;
 
     public static final int CATEGORY_FRIEND_SHIP = 100;
     public static final int CATEGORY_ENEMY_SHIP = 101;

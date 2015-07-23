@@ -33,7 +33,7 @@ public class FriendAutoFollowMissile extends AutoFollowMissile
     @Override
     public void explode()
     {
-        int number = abs(theRandom.nextInt()) % 10 + 30;
+        int number = abs(theRandom.nextInt()) % 10 + 40;
 
         for (int i = 0; i < number; i++)
         {
@@ -45,9 +45,9 @@ public class FriendAutoFollowMissile extends AutoFollowMissile
             aFire.setY(this.getCentreY());
             aFire.setVelocityX(tmpX);
             aFire.setVelocityY(tmpY);
-            aFire.setRed(255);
-            aFire.setGreen(255);
-            aFire.setBlue(0);
+            aFire.setRed(0);
+            aFire.setGreen(0);
+            aFire.setBlue(255);
             aFire.bDeadIfNoActions = true;
 
             AlphaToAction aAction = new AlphaToAction(aFire);
