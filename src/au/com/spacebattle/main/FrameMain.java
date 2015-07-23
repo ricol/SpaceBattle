@@ -17,7 +17,7 @@ import java.util.Random;
  */
 /**
  *
- * @author Philology
+ * @author ricolwang
  */
 public class FrameMain extends javax.swing.JFrame implements MouseListener, MouseMotionListener
 {
