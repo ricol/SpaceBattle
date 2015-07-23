@@ -26,6 +26,14 @@ public class BossMainWeaponMissile extends Missile
         this.collisionCategory = Common.CATEGORY_ENEMY_SHIP;
         this.collisionTargetCategory = Common.CATEGORY_FRIEND_SHIP;
     }
+    
+    @Override
+    public void onDead()
+    {
+        super.onDead(); //To change body of generated methods, choose Tools | Templates.
+
+        this.explode();
+    }
 
     @Override
     public void explode()
