@@ -11,6 +11,7 @@ import au.com.rmit.Game2dEngine.scene.Scene;
 import au.com.spacebattle.common.Common;
 import au.com.spacebattle.sprite.missile.BossAutoFollowMissile;
 import au.com.spacebattle.sprite.missile.EnemyAutoFollowMissile;
+import au.com.spacebattle.sprite.other.SpaceBackground;
 import au.com.spacebattle.sprite.spaceship.enemy.Boss;
 import au.com.spacebattle.sprite.spaceship.enemy.Enemy;
 import au.com.spacebattle.sprite.spaceship.friend.MySpaceship;
@@ -35,14 +36,16 @@ public class SpaceShipScene extends Scene implements ActionListener
     public LabelSprite lblEnemyKilled;
     public LabelSprite lblBossKilled;
     public LabelSprite lblMyLife;
+    SpaceBackground theBackgroundFirst;
+    SpaceBackground theBackgroundSecond;
 
     int enemyKilled = 0;
     int bossKilled = 0;
     int mylife = 3;
 
     Timer timerForFire = new Timer(200, this);
-    Timer timerForFirMainWeapon = new Timer(300, this);
-    Timer timerForEnemy = new Timer(600, this);
+    Timer timerForFirMainWeapon = new Timer(200, this);
+    Timer timerForEnemy = new Timer(300, this);
 
     ArrayList<Boss> allBosses = new ArrayList<>();
     ArrayList<Enemy> allEnemies = new ArrayList<>();
@@ -58,6 +61,12 @@ public class SpaceShipScene extends Scene implements ActionListener
 //        {
 //        }
 
+//        this.theBackgroundFirst = new SpaceBackground();
+//        this.addSprite(this.theBackgroundFirst);
+//
+//        this.theBackgroundSecond = new SpaceBackground();
+//        this.theBackgroundSecond.setY((this.theBackgroundSecond.getHeight() + this.getHeight())* -1);
+//        this.addSprite(this.theBackgroundSecond);
         theShip = new MySpaceship();
         theShip.lifetime = Sprite.EVER;
 
@@ -235,7 +244,7 @@ public class SpaceShipScene extends Scene implements ActionListener
     {
         if (e.getSource().equals(this.timerForEnemy))
         {
-            if (abs(theRandom.nextInt()) % 100 > 80)
+            if (abs(theRandom.nextInt()) % 100 > 90)
             {
                 this.addABoss();
             } else
@@ -260,19 +269,28 @@ public class SpaceShipScene extends Scene implements ActionListener
     public void killAEnemy()
     {
         this.enemyKilled++;
-        this.lblEnemyKilled.setText("Enemy Killed: " + this.enemyKilled);
+        if (this.lblEnemyKilled != null)
+        {
+            this.lblEnemyKilled.setText("Enemy Killed: " + this.enemyKilled);
+        }
     }
 
     public void killABoss()
     {
         this.bossKilled++;
-        this.lblBossKilled.setText("Boss Killed: " + this.bossKilled);
+        if (this.lblBossKilled != null)
+        {
+            this.lblBossKilled.setText("Boss Killed: " + this.bossKilled);
+        }
     }
 
     public void lostALife()
     {
         this.mylife--;
-        this.lblMyLife.setText("My Life: " + this.mylife);
+        if (this.lblMyLife != null)
+        {
+            this.lblMyLife.setText("My Life: " + this.mylife);
+        }
     }
 
     @Override
@@ -384,7 +402,7 @@ public class SpaceShipScene extends Scene implements ActionListener
             aEnemy = tmpAllEnemies.get(index);
             tmpAllEnemies.clear();
         }
-        
+
         return aEnemy;
     }
 

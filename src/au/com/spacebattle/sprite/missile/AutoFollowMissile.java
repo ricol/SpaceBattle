@@ -23,18 +23,15 @@ public class AutoFollowMissile extends Missile implements ActionListener
 {
 
     public MovingObject theTarget;
-    int times = 10;
+    int times = 30;
     int currentTimers = 0;
-    Timer theTimer = new Timer(200, this);
+    Timer theTimer = new Timer(50, this);
 
-    public AutoFollowMissile(double x, double y, double width, double height, double mass, double velocityX, double velocityY)
-    {
-        super(x, y, width, height, mass, velocityX, velocityY);
-    }
 
     public AutoFollowMissile(String imagename)
     {
         super(imagename);
+        this.lifetime = 5;
     }
 
     @Override
@@ -67,13 +64,23 @@ public class AutoFollowMissile extends Missile implements ActionListener
             double changeX = targetCentreX - this.getCentreX();
             double changeY = targetCentreY - this.getCentreY();
             double distance = Math.sqrt(changeX * changeX + changeY * changeY);
-            double delta = Math.asin(changeX / distance);
 
-            this.angle = -delta;
-
-            //adjust velocity
-            this.setVelocityX(Common.SPEED_MISSILE_ENEMY * Math.sin(-this.getAngle()));
-            this.setVelocityY(Common.SPEED_MISSILE_ENEMY * Math.cos(-this.getAngle()));
+            if (changeY >= 0)
+            {
+                double delta = Math.asin(changeX / distance);
+                this.angle = -delta;
+                //adjust velocity
+                this.setVelocityX(Common.SPEED_MISSILE_ENEMY * Math.sin(delta));
+                this.setVelocityY(Common.SPEED_MISSILE_ENEMY * Math.cos(delta));
+            } 
+            else
+            {
+                double delta = Math.asin(changeX / distance);
+                this.angle = delta + Math.PI;
+                //adjust velocity
+                this.setVelocityX(Common.SPEED_MISSILE_ENEMY * Math.sin(delta));
+                this.setVelocityY(-Common.SPEED_MISSILE_ENEMY * Math.cos(delta));
+            }
         }
     }
 
@@ -87,6 +94,7 @@ public class AutoFollowMissile extends Missile implements ActionListener
     {
         super.onDead(); //To change body of generated methods, choose Tools | Templates.
 
+        this.theTimer.stop();
         this.explode();
     }
 

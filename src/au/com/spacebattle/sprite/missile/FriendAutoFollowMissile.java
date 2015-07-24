@@ -25,7 +25,7 @@ public class FriendAutoFollowMissile extends AutoFollowMissile
         super("nuclear.png");
 
         this.lifetime = 5;
-        this.times = 50;
+        this.times = 100;
         this.bCollisionDetect = true;
         this.collisionCategory = Common.CATEGORY_FRIEND_SHIP;
         this.collisionTargetCategory = Common.CATEGORY_ENEMY_SHIP;
@@ -78,7 +78,21 @@ public class FriendAutoFollowMissile extends AutoFollowMissile
             if (theScene instanceof SpaceShipScene)
             {
                 SpaceShipScene theSpaceScene = (SpaceShipScene) this.theScene;
-                this.theTarget = theSpaceScene.getARandomTarget();
+                BossAutoFollowMissile aBossMissile = theSpaceScene.getARandomBossMissile();
+                if (aBossMissile != null)
+                {
+                    this.theTarget = aBossMissile;
+                } else
+                {
+                    EnemyAutoFollowMissile aEnemyMissile = theSpaceScene.getARandomEnemyMissile();
+                    if (aEnemyMissile != null)
+                    {
+                        this.theTarget = aEnemyMissile;
+                    } else
+                    {
+                        this.theTarget = theSpaceScene.getARandomTarget();
+                    }
+                }
             }
         }
 
@@ -93,13 +107,21 @@ public class FriendAutoFollowMissile extends AutoFollowMissile
         double changeX = targetCentreX - this.getCentreX();
         double changeY = targetCentreY - this.getCentreY();
         double distance = Math.sqrt(changeX * changeX + changeY * changeY);
-        double delta = Math.asin(changeX / distance);
-
-        this.angle = delta;
 
         //adjust velocity
-        this.setVelocityX(Common.SPEED_MISSILE_FRIEND * Math.sin(this.getAngle()));
-        this.setVelocityY(-Common.SPEED_MISSILE_FRIEND * Math.cos(this.getAngle()));
+        if (changeY <= 0)
+        {
+            double delta = Math.asin(changeX / distance);
+            this.angle = delta;
+            this.setVelocityX(Common.SPEED_MISSILE_FRIEND * Math.sin(this.getAngle()));
+            this.setVelocityY(-Common.SPEED_MISSILE_FRIEND * Math.cos(this.getAngle()));
+        } else
+        {
+            double delta = Math.acos(changeX / distance);
+            this.angle = Math.PI / 2.0f + delta;
+            this.setVelocityX(Common.SPEED_MISSILE_FRIEND * Math.cos(delta));
+            this.setVelocityY(Common.SPEED_MISSILE_FRIEND * Math.sin(delta));
+        }
     }
 
 }
