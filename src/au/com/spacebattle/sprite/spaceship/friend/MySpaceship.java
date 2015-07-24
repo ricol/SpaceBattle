@@ -13,6 +13,8 @@ import au.com.rmit.Game2dEngine.action.MoveYByAction;
 import au.com.rmit.Game2dEngine.node.Sprite;
 import au.com.spacebattle.common.Common;
 import au.com.spacebattle.scene.SpaceShipScene;
+import au.com.spacebattle.sprite.missile.BossAutoFollowMissile;
+import au.com.spacebattle.sprite.missile.EnemyAutoFollowMissile;
 import au.com.spacebattle.sprite.missile.FriendAutoFollowMissile;
 import au.com.spacebattle.sprite.missile.MainWeapanFriendMissile;
 import au.com.spacebattle.sprite.missile.Missile;
@@ -36,7 +38,7 @@ public class MySpaceship extends Spaceship implements ActionListener
 
     Timer timerForLaser = new Timer(10, this);
     Timer timerForStop = new Timer(3000, this);
-    Timer theTimerForAutoFollowMissile = new Timer(400, this);
+    Timer theTimerForAutoFollowMissile = new Timer(300, this);
 
     boolean bLaser = false;
     public boolean bAutoshot;
@@ -99,7 +101,7 @@ public class MySpaceship extends Spaceship implements ActionListener
         Missile aMissile = new MainWeapanFriendMissile("blue-missile.png");
         aMissile.setCentreX(this.getCentreX());
         aMissile.setCentreY(this.getCentreY() - aMissile.getHeight());
-            
+
         aMissile.setVelocityY(-speed * 1.2);
         this.theScene.addSprite(aMissile);
 
@@ -227,7 +229,7 @@ public class MySpaceship extends Spaceship implements ActionListener
     public void actionPerformed(ActionEvent e)
     {
         super.actionPerformed(e);
-        
+
         if (e.getSource().equals(this.timerForLaser))
         {
             if (bLaser)
@@ -241,7 +243,7 @@ public class MySpaceship extends Spaceship implements ActionListener
             this.timerForStop.stop();
         } else if (e.getSource().equals(this.theTimerForAutoFollowMissile))
         {
-//            this.fireAutoFollowMissile();
+            this.fireAutoFollowMissile();
         }
     }
 
@@ -266,7 +268,21 @@ public class MySpaceship extends Spaceship implements ActionListener
         if (theScene instanceof SpaceShipScene)
         {
             SpaceShipScene theSpaceScene = (SpaceShipScene) this.theScene;
-            aMissile.theTarget = theSpaceScene.getARandomTarget();
+                BossAutoFollowMissile aBossMissile = theSpaceScene.getARandomBossMissile();
+                if (aBossMissile != null)
+                {
+                    aMissile.theTarget = aBossMissile;
+                } else
+                {
+                    EnemyAutoFollowMissile aEnemyMissile = theSpaceScene.getARandomEnemyMissile();
+                    if (aEnemyMissile != null)
+                    {
+                        aMissile.theTarget = aEnemyMissile;
+                    } else
+                    {
+                        aMissile.theTarget = theSpaceScene.getARandomTarget();
+                    }
+                }
         }
 //        aMissile.bDrawFrame = true;
         aMissile.setCentreX(this.getCentreX());

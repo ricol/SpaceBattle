@@ -78,7 +78,21 @@ public class FriendAutoFollowMissile extends AutoFollowMissile
             if (theScene instanceof SpaceShipScene)
             {
                 SpaceShipScene theSpaceScene = (SpaceShipScene) this.theScene;
-                this.theTarget = theSpaceScene.getARandomTarget();
+                BossAutoFollowMissile aBossMissile = theSpaceScene.getARandomBossMissile();
+                if (aBossMissile != null)
+                {
+                    this.theTarget = aBossMissile;
+                } else
+                {
+                    EnemyAutoFollowMissile aEnemyMissile = theSpaceScene.getARandomEnemyMissile();
+                    if (aEnemyMissile != null)
+                    {
+                        this.theTarget = aEnemyMissile;
+                    } else
+                    {
+                        this.theTarget = theSpaceScene.getARandomTarget();
+                    }
+                }
             }
         }
 

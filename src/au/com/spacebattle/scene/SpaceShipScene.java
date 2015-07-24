@@ -6,7 +6,6 @@
 package au.com.spacebattle.scene;
 
 import au.com.rmit.Game2dEngine.node.LabelSprite;
-import au.com.rmit.Game2dEngine.node.MovingSprite;
 import au.com.rmit.Game2dEngine.node.Sprite;
 import au.com.rmit.Game2dEngine.scene.Scene;
 import au.com.spacebattle.common.Common;
@@ -68,7 +67,6 @@ public class SpaceShipScene extends Scene implements ActionListener
 //        this.theBackgroundSecond = new SpaceBackground();
 //        this.theBackgroundSecond.setY((this.theBackgroundSecond.getHeight() + this.getHeight())* -1);
 //        this.addSprite(this.theBackgroundSecond);
-
         theShip = new MySpaceship();
         theShip.lifetime = Sprite.EVER;
 
@@ -246,7 +244,7 @@ public class SpaceShipScene extends Scene implements ActionListener
     {
         if (e.getSource().equals(this.timerForEnemy))
         {
-            if (abs(theRandom.nextInt()) % 100 > 80)
+            if (abs(theRandom.nextInt()) % 100 > 90)
             {
                 this.addABoss();
             } else
@@ -271,19 +269,28 @@ public class SpaceShipScene extends Scene implements ActionListener
     public void killAEnemy()
     {
         this.enemyKilled++;
-        this.lblEnemyKilled.setText("Enemy Killed: " + this.enemyKilled);
+        if (this.lblEnemyKilled != null)
+        {
+            this.lblEnemyKilled.setText("Enemy Killed: " + this.enemyKilled);
+        }
     }
 
     public void killABoss()
     {
         this.bossKilled++;
-        this.lblBossKilled.setText("Boss Killed: " + this.bossKilled);
+        if (this.lblBossKilled != null)
+        {
+            this.lblBossKilled.setText("Boss Killed: " + this.bossKilled);
+        }
     }
 
     public void lostALife()
     {
         this.mylife--;
-        this.lblMyLife.setText("My Life: " + this.mylife);
+        if (this.lblMyLife != null)
+        {
+            this.lblMyLife.setText("My Life: " + this.mylife);
+        }
     }
 
     @Override
