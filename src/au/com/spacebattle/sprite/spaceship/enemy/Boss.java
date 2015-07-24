@@ -85,7 +85,7 @@ public class Boss extends Enemy
             this.decreaseLife(200);
         } else if (target instanceof FriendLaserWeapon)
         {
-            this.decreaseLife(20);
+            this.decreaseLife(100);
         } else if (target instanceof FriendAutoFollowMissile)
         {
             this.decreaseLife(100);
