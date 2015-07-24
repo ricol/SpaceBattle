@@ -23,8 +23,7 @@ public class BossAutoFollowMissile extends AutoFollowMissile
     {
         super("nuclear-enemy-missile.png");
 
-        this.lifetime = 5;
-        this.times = 30;
+        this.times = 50;
         this.bCollisionDetect = true;
         this.collisionCategory = Common.CATEGORY_ENEMY_SHIP;
         this.collisionTargetCategory = Common.CATEGORY_FRIEND_SHIP;

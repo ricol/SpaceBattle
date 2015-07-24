@@ -241,7 +241,7 @@ public class MySpaceship extends Spaceship implements ActionListener
             this.timerForStop.stop();
         } else if (e.getSource().equals(this.theTimerForAutoFollowMissile))
         {
-            this.fireAutoFollowMissile();
+//            this.fireAutoFollowMissile();
         }
     }
 

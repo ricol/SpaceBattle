@@ -62,12 +62,12 @@ public class SpaceShipScene extends Scene implements ActionListener
 //        {
 //        }
 
-        this.theBackgroundFirst = new SpaceBackground();
-        this.addSprite(this.theBackgroundFirst);
-
-        this.theBackgroundSecond = new SpaceBackground();
-        this.theBackgroundSecond.setY((this.theBackgroundSecond.getHeight() + this.getHeight())* -1);
-        this.addSprite(this.theBackgroundSecond);
+//        this.theBackgroundFirst = new SpaceBackground();
+//        this.addSprite(this.theBackgroundFirst);
+//
+//        this.theBackgroundSecond = new SpaceBackground();
+//        this.theBackgroundSecond.setY((this.theBackgroundSecond.getHeight() + this.getHeight())* -1);
+//        this.addSprite(this.theBackgroundSecond);
 
         theShip = new MySpaceship();
         theShip.lifetime = Sprite.EVER;

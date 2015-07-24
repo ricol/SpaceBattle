@@ -146,9 +146,16 @@ public class Enemy extends Spaceship implements ActionListener
         double changeX = targetCentreX - this.getCentreX();
         double changeY = targetCentreY - this.getCentreY();
         double distance = Math.sqrt(changeX * changeX + changeY * changeY);
-        double delta = Math.asin(changeX / distance);
 
-        this.angle = -delta;
+        if (changeY >= 0)
+        {
+            double delta = Math.asin(changeX / distance);
+            this.angle = -delta;
+        } else
+        {
+            double delta = Math.asin(changeX / distance);
+            this.angle = delta + Math.PI;
+        }
     }
 
     @Override
