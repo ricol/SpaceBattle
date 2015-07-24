@@ -15,8 +15,8 @@ public class Common
     public static final float SPEED_EXPLODE_PARTICLE = 300;
 
     public static final float SPEED_MISSILE_FRIEND = 500;
-    public static final float SPEED_MISSILE_ENEMY = 500;
-    public static final float SPEED_MAIN_MISSILE_ENEMY = 400;
+    public static final float SPEED_MISSILE_ENEMY = 400;
+    public static final float SPEED_MAIN_MISSILE_ENEMY = 350;
 
     public static final float SPEED_ENEMY_SHIP_X = 10;
     public static final float SPEED_ENEMY_SHIP_CHANGE_X = 5;

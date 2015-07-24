@@ -23,8 +23,6 @@ public class EnemyAutoFollowMissile extends AutoFollowMissile
     {
         super("enemy-auto-follow-missile.png");
 
-        this.lifetime = 5;
-        this.times = 20;
         this.bCollisionDetect = true;
         this.collisionCategory = Common.CATEGORY_ENEMY_SHIP;
         this.collisionTargetCategory = Common.CATEGORY_FRIEND_SHIP;
