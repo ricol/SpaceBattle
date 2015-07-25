@@ -22,7 +22,6 @@ import java.util.Random;
 public class FrameMain extends javax.swing.JFrame implements MouseListener, MouseMotionListener
 {
 
-    boolean bGameStart = false;
     Random theRandom = new Random();
     SpaceShipScene theScene;
 
@@ -117,7 +116,7 @@ public class FrameMain extends javax.swing.JFrame implements MouseListener, Mous
         this.theScene = new SpaceShipScene();
         Director.getSharedInstance().setParent(this.panelGame);
         Director.getSharedInstance().showScene(theScene);
-        bGameStart = true;
+        this.theScene.gameStart();
     }
 
     @Override
@@ -125,7 +124,7 @@ public class FrameMain extends javax.swing.JFrame implements MouseListener, Mous
     {
         if (e.getButton() == MouseEvent.BUTTON1)
         {
-            if (bGameStart)
+            if (this.theScene.bGameRunning)
             {
                 theScene.theShip.bAutoshot = true;
             }
@@ -137,7 +136,7 @@ public class FrameMain extends javax.swing.JFrame implements MouseListener, Mous
     {
         if (e.getButton() == MouseEvent.BUTTON3)
         {
-            if (bGameStart)
+            if (this.theScene.bGameRunning)
             {
                 theScene.theShip.openSheld();
             }
@@ -149,7 +148,7 @@ public class FrameMain extends javax.swing.JFrame implements MouseListener, Mous
     {
         if (e.getButton() == MouseEvent.BUTTON1)
         {
-            if (bGameStart)
+            if (this.theScene.bGameRunning)
             {
                 theScene.theShip.bAutoshot = false;
             }
@@ -159,9 +158,12 @@ public class FrameMain extends javax.swing.JFrame implements MouseListener, Mous
     @Override
     public void mouseMoved(MouseEvent e)
     {
-        if (bGameStart)
+        if (this.theScene.bGameRunning)
         {
-            theScene.theShip.moveToXY(e.getX(), e.getY());
+            if (theScene.theShip != null)
+            {
+                theScene.theShip.moveToXY(e.getX(), e.getY());
+            }
         }
     }
 

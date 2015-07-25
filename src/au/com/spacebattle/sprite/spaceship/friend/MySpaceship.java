@@ -42,6 +42,7 @@ public class MySpaceship extends Spaceship implements ActionListener
 
     boolean bLaser = false;
     public boolean bAutoshot;
+    public boolean bAutoMissile;
 
     public MySpaceship()
     {
@@ -243,7 +244,10 @@ public class MySpaceship extends Spaceship implements ActionListener
             this.timerForStop.stop();
         } else if (e.getSource().equals(this.theTimerForAutoFollowMissile))
         {
-            this.fireAutoFollowMissile();
+            if (bAutoMissile)
+            {
+                this.fireAutoFollowMissile();
+            }
         }
     }
 
@@ -268,21 +272,21 @@ public class MySpaceship extends Spaceship implements ActionListener
         if (theScene instanceof SpaceShipScene)
         {
             SpaceShipScene theSpaceScene = (SpaceShipScene) this.theScene;
-                BossAutoFollowMissile aBossMissile = theSpaceScene.getARandomBossMissile();
-                if (aBossMissile != null)
+            BossAutoFollowMissile aBossMissile = theSpaceScene.getARandomBossMissile();
+            if (aBossMissile != null)
+            {
+                aMissile.theTarget = aBossMissile;
+            } else
+            {
+                EnemyAutoFollowMissile aEnemyMissile = theSpaceScene.getARandomEnemyMissile();
+                if (aEnemyMissile != null)
                 {
-                    aMissile.theTarget = aBossMissile;
+                    aMissile.theTarget = aEnemyMissile;
                 } else
                 {
-                    EnemyAutoFollowMissile aEnemyMissile = theSpaceScene.getARandomEnemyMissile();
-                    if (aEnemyMissile != null)
-                    {
-                        aMissile.theTarget = aEnemyMissile;
-                    } else
-                    {
-                        aMissile.theTarget = theSpaceScene.getARandomTarget();
-                    }
+                    aMissile.theTarget = theSpaceScene.getARandomTarget();
                 }
+            }
         }
 //        aMissile.bDrawFrame = true;
         aMissile.setCentreX(this.getCentreX());
