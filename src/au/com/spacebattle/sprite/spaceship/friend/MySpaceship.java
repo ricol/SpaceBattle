@@ -38,7 +38,7 @@ public class MySpaceship extends Spaceship implements ActionListener
 
     Timer timerForLaser = new Timer(10, this);
     Timer timerForStop = new Timer(3000, this);
-    Timer theTimerForAutoFollowMissile = new Timer(300, this);
+    Timer theTimerForAutoFollowMissile = new Timer(1000, this);
 
     boolean bLaser = false;
     public boolean bAutoshot;

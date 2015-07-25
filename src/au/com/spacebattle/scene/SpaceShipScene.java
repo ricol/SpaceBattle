@@ -5,6 +5,7 @@
  */
 package au.com.spacebattle.scene;
 
+import au.com.rmit.Game2dEngine.action.AlphaByAction;
 import au.com.rmit.Game2dEngine.action.AlphaToAction;
 import au.com.rmit.Game2dEngine.action.MoveYToAction;
 import au.com.rmit.Game2dEngine.node.LabelSprite;
@@ -515,14 +516,33 @@ public class SpaceShipScene extends Scene implements ActionListener
 
     public void gameEnd()
     {
-        if (this.theShip != null)
-        {
-            this.theShip.setDead();
-        }
-
         this.timerForEnemy.stop();
         this.timerForFirMainWeapon.stop();
         this.timerForFire.stop();
+        
+        if (this.theShip != null)
+        {
+            AlphaByAction aAction = new AlphaByAction();
+            aAction.alphaBy(-1, 1);
+            theShip.addAction(aAction);
+            theShip.bDeadIfNoActions = true;
+        }
+
+        for (Boss aBoss : this.allBosses)
+        {
+            AlphaByAction aAction = new AlphaByAction();
+            aAction.alphaBy(-1, 1);
+            aBoss.addAction(aAction);
+            aBoss.bDeadIfNoActions = true;
+        }
+
+        for (Enemy aEnemy : this.allEnemies)
+        {
+            AlphaByAction aAction = new AlphaByAction();
+            aAction.alphaBy(-1, 1);
+            aEnemy.addAction(aAction);
+            aEnemy.bDeadIfNoActions = true;
+        }
 
         LabelSprite aLabel = new LabelSprite("Game End", new Font("TimesRoman", Font.PLAIN, 30));
         aLabel.setWidth(150);
@@ -534,9 +554,9 @@ public class SpaceShipScene extends Scene implements ActionListener
         aLabel.setCentreX(this.getWidth() / 2);
         aLabel.setCentreY(this.getHeight() / 2);
 
-        AlphaToAction aAction = new AlphaToAction(aLabel);
-        aAction.alphaTo(0, 1.5f);
-        aLabel.addAction(aAction);
+        AlphaToAction aAlphaAction = new AlphaToAction(aLabel);
+        aAlphaAction.alphaTo(0, 1.5f);
+        aLabel.addAction(aAlphaAction);
 
         this.addSprite(aLabel);
         this.bGameRunning = false;
