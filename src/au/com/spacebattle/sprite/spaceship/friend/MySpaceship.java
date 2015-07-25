@@ -38,10 +38,11 @@ public class MySpaceship extends Spaceship implements ActionListener
 
     Timer timerForLaser = new Timer(10, this);
     Timer timerForStop = new Timer(3000, this);
-    Timer theTimerForAutoFollowMissile = new Timer(300, this);
+    Timer theTimerForAutoFollowMissile = new Timer(1000, this);
 
     boolean bLaser = false;
     public boolean bAutoshot;
+    public boolean bAutoMissile;
 
     public MySpaceship()
     {
@@ -128,6 +129,20 @@ public class MySpaceship extends Spaceship implements ActionListener
         aCentreYAction.MoveCentreYTo(y, 0);
         this.addAction(aCentreYAction);
     }
+    
+    public void moveToXYInSequence(int x, int y, float duration)
+    {
+        double theShipCentreX = this.getCentreX();
+        double theShipCentreY = this.getCentreY();
+
+        MoveCentreXToAction aCentreXAction = new MoveCentreXToAction(this);
+        aCentreXAction.MoveCentreXTo(x, duration);
+        this.enQueueAction(aCentreXAction);
+
+        MoveCentreYToAction aCentreYAction = new MoveCentreYToAction(this);
+        aCentreYAction.MoveCentreYTo(y, duration);
+        this.enQueueAction(aCentreYAction);
+    }
 
     public void openSheld()
     {
@@ -173,6 +188,35 @@ public class MySpaceship extends Spaceship implements ActionListener
         MoveXByAction aAction = new MoveXByAction();
         aAction.moveXBy(value, duration);
         this.addAction(aAction);
+    }
+    
+    public void moveDownInSequence(float value, float duration)
+    {
+        //move down
+        MoveYByAction aAction = new MoveYByAction();
+        aAction.moveYBy(value, duration);
+        this.enQueueAction(aAction);
+    }
+
+    public void moveUpInSequence(float value, float duration)
+    {
+        MoveYByAction aAction = new MoveYByAction();
+        aAction.moveYBy(value, duration);
+        this.enQueueAction(aAction);
+    }
+
+    public void moveLeftInSequence(float value, float duration)
+    {
+        MoveXByAction aAction = new MoveXByAction();
+        aAction.moveXBy(value, duration);
+        this.enQueueAction(aAction);
+    }
+
+    public void moveRightInSequence(float value, float duration)
+    {
+        MoveXByAction aAction = new MoveXByAction();
+        aAction.moveXBy(value, duration);
+        this.enQueueAction(aAction);
     }
 
     @Override
@@ -243,7 +287,10 @@ public class MySpaceship extends Spaceship implements ActionListener
             this.timerForStop.stop();
         } else if (e.getSource().equals(this.theTimerForAutoFollowMissile))
         {
-            this.fireAutoFollowMissile();
+            if (bAutoMissile)
+            {
+                this.fireAutoFollowMissile();
+            }
         }
     }
 
@@ -254,6 +301,7 @@ public class MySpaceship extends Spaceship implements ActionListener
 
         this.timerForLaser.stop();
         this.timerForStop.stop();
+        this.theTimerForAutoFollowMissile.stop();
 
         if (this.theScene instanceof SpaceShipScene)
         {
@@ -268,21 +316,21 @@ public class MySpaceship extends Spaceship implements ActionListener
         if (theScene instanceof SpaceShipScene)
         {
             SpaceShipScene theSpaceScene = (SpaceShipScene) this.theScene;
-                BossAutoFollowMissile aBossMissile = theSpaceScene.getARandomBossMissile();
-                if (aBossMissile != null)
+            BossAutoFollowMissile aBossMissile = theSpaceScene.getARandomBossMissile();
+            if (aBossMissile != null)
+            {
+                aMissile.theTarget = aBossMissile;
+            } else
+            {
+                EnemyAutoFollowMissile aEnemyMissile = theSpaceScene.getARandomEnemyMissile();
+                if (aEnemyMissile != null)
                 {
-                    aMissile.theTarget = aBossMissile;
+                    aMissile.theTarget = aEnemyMissile;
                 } else
                 {
-                    EnemyAutoFollowMissile aEnemyMissile = theSpaceScene.getARandomEnemyMissile();
-                    if (aEnemyMissile != null)
-                    {
-                        aMissile.theTarget = aEnemyMissile;
-                    } else
-                    {
-                        aMissile.theTarget = theSpaceScene.getARandomTarget();
-                    }
+                    aMissile.theTarget = theSpaceScene.getARandomTarget();
                 }
+            }
         }
 //        aMissile.bDrawFrame = true;
         aMissile.setCentreX(this.getCentreX());

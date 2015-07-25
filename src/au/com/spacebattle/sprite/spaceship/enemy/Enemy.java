@@ -19,6 +19,7 @@ import au.com.spacebattle.sprite.missile.Missile;
 import au.com.spacebattle.sprite.missile.NormalWeanponFriendMissile;
 import au.com.spacebattle.sprite.other.EnemyFire;
 import au.com.spacebattle.sprite.other.ExpodeParticle;
+import au.com.spacebattle.sprite.other.Score;
 import au.com.spacebattle.sprite.spaceship.Spaceship;
 import au.com.spacebattle.sprite.spaceship.friend.MySpaceship;
 import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
@@ -101,7 +102,7 @@ public class Enemy extends Spaceship implements ActionListener
         {
             if (this.theScene instanceof SpaceShipScene)
             {
-                ((SpaceShipScene) this.theScene).killAEnemy();
+                ((SpaceShipScene) this.theScene).killAEnemy(this);
             }
         }
     }
