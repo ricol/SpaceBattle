@@ -20,6 +20,7 @@ import au.com.spacebattle.sprite.spaceship.enemy.Enemy;
 import au.com.spacebattle.sprite.spaceship.friend.MySpaceship;
 import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.lang.Math.abs;
@@ -449,11 +450,12 @@ public class SpaceShipScene extends Scene implements ActionListener
 
     public void gameStart()
     {
-        LabelSprite aLabel = new LabelSprite("Game Start");
-        aLabel.setWidth(100);
-        aLabel.setHeight(20);
+        LabelSprite aLabel = new LabelSprite("Game Start", new Font("TimesRoman", Font.PLAIN, 30));
+        aLabel.setWidth(150);
+        aLabel.setHeight(30);
+        aLabel.textPosY = 25;
         aLabel.setVelocityY(-50);
-        aLabel.bTextFrame = false;
+        aLabel.bTextFrame = true;
         aLabel.bDeadIfNoActions = true;
         aLabel.setCentreX(this.getWidth() / 2);
         aLabel.setCentreY(this.getHeight() / 2);
@@ -463,6 +465,21 @@ public class SpaceShipScene extends Scene implements ActionListener
         aLabel.addAction(aAction);
 
         this.addSprite(aLabel);
+
+        theShip = new MySpaceship();
+        theShip.lifetime = Sprite.EVER;
+        theShip.bAutoMissile = false;
+
+        theShip.setCentreX(this.getWidth() / 2.0f);
+        theShip.setCentreY(this.getHeight());
+
+        MoveYToAction aMoveAction = new MoveYToAction(theShip);
+        aMoveAction.moveYTo(getHeight() / 2 - theShip.getHeight() / 2, 1);
+        theShip.addAction(aMoveAction);
+
+        addSprite(theShip);
+
+        bGameRunning = true;
 
         new Thread(new Runnable()
         {
@@ -480,69 +497,39 @@ public class SpaceShipScene extends Scene implements ActionListener
 
                 SwingUtilities.invokeLater(new Runnable()
                 {
-
                     @Override
                     public void run()
                     {
-                        theShip = new MySpaceship();
-                        theShip.lifetime = Sprite.EVER;
-                        theShip.bAutoMissile = false;
-
-                        theShip.setX(getWidth() / 2.0);
-                        theShip.setY(getHeight() * (3 / 4.0));
-
-                        MoveYToAction aMoveAction = new MoveYToAction(theShip);
-                        aMoveAction.moveYTo(getHeight() / 2 - theShip.getHeight() / 2, 1);
-                        theShip.addAction(aMoveAction);
-
-                        addSprite(theShip);
-
-                        bGameRunning = true;
-
-                        new Thread(new Runnable()
-                        {
-
-                            @Override
-                            public void run()
-                            {
-                                try
-                                {
-                                    Thread.sleep(2000);
-                                } catch (InterruptedException ex)
-                                {
-                                    Logger.getLogger(SpaceShipScene.class.getName()).log(Level.SEVERE, null, ex);
-                                }
-
-                                SwingUtilities.invokeLater(new Runnable()
-                                {
-                                    @Override
-                                    public void run()
-                                    {
-                                        timerForEnemy.start();
-                                        timerForFire.start();
-                                        timerForFirMainWeapon.start();
-                                        theShip.bAutoMissile = true;
-                                    }
-                                });
-
-                            }
-
-                        }).start();
+                        timerForEnemy.start();
+                        timerForFire.start();
+                        timerForFirMainWeapon.start();
+                        theShip.bAutoMissile = true;
                     }
-                }
-                );
+                });
+
             }
 
         }).start();
+
     }
 
     public void gameEnd()
     {
-        LabelSprite aLabel = new LabelSprite("Game End");
-        aLabel.setWidth(100);
-        aLabel.setHeight(20);
+        if (this.theShip != null)
+        {
+            this.theShip.setDead();
+        }
+
+        this.timerForEnemy.stop();
+        this.timerForFirMainWeapon.stop();
+        this.timerForFire.stop();
+
+        LabelSprite aLabel = new LabelSprite("Game End", new Font("TimesRoman", Font.PLAIN, 30));
+        aLabel.setWidth(150);
+        aLabel.setHeight(30);
+        aLabel.textPosY = 25;
         aLabel.setVelocityY(-50);
-        aLabel.bTextFrame = false;
+        aLabel.bTextFrame = true;
         aLabel.bDeadIfNoActions = true;
         aLabel.setCentreX(this.getWidth() / 2);
         aLabel.setCentreY(this.getHeight() / 2);
@@ -557,7 +544,7 @@ public class SpaceShipScene extends Scene implements ActionListener
 
     public void gamePause()
     {
-        LabelSprite aLabel = new LabelSprite("Game Pause");
+        LabelSprite aLabel = new LabelSprite("Game Pause", new Font("TimesRoman", Font.PLAIN, 20));
         aLabel.setWidth(100);
         aLabel.setHeight(20);
         aLabel.bTextFrame = false;

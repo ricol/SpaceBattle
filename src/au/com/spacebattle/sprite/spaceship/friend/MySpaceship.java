@@ -129,6 +129,20 @@ public class MySpaceship extends Spaceship implements ActionListener
         aCentreYAction.MoveCentreYTo(y, 0);
         this.addAction(aCentreYAction);
     }
+    
+    public void moveToXYInSequence(int x, int y, float duration)
+    {
+        double theShipCentreX = this.getCentreX();
+        double theShipCentreY = this.getCentreY();
+
+        MoveCentreXToAction aCentreXAction = new MoveCentreXToAction(this);
+        aCentreXAction.MoveCentreXTo(x, duration);
+        this.enQueueAction(aCentreXAction);
+
+        MoveCentreYToAction aCentreYAction = new MoveCentreYToAction(this);
+        aCentreYAction.MoveCentreYTo(y, duration);
+        this.enQueueAction(aCentreYAction);
+    }
 
     public void openSheld()
     {
@@ -174,6 +188,35 @@ public class MySpaceship extends Spaceship implements ActionListener
         MoveXByAction aAction = new MoveXByAction();
         aAction.moveXBy(value, duration);
         this.addAction(aAction);
+    }
+    
+    public void moveDownInSequence(float value, float duration)
+    {
+        //move down
+        MoveYByAction aAction = new MoveYByAction();
+        aAction.moveYBy(value, duration);
+        this.enQueueAction(aAction);
+    }
+
+    public void moveUpInSequence(float value, float duration)
+    {
+        MoveYByAction aAction = new MoveYByAction();
+        aAction.moveYBy(value, duration);
+        this.enQueueAction(aAction);
+    }
+
+    public void moveLeftInSequence(float value, float duration)
+    {
+        MoveXByAction aAction = new MoveXByAction();
+        aAction.moveXBy(value, duration);
+        this.enQueueAction(aAction);
+    }
+
+    public void moveRightInSequence(float value, float duration)
+    {
+        MoveXByAction aAction = new MoveXByAction();
+        aAction.moveXBy(value, duration);
+        this.enQueueAction(aAction);
     }
 
     @Override
@@ -258,6 +301,7 @@ public class MySpaceship extends Spaceship implements ActionListener
 
         this.timerForLaser.stop();
         this.timerForStop.stop();
+        this.theTimerForAutoFollowMissile.stop();
 
         if (this.theScene instanceof SpaceShipScene)
         {
