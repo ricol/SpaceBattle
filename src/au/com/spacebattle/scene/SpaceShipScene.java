@@ -169,13 +169,10 @@ public class SpaceShipScene extends Scene implements ActionListener
 
     private void addLabels()
     {
-        int tmpY = 10;
-        int tmpMarginRight = 140;
         int tmpWidth = 150;
         int tmpHeight = 20;
-        int tmpGap = 1;
 
-        lblMyLife = new LabelSprite(this.getWidth() - tmpMarginRight, tmpY, "My Life: " + this.mylife, null);
+        lblMyLife = new LabelSprite(0, 0, "My Life: " + this.mylife, null);
 
         lblMyLife.setWidth(tmpWidth);
 
@@ -188,7 +185,7 @@ public class SpaceShipScene extends Scene implements ActionListener
 
         addSprite(lblMyLife);
 
-        lblEnemyKilled = new LabelSprite(this.getWidth() - tmpMarginRight, tmpY + tmpHeight + tmpGap, "Enemy Killed: " + this.enemyKilled, null);
+        lblEnemyKilled = new LabelSprite(0, 0, "Enemy Killed: " + this.enemyKilled, null);
 
         lblEnemyKilled.setWidth(tmpWidth);
 
@@ -201,7 +198,7 @@ public class SpaceShipScene extends Scene implements ActionListener
 
         addSprite(lblEnemyKilled);
 
-        lblBossKilled = new LabelSprite(this.getWidth() - tmpMarginRight, tmpY + (tmpHeight + tmpGap) * 2, "Boss Killed: " + this.bossKilled, null);
+        lblBossKilled = new LabelSprite(0, 0, "Boss Killed: " + this.bossKilled, null);
 
         lblBossKilled.setWidth(tmpWidth);
 
@@ -214,7 +211,7 @@ public class SpaceShipScene extends Scene implements ActionListener
 
         addSprite(lblBossKilled);
 
-        lblScore = new LabelSprite(this.getWidth() - tmpMarginRight, tmpY + (tmpHeight + tmpGap) * 3, "Score: " + this.score, null);
+        lblScore = new LabelSprite(0, 0, "Score: " + this.score, null);
 
         lblScore.setWidth(tmpWidth);
 
@@ -226,11 +223,12 @@ public class SpaceShipScene extends Scene implements ActionListener
         lblScore.layer = Common.LAYER_TEXT;
 
         addSprite(lblScore);
+        this.adjustLabelPos();
     }
 
     void adjustLabelPos()
     {
-        int tmpY = 10;
+        int tmpY = 20;
         int tmpMarginRight = 140;
         int tmpHeight = 20;
         int tmpGap = 1;
@@ -295,6 +293,15 @@ public class SpaceShipScene extends Scene implements ActionListener
         this.score += Common.SCORE_ENEMY;
 
         this.enemyKilled++;
+        this.updateLabels();
+    }
+    
+    public void updateLabels()
+    {
+        if (this.lblBossKilled != null)
+        {
+            this.lblBossKilled.setText("Boss Killed: " + this.bossKilled);
+        }
         if (this.lblEnemyKilled != null)
         {
             this.lblEnemyKilled.setText("Enemy Killed: " + this.enemyKilled);
@@ -302,6 +309,10 @@ public class SpaceShipScene extends Scene implements ActionListener
         if (this.lblScore != null)
         {
             this.lblScore.setText("Score: " + this.score);
+        }
+        if (this.lblMyLife != null)
+        {
+            this.lblMyLife.setText("My Life: " + this.mylife);
         }
     }
 
@@ -317,23 +328,13 @@ public class SpaceShipScene extends Scene implements ActionListener
         this.score += Common.SCORE_BOSS;
 
         this.bossKilled++;
-        if (this.lblBossKilled != null)
-        {
-            this.lblBossKilled.setText("Boss Killed: " + this.bossKilled);
-        }
-        if (this.lblScore != null)
-        {
-            this.lblScore.setText("Score: " + this.score);
-        }
+        this.updateLabels();
     }
 
     public void lostALife()
     {
         this.mylife--;
-        if (this.lblMyLife != null)
-        {
-            this.lblMyLife.setText("My Life: " + this.mylife);
-        }
+        this.updateLabels();
     }
 
     @Override
@@ -451,6 +452,12 @@ public class SpaceShipScene extends Scene implements ActionListener
 
     public void gameStart()
     {
+        enemyKilled = 0;
+        bossKilled = 0;
+        mylife = 3;
+        score = 0;
+        this.updateLabels();
+        
         LabelSprite aLabel = new LabelSprite("Game Start", new Font("TimesRoman", Font.PLAIN, 30));
         aLabel.setWidth(150);
         aLabel.setHeight(30);
@@ -519,12 +526,14 @@ public class SpaceShipScene extends Scene implements ActionListener
         this.timerForEnemy.stop();
         this.timerForFirMainWeapon.stop();
         this.timerForFire.stop();
-        
+
         if (this.theShip != null)
         {
             AlphaByAction aAction = new AlphaByAction();
             aAction.alphaBy(-1, 1);
             theShip.addAction(aAction);
+
+            theShip.setVelocityY(-500);
             theShip.bDeadIfNoActions = true;
         }
 
@@ -543,6 +552,12 @@ public class SpaceShipScene extends Scene implements ActionListener
             aEnemy.addAction(aAction);
             aEnemy.bDeadIfNoActions = true;
         }
+
+        enemyKilled = 0;
+        bossKilled = 0;
+        mylife = 3;
+        score = 0;
+        this.updateLabels();
 
         LabelSprite aLabel = new LabelSprite("Game End", new Font("TimesRoman", Font.PLAIN, 30));
         aLabel.setWidth(150);
