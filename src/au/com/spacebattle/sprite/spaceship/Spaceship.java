@@ -34,14 +34,14 @@ public class Spaceship extends MovingObject implements ActionListener
     public Spaceship(double x, double y, double width, double height, double mass, double velocityX, double velocityY)
     {
         super(x, y, width, height, mass, velocityX, velocityY);
-        this.lifetime = 20;
+        this.setLifeTime(20);
         theTimerForEngine.start();
     }
 
     public Spaceship(String imagename)
     {
         super(0, 0, 0, 0, 0, 0, 0);
-        this.lifetime = 20;
+        this.setLifeTime(20);
         BufferedImage aImage;
 
         try
@@ -81,7 +81,7 @@ public class Spaceship extends MovingObject implements ActionListener
         }
     }
 
-    public int getLife()
+    public int getCurrentLife()
     {
         return currentLife;
     }

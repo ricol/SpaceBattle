@@ -5,13 +5,13 @@
  */
 package au.com.spacebattle.sprite.other;
 
-import au.com.rmit.Game2dEngine.node.MovingSprite;
+import au.com.rmit.Game2dEngine.node.Sprite;
 
 /**
  *
  * @author ricolwang
  */
-public class ExpodeParticle extends MovingSprite
+public class ExpodeParticle extends Sprite
 {
 
     public ExpodeParticle(double x, double y, double width, double height, double mass, double velocityX, double velocityY)

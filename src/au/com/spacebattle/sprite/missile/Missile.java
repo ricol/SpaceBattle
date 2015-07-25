@@ -48,7 +48,7 @@ public class Missile extends MovingObject
 
         }
 
-        this.lifetime = 1f;
+        this.setLifeTime(1);
     }
 
     @Override

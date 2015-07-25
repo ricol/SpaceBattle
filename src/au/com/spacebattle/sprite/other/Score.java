@@ -22,7 +22,7 @@ public class Score extends LabelSprite
         super(0, 0, text, new Font("TimesRoman", Font.PLAIN, 15));
 
         this.setVelocityY(-50);
-        this.layer = Common.LAYER_TEXT;
+        this.setLayer(Common.LAYER_TEXT);
         this.setRed(255);
         this.setGreen(255);
         this.setBlue(0);

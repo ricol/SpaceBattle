@@ -34,8 +34,8 @@ public class FriendLaserWeapon extends FriendMissile
         this.setCentreY(ship.getCentreY() - this.getHeight() / 2 - ship.getHeight() / 2);
         theShip = ship;
 
-        this.layer = ship.layer;
-        this.lifetime = 0.1f;
+        this.setLayer(ship.getLayer());
+        this.setLifeTime(0.1f);
 
         this.bCustomDrawing = true;
     }

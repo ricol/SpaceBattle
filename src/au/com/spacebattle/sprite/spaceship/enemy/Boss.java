@@ -47,7 +47,7 @@ public class Boss extends Enemy
         aAction.identifer = "ActionExpand";
         this.addAction(aAction);
 
-        this.layer = Common.LAYER_BOSS_SHIP;
+        this.setLayer(Common.LAYER_BOSS_SHIP);
         this.resetTotalLife(500);
         this.theTimerForMainWealpon.start();
     }
@@ -154,16 +154,16 @@ public class Boss extends Enemy
 //        aMissile.setVelocityX(Common.SPEED_MAIN_MISSILE_ENEMY * Math.sin(-aMissile.getAngle()));
         aMissile.setVelocityY(Common.SPEED_MAIN_MISSILE_ENEMY);
 
-        aMissile.layer = this.layer;
+        aMissile.setLayer(this.getLayer());
 
         this.theScene.addSprite(aMissile);
 
         EnemyFire aFire = new EnemyFire();
         aFire.setCentreX(aMissile.getCentreX());
         aFire.setCentreY(aMissile.getCentreY() + aMissile.getHeight() / 2);
-        aFire.layer = this.layer;
-        aFire.setVelocityX(this.velocityX);
-        aFire.setVelocityY(this.velocityY);
+        aFire.setLayer(this.getLayer());
+        aFire.setVelocityX(this.getVelocityX());
+        aFire.setVelocityY(this.getVelocityY());
 
         this.theScene.addSprite(aFire);
     }
@@ -176,12 +176,12 @@ public class Boss extends Enemy
 //        aMissile.bDrawFrame = true;
         aMissile.setX(this.getCentreX() - aMissile.getWidth() / 2);
         aMissile.setY(this.getCentreY() + this.getHeight() / 2);
-        aMissile.setAngle(this.angle);
+        aMissile.setAngle(this.getAngle());
 
         aMissile.setVelocityX(Common.SPEED_MISSILE_ENEMY * Math.sin(-aMissile.getAngle()));
         aMissile.setVelocityY(Common.SPEED_MISSILE_ENEMY * Math.cos(-aMissile.getAngle()));
 
-        aMissile.layer = this.layer;
+        aMissile.setLayer(this.getLayer());
         aMissile.fire();
 
         this.theScene.addSprite(aMissile);
@@ -190,9 +190,9 @@ public class Boss extends Enemy
         EnemyFire aFire = new EnemyFire();
         aFire.setCentreX(aMissile.getCentreX());
         aFire.setCentreY(aMissile.getCentreY() + aMissile.getHeight() / 2);
-        aFire.layer = this.layer;
-        aFire.setVelocityX(this.velocityX);
-        aFire.setVelocityY(this.velocityY);
+        aFire.setLayer(this.getLayer());
+        aFire.setVelocityX(this.getVelocityX());
+        aFire.setVelocityY(this.getVelocityY());
 
         this.theScene.addSprite(aFire);
 

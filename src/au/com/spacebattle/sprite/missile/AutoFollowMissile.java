@@ -31,7 +31,7 @@ public class AutoFollowMissile extends Missile implements ActionListener
     public AutoFollowMissile(String imagename)
     {
         super(imagename);
-        this.lifetime = 5;
+        this.setLifeTime(5);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class AutoFollowMissile extends Missile implements ActionListener
             if (changeY >= 0)
             {
                 double delta = Math.asin(changeX / distance);
-                this.angle = -delta;
+                this.setAngle(-delta);
                 //adjust velocity
                 this.setVelocityX(Common.SPEED_MISSILE_ENEMY * Math.sin(delta));
                 this.setVelocityY(Common.SPEED_MISSILE_ENEMY * Math.cos(delta));
@@ -76,7 +76,7 @@ public class AutoFollowMissile extends Missile implements ActionListener
             else
             {
                 double delta = Math.asin(changeX / distance);
-                this.angle = delta + Math.PI;
+                this.setAngle(delta + Math.PI);
                 //adjust velocity
                 this.setVelocityX(Common.SPEED_MISSILE_ENEMY * Math.sin(delta));
                 this.setVelocityY(-Common.SPEED_MISSILE_ENEMY * Math.cos(delta));

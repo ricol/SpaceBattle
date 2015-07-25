@@ -121,7 +121,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         aBoss.setVelocityX(velocityX / 2);
         aBoss.setVelocityY(velocttyY / 2);
 
-        aBoss.lifetime = 10;
+        aBoss.setLifeTime(10);
 
         aBoss.theTarget = this.theShip;
         aBoss.bAutoAdjustGesture = true;
@@ -159,7 +159,7 @@ public class SpaceShipScene extends Scene implements ActionListener
 
         aEnemy.setVelocityX(velocityXTmp);
         aEnemy.setVelocityY(velocttyYTmp);
-        aEnemy.lifetime = 10;
+        aEnemy.setLifeTime(10);
 
         aEnemy.theTarget = this.theShip;
         this.addSprite(aEnemy);
@@ -181,7 +181,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         lblMyLife.setRed(
             255);
         lblMyLife.bTextFrame = false;
-        lblMyLife.layer = Common.LAYER_TEXT;
+        lblMyLife.setLayer(Common.LAYER_TEXT);
 
         addSprite(lblMyLife);
 
@@ -194,7 +194,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         lblEnemyKilled.setRed(
             255);
         lblEnemyKilled.bTextFrame = false;
-        lblEnemyKilled.layer = Common.LAYER_TEXT;
+        lblEnemyKilled.setLayer(Common.LAYER_TEXT);
 
         addSprite(lblEnemyKilled);
 
@@ -207,7 +207,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         lblBossKilled.setRed(
             255);
         lblBossKilled.bTextFrame = false;
-        lblBossKilled.layer = Common.LAYER_TEXT;
+        lblBossKilled.setLayer(Common.LAYER_TEXT);
 
         addSprite(lblBossKilled);
 
@@ -220,7 +220,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         lblScore.setRed(
             255);
         lblScore.bTextFrame = false;
-        lblScore.layer = Common.LAYER_TEXT;
+        lblScore.setLayer(Common.LAYER_TEXT);
 
         addSprite(lblScore);
         this.adjustLabelPos();
@@ -475,7 +475,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         this.addSprite(aLabel);
 
         theShip = new MySpaceship();
-        theShip.lifetime = Sprite.EVER;
+        theShip.setLifeTime(Sprite.EVER);
         theShip.bAutoMissile = false;
 
         theShip.setCentreX(this.getWidth() / 2.0f);

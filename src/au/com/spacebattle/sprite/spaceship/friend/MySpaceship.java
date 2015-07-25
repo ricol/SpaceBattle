@@ -47,12 +47,12 @@ public class MySpaceship extends Spaceship implements ActionListener
     public MySpaceship()
     {
         super("my-spaceship.png");
-        this.lifetime = Sprite.EVER;
+        this.setLifeTime(Sprite.EVER);
         this.bCollisionDetect = true;
         this.collisionCategory = Common.CATEGORY_FRIEND_SHIP;
         this.collisionTargetCategory = Common.CATEGORY_ENEMY_SHIP;
 
-        this.layer = Common.LAYER_FRIEND_SHIP;
+        this.setLayer(Common.LAYER_FRIEND_SHIP);
         this.resetTotalLife(500);
         this.timerForLaser.start();
         theTimerForAutoFollowMissile.start();
@@ -73,7 +73,7 @@ public class MySpaceship extends Spaceship implements ActionListener
         FriendFire aLeftFire = new FriendFire();
         aLeftFire.setCentreX(aMissile.getCentreX());
         aLeftFire.setCentreY(aMissile.getCentreY() + 10);
-        aLeftFire.layer = this.layer;
+        aLeftFire.setLayer(this.getLayer());
         aLeftFire.setVelocityX(this.getVelocityX());
         aLeftFire.setVelocityY(this.getVelocityY());
 
@@ -89,7 +89,7 @@ public class MySpaceship extends Spaceship implements ActionListener
         FriendFire aRightFire = new FriendFire();
         aRightFire.setCentreX(aMissile.getCentreX());
         aRightFire.setCentreY(aMissile.getCentreY() + 10);
-        aRightFire.layer = this.layer;
+        aRightFire.setLayer(this.getLayer());
         aRightFire.setVelocityX(this.getVelocityX());
         aRightFire.setVelocityY(this.getVelocityY());
 
@@ -109,7 +109,7 @@ public class MySpaceship extends Spaceship implements ActionListener
         FriendFire aFire = new FriendFire();
         aFire.setCentreX(aMissile.getCentreX());
         aFire.setCentreY(aMissile.getCentreY() + aMissile.getHeight() / 2);
-        aFire.layer = this.layer;
+        aFire.setLayer(this.getLayer());
         aFire.setVelocityX(this.getVelocityX());
         aFire.setVelocityY(this.getVelocityY());
 
@@ -335,12 +335,12 @@ public class MySpaceship extends Spaceship implements ActionListener
 //        aMissile.bDrawFrame = true;
         aMissile.setCentreX(this.getCentreX());
         aMissile.setCentreY(this.getCentreY() - aMissile.getHeight());
-        aMissile.setAngle(this.angle);
+        aMissile.setAngle(this.getAngle());
 
 //        aMissile.setVelocityX(Common.SPEED_MISSILE_FRIEND * Math.sin(aMissile.getAngle()));
         aMissile.setVelocityY(-Common.SPEED_MISSILE_FRIEND);
 
-        aMissile.layer = this.layer;
+        aMissile.setLayer(this.getLayer());
         aMissile.fire();
 
         this.theScene.addSprite(aMissile);
@@ -348,7 +348,7 @@ public class MySpaceship extends Spaceship implements ActionListener
         FriendFire aFire = new FriendFire();
         aFire.setCentreX(aMissile.getCentreX());
         aFire.setCentreY(aMissile.getCentreY() + aMissile.getHeight() / 2);
-        aFire.layer = this.layer;
+        aFire.setLayer(this.getLayer());
         aFire.setVelocityX(this.getVelocityX());
         aFire.setVelocityY(this.getVelocityY());
 
