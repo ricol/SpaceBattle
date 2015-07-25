@@ -39,4 +39,7 @@ public class Common
     
     public static final float SPEED_ENGINE_X = 20;
     public static final float SPEED_ENGINE_Y = 100;
+    
+    public static final int SCORE_ENEMY = 5;
+    public static final int SCORE_BOSS = 20;
 }

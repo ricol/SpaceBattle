@@ -20,6 +20,7 @@ import au.com.spacebattle.sprite.missile.Missile;
 import au.com.spacebattle.sprite.missile.NormalWeanponFriendMissile;
 import au.com.spacebattle.sprite.other.EnemyFire;
 import au.com.spacebattle.sprite.other.ExpodeParticle;
+import au.com.spacebattle.sprite.other.Score;
 import au.com.spacebattle.sprite.spaceship.friend.MySpaceship;
 import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
 import java.awt.event.ActionEvent;
@@ -95,7 +96,7 @@ public class Boss extends Enemy
         {
             if (this.theScene instanceof SpaceShipScene)
             {
-                ((SpaceShipScene) this.theScene).killABoss();
+                ((SpaceShipScene) this.theScene).killABoss(this);
             }
         }
     }
@@ -105,7 +106,7 @@ public class Boss extends Enemy
     {
         super.onDead(); //To change body of generated methods, choose Tools | Templates.
         this.theTimerForMainWealpon.stop();
-        
+
         if (this.theScene instanceof SpaceShipScene)
         {
             SpaceShipScene theSpaceShipScene = (SpaceShipScene) this.theScene;

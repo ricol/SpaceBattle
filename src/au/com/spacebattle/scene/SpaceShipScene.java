@@ -5,22 +5,29 @@
  */
 package au.com.spacebattle.scene;
 
+import au.com.rmit.Game2dEngine.action.AlphaByAction;
+import au.com.rmit.Game2dEngine.action.AlphaToAction;
+import au.com.rmit.Game2dEngine.action.MoveYToAction;
 import au.com.rmit.Game2dEngine.node.LabelSprite;
 import au.com.rmit.Game2dEngine.node.Sprite;
 import au.com.rmit.Game2dEngine.scene.Scene;
 import au.com.spacebattle.common.Common;
 import au.com.spacebattle.sprite.missile.BossAutoFollowMissile;
 import au.com.spacebattle.sprite.missile.EnemyAutoFollowMissile;
+import au.com.spacebattle.sprite.other.Score;
 import au.com.spacebattle.sprite.other.SpaceBackground;
 import au.com.spacebattle.sprite.spaceship.enemy.Boss;
 import au.com.spacebattle.sprite.spaceship.enemy.Enemy;
 import au.com.spacebattle.sprite.spaceship.friend.MySpaceship;
 import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.lang.Math.abs;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
@@ -31,17 +38,20 @@ import javax.swing.Timer;
 public class SpaceShipScene extends Scene implements ActionListener
 {
 
+    public boolean bGameRunning;
     boolean bUp;
     public MySpaceship theShip;
     public LabelSprite lblEnemyKilled;
     public LabelSprite lblBossKilled;
     public LabelSprite lblMyLife;
+    public LabelSprite lblScore;
     SpaceBackground theBackgroundFirst;
     SpaceBackground theBackgroundSecond;
 
     int enemyKilled = 0;
     int bossKilled = 0;
     int mylife = 3;
+    int score = 0;
 
     Timer timerForFire = new Timer(200, this);
     Timer timerForFirMainWeapon = new Timer(200, this);
@@ -56,7 +66,7 @@ public class SpaceShipScene extends Scene implements ActionListener
     {
 //        try
 //        {
-//            this.theImageBackground = ImageIO.read(new File("space.jpg"));
+//            this.theImageBackground = ImageIO.read(new File("space-background.jpg"));
 //        } catch (IOException ex)
 //        {
 //        }
@@ -67,18 +77,6 @@ public class SpaceShipScene extends Scene implements ActionListener
 //        this.theBackgroundSecond = new SpaceBackground();
 //        this.theBackgroundSecond.setY((this.theBackgroundSecond.getHeight() + this.getHeight())* -1);
 //        this.addSprite(this.theBackgroundSecond);
-        theShip = new MySpaceship();
-        theShip.lifetime = Sprite.EVER;
-
-        theShip.setX(getWidth() / 2.0);
-        theShip.setY(getHeight() * (3 / 4.0));
-
-        addSprite(theShip);
-
-        this.timerForEnemy.start();
-        this.timerForFire.start();
-        this.timerForFirMainWeapon.start();
-
         new Thread()
         {
             public void run()
@@ -99,6 +97,7 @@ public class SpaceShipScene extends Scene implements ActionListener
                 });
             }
         }.start();
+
     }
 
     public void addABoss()
@@ -214,6 +213,19 @@ public class SpaceShipScene extends Scene implements ActionListener
         lblBossKilled.layer = Common.LAYER_TEXT;
 
         addSprite(lblBossKilled);
+
+        lblScore = new LabelSprite(this.getWidth() - tmpMarginRight, tmpY + (tmpHeight + tmpGap) * 3, "Score: " + this.score, null);
+
+        lblScore.setWidth(tmpWidth);
+
+        lblScore.setHeight(tmpHeight);
+
+        lblScore.setRed(
+            255);
+        lblScore.bTextFrame = false;
+        lblScore.layer = Common.LAYER_TEXT;
+
+        addSprite(lblScore);
     }
 
     void adjustLabelPos()
@@ -236,6 +248,11 @@ public class SpaceShipScene extends Scene implements ActionListener
         {
             lblBossKilled.setX(this.getWidth() - tmpMarginRight);
             lblBossKilled.setY(tmpY + (tmpHeight + tmpGap) * 2);
+        }
+        if (lblScore != null)
+        {
+            lblScore.setX(this.getWidth() - tmpMarginRight);
+            lblScore.setY(tmpY + (tmpHeight + tmpGap) * 3);
         }
     }
 
@@ -266,21 +283,47 @@ public class SpaceShipScene extends Scene implements ActionListener
         }
     }
 
-    public void killAEnemy()
+    public void killAEnemy(Enemy aEnemy)
     {
+        Score aScore = new Score("+" + Common.SCORE_ENEMY);
+        aScore.setCentreX(aEnemy.getCentreX());
+        aScore.setCentreY(aEnemy.getCentreY());
+        aScore.setWidth(50);
+        aScore.setHeight(15);
+        this.addSprite(aScore);
+
+        this.score += Common.SCORE_ENEMY;
+
         this.enemyKilled++;
         if (this.lblEnemyKilled != null)
         {
             this.lblEnemyKilled.setText("Enemy Killed: " + this.enemyKilled);
         }
+        if (this.lblScore != null)
+        {
+            this.lblScore.setText("Score: " + this.score);
+        }
     }
 
-    public void killABoss()
+    public void killABoss(Boss aBoss)
     {
+        Score aScore = new Score("+" + Common.SCORE_BOSS);
+        aScore.setCentreX(aBoss.getCentreX());
+        aScore.setCentreY(aBoss.getCentreY());
+        aScore.setWidth(50);
+        aScore.setHeight(15);
+        this.addSprite(aScore);
+
+        this.score += Common.SCORE_BOSS;
+
         this.bossKilled++;
         if (this.lblBossKilled != null)
         {
             this.lblBossKilled.setText("Boss Killed: " + this.bossKilled);
+        }
+        if (this.lblScore != null)
+        {
+            this.lblScore.setText("Score: " + this.score);
         }
     }
 
@@ -406,4 +449,134 @@ public class SpaceShipScene extends Scene implements ActionListener
         return aEnemy;
     }
 
+    public void gameStart()
+    {
+        LabelSprite aLabel = new LabelSprite("Game Start", new Font("TimesRoman", Font.PLAIN, 30));
+        aLabel.setWidth(150);
+        aLabel.setHeight(30);
+        aLabel.textPosY = 25;
+        aLabel.setVelocityY(-50);
+        aLabel.bTextFrame = true;
+        aLabel.bDeadIfNoActions = true;
+        aLabel.setCentreX(this.getWidth() / 2);
+        aLabel.setCentreY(this.getHeight() / 2);
+
+        AlphaToAction aAction = new AlphaToAction(aLabel);
+        aAction.alphaTo(0, 1.5f);
+        aLabel.addAction(aAction);
+
+        this.addSprite(aLabel);
+
+        theShip = new MySpaceship();
+        theShip.lifetime = Sprite.EVER;
+        theShip.bAutoMissile = false;
+
+        theShip.setCentreX(this.getWidth() / 2.0f);
+        theShip.setCentreY(this.getHeight());
+
+        MoveYToAction aMoveAction = new MoveYToAction(theShip);
+        aMoveAction.moveYTo(getHeight() / 2 - theShip.getHeight() / 2, 1);
+        theShip.addAction(aMoveAction);
+
+        addSprite(theShip);
+
+        bGameRunning = true;
+
+        new Thread(new Runnable()
+        {
+
+            @Override
+            public void run()
+            {
+                try
+                {
+                    Thread.sleep(2000);
+                } catch (InterruptedException ex)
+                {
+                    Logger.getLogger(SpaceShipScene.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                SwingUtilities.invokeLater(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        timerForEnemy.start();
+                        timerForFire.start();
+                        timerForFirMainWeapon.start();
+                        theShip.bAutoMissile = true;
+                    }
+                });
+
+            }
+
+        }).start();
+
+    }
+
+    public void gameEnd()
+    {
+        this.timerForEnemy.stop();
+        this.timerForFirMainWeapon.stop();
+        this.timerForFire.stop();
+        
+        if (this.theShip != null)
+        {
+            AlphaByAction aAction = new AlphaByAction();
+            aAction.alphaBy(-1, 1);
+            theShip.addAction(aAction);
+            theShip.bDeadIfNoActions = true;
+        }
+
+        for (Boss aBoss : this.allBosses)
+        {
+            AlphaByAction aAction = new AlphaByAction();
+            aAction.alphaBy(-1, 1);
+            aBoss.addAction(aAction);
+            aBoss.bDeadIfNoActions = true;
+        }
+
+        for (Enemy aEnemy : this.allEnemies)
+        {
+            AlphaByAction aAction = new AlphaByAction();
+            aAction.alphaBy(-1, 1);
+            aEnemy.addAction(aAction);
+            aEnemy.bDeadIfNoActions = true;
+        }
+
+        LabelSprite aLabel = new LabelSprite("Game End", new Font("TimesRoman", Font.PLAIN, 30));
+        aLabel.setWidth(150);
+        aLabel.setHeight(30);
+        aLabel.textPosY = 25;
+        aLabel.setVelocityY(-50);
+        aLabel.bTextFrame = true;
+        aLabel.bDeadIfNoActions = true;
+        aLabel.setCentreX(this.getWidth() / 2);
+        aLabel.setCentreY(this.getHeight() / 2);
+
+        AlphaToAction aAlphaAction = new AlphaToAction(aLabel);
+        aAlphaAction.alphaTo(0, 1.5f);
+        aLabel.addAction(aAlphaAction);
+
+        this.addSprite(aLabel);
+        this.bGameRunning = false;
+    }
+
+    public void gamePause()
+    {
+        LabelSprite aLabel = new LabelSprite("Game Pause", new Font("TimesRoman", Font.PLAIN, 20));
+        aLabel.setWidth(100);
+        aLabel.setHeight(20);
+        aLabel.bTextFrame = false;
+        aLabel.bDeadIfNoActions = true;
+        aLabel.setCentreX(this.getWidth() / 2);
+        aLabel.setCentreY(this.getHeight() / 2);
+
+        AlphaToAction aAction = new AlphaToAction(aLabel);
+        aAction.alphaTo(0, 1.5f);
+        aLabel.addAction(aAction);
+
+        this.addSprite(aLabel);
+        this.bGameRunning = false;
+    }
 }

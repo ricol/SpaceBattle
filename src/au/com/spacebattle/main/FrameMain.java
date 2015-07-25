@@ -3,12 +3,17 @@ package au.com.spacebattle.main;
 import au.com.rmit.Game2dEngine.director.Director;
 import au.com.spacebattle.scene.SpaceShipScene;
 import java.awt.Dimension;
-import java.awt.event.ComponentAdapter;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.Random;
+import javax.swing.Timer;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -19,28 +24,17 @@ import java.util.Random;
  *
  * @author ricolwang
  */
-public class FrameMain extends javax.swing.JFrame implements MouseListener, MouseMotionListener
-{
+public class FrameMain extends javax.swing.JFrame implements MouseListener, MouseMotionListener, ActionListener, KeyListener, ComponentListener
 
-    boolean bGameStart = false;
+{
+    MouseEvent mouseEvent;
     Random theRandom = new Random();
     SpaceShipScene theScene;
+    Timer theTimerForMovingSpaceShip = new Timer(200, this);
 
     public FrameMain()
     {
         initComponents();
-
-        this.addComponentListener(new ComponentAdapter()
-        {
-            @Override
-            public void componentResized(ComponentEvent evt)
-            {
-                int x = 10, y = 10;
-                panelGame.setLocation(x, y);
-                panelGame.setSize(new Dimension(getWidth() - 2 * x, getHeight() - 4 * y));
-                Director.getSharedInstance().updatePosition(0, 0, panelGame.getWidth(), panelGame.getHeight());
-            }
-        });
     }
 
     @SuppressWarnings("unchecked")
@@ -98,8 +92,14 @@ public class FrameMain extends javax.swing.JFrame implements MouseListener, Mous
     private void formWindowActivated(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowActivated
     {//GEN-HEADEREND:event_formWindowActivated
         // TODO add your handling code here:
+
+        this.addComponentListener(this);
+
+        this.addKeyListener(this);
+
         this.launchGame();
 
+        this.requestFocus();
     }//GEN-LAST:event_formWindowActivated
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -117,7 +117,7 @@ public class FrameMain extends javax.swing.JFrame implements MouseListener, Mous
         this.theScene = new SpaceShipScene();
         Director.getSharedInstance().setParent(this.panelGame);
         Director.getSharedInstance().showScene(theScene);
-        bGameStart = true;
+        this.theScene.gameStart();
     }
 
     @Override
@@ -125,7 +125,7 @@ public class FrameMain extends javax.swing.JFrame implements MouseListener, Mous
     {
         if (e.getButton() == MouseEvent.BUTTON1)
         {
-            if (bGameStart)
+            if (this.theScene.bGameRunning)
             {
                 theScene.theShip.bAutoshot = true;
             }
@@ -137,7 +137,7 @@ public class FrameMain extends javax.swing.JFrame implements MouseListener, Mous
     {
         if (e.getButton() == MouseEvent.BUTTON3)
         {
-            if (bGameStart)
+            if (this.theScene.bGameRunning)
             {
                 theScene.theShip.openSheld();
             }
@@ -149,7 +149,7 @@ public class FrameMain extends javax.swing.JFrame implements MouseListener, Mous
     {
         if (e.getButton() == MouseEvent.BUTTON1)
         {
-            if (bGameStart)
+            if (this.theScene.bGameRunning)
             {
                 theScene.theShip.bAutoshot = false;
             }
@@ -159,9 +159,17 @@ public class FrameMain extends javax.swing.JFrame implements MouseListener, Mous
     @Override
     public void mouseMoved(MouseEvent e)
     {
-        if (bGameStart)
+        this.mouseEvent = e;
+
+        if (this.theScene.bGameRunning)
         {
-            theScene.theShip.moveToXY(e.getX(), e.getY());
+            if (theScene.theShip != null)
+            {
+                if (this.mouseEvent != null)
+                {
+                    theScene.theShip.moveToXY(this.mouseEvent.getX(), this.mouseEvent.getY());
+                }
+            }
         }
     }
 
@@ -177,6 +185,74 @@ public class FrameMain extends javax.swing.JFrame implements MouseListener, Mous
 
     @Override
     public void mouseDragged(MouseEvent e)
+    {
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e)
+    {
+        if (e.getSource().equals(this.theTimerForMovingSpaceShip))
+        {
+            if (this.theScene.bGameRunning)
+            {
+                if (theScene.theShip != null)
+                {
+                    if (this.mouseEvent != null)
+                    {
+                        theScene.theShip.moveToXYInSequence(this.mouseEvent.getX(), this.mouseEvent.getY(), 0.1f);
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e)
+    {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e)
+    {
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
+        {
+            if (theScene.bGameRunning)
+            {
+                theScene.gameEnd();
+            } else
+            {
+                theScene.gameStart();
+            }
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e)
+    {
+    }
+
+    @Override
+    public void componentResized(ComponentEvent evt)
+    {
+        int x = 10, y = 10;
+        panelGame.setLocation(x, y);
+        panelGame.setSize(new Dimension(getWidth() - 2 * x, getHeight() - 4 * y));
+        Director.getSharedInstance().updatePosition(0, 0, panelGame.getWidth(), panelGame.getHeight());
+    }
+
+    @Override
+    public void componentMoved(ComponentEvent e)
+
+    {
+    }
+
+    @Override
+    public void componentShown(ComponentEvent e)
+    {
+    }
+
+    @Override
+    public void componentHidden(ComponentEvent e)
     {
     }
 }
