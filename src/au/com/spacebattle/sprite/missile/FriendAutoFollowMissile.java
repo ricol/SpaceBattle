@@ -10,8 +10,8 @@ import au.com.spacebattle.common.Common;
 import au.com.spacebattle.common.MovingObject;
 import au.com.spacebattle.scene.SpaceShipScene;
 import au.com.spacebattle.sprite.other.ExpodeParticle;
-import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
 import static java.lang.Math.abs;
+import static java.lang.Math.pow;
 
 /**
  *
@@ -24,7 +24,7 @@ public class FriendAutoFollowMissile extends AutoFollowMissile
     {
         super("nuclear.png");
 
-        this.lifetime = 5;
+        this.setLifeTime(5);
         this.times = 100;
         this.bCollisionDetect = true;
         this.collisionCategory = Common.CATEGORY_FRIEND_SHIP;
@@ -32,20 +32,14 @@ public class FriendAutoFollowMissile extends AutoFollowMissile
     }
 
     @Override
-    public void onDead()
-    {
-        super.onDead(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void explode()
+    protected void explode()
     {
         int number = abs(theRandom.nextInt()) % 10 + 40;
 
         for (int i = 0; i < number; i++)
         {
-            double tmpX = power(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE;
-            double tmpY = power(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE;
+            double tmpX = pow(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE;
+            double tmpY = pow(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE;
 
             ExpodeParticle aFire = new ExpodeParticle();
             aFire.setX(this.getCentreX());
@@ -61,6 +55,7 @@ public class FriendAutoFollowMissile extends AutoFollowMissile
             aAction.alphaTo(0, 0.5f);
             aFire.addAction(aAction);
 
+            if (this.theScene == null) break;
             this.theScene.addSprite(aFire);
         }
     }
@@ -112,13 +107,13 @@ public class FriendAutoFollowMissile extends AutoFollowMissile
         if (changeY <= 0)
         {
             double delta = Math.asin(changeX / distance);
-            this.angle = delta;
+            this.setAngle(delta);
             this.setVelocityX(Common.SPEED_MISSILE_FRIEND * Math.sin(this.getAngle()));
             this.setVelocityY(-Common.SPEED_MISSILE_FRIEND * Math.cos(this.getAngle()));
         } else
         {
             double delta = Math.acos(changeX / distance);
-            this.angle = Math.PI / 2.0f + delta;
+            this.setAngle(Math.PI / 2.0f + delta);
             this.setVelocityX(Common.SPEED_MISSILE_FRIEND * Math.cos(delta));
             this.setVelocityY(Common.SPEED_MISSILE_FRIEND * Math.sin(delta));
         }

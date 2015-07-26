@@ -5,13 +5,13 @@
  */
 package au.com.spacebattle.sprite.other;
 
-import au.com.rmit.Game2dEngine.node.MovingSprite;
+import au.com.rmit.Game2dEngine.node.Sprite;
 
 /**
  *
  * @author ricolwang
  */
-public class SpaceBackground extends MovingSprite
+public class SpaceBackground extends Sprite
 {
     public SpaceBackground()
     {

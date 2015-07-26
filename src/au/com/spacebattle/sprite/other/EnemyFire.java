@@ -6,7 +6,7 @@
 package au.com.spacebattle.sprite.other;
 
 import au.com.rmit.Game2dEngine.action.ExpandByAction;
-import au.com.rmit.Game2dEngine.node.MovingSprite;
+import au.com.rmit.Game2dEngine.node.Sprite;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -16,7 +16,7 @@ import java.awt.Polygon;
  *
  * @author ricolwang
  */
-public class EnemyFire extends MovingSprite
+public class EnemyFire extends Sprite
 {
 
     public EnemyFire(double x, double y, double width, double height, double mass, double velocityX, double velocityY)
@@ -24,7 +24,7 @@ public class EnemyFire extends MovingSprite
         super(x, y, width, height, mass, velocityX, velocityY);
 
         this.bCustomDrawing = true;
-        this.red = 255;
+        this.setRed(255);
         this.bDeadIfNoActions = true;
 
         ExpandByAction aAction = new ExpandByAction();
@@ -45,8 +45,7 @@ public class EnemyFire extends MovingSprite
         Color blackTransparent = new Color(0, 0, 0, 0);
         theGraphics2D.setColor(blackTransparent);
         theGraphics2D.fillRect(0, 0, (int) getWidth(), (int) getHeight());
-        Color theColor = new Color(red / 255.0f, green / 255.0f, blue / 255.0f, alpha);
-        theGraphics2D.setColor(theColor);
+        theGraphics2D.setColor(this.getColor());
         theGraphics2D.setStroke(new BasicStroke(3, 2, 1));
         Polygon p = new Polygon(new int[]
         {

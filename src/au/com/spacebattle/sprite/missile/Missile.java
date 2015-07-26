@@ -48,26 +48,19 @@ public class Missile extends MovingObject
 
         }
 
-        this.lifetime = 1f;
+        this.setLifeTime(1);
     }
 
-    @Override
-    public void onDead()
-    {
-        super.onDead(); //To change body of generated methods, choose Tools | Templates.
-
-//        this.explode();
-    }
-
-    public void explode()
-    {
-
-    }
 
     @Override
     public void onCollideWith(Sprite target)
     {
-        this.setDead();
+        this.setShouldDie();
     }
 
+    
+    protected void explode()
+    {
+
+    }
 }

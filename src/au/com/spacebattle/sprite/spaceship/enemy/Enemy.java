@@ -19,13 +19,12 @@ import au.com.spacebattle.sprite.missile.Missile;
 import au.com.spacebattle.sprite.missile.NormalWeanponFriendMissile;
 import au.com.spacebattle.sprite.other.EnemyFire;
 import au.com.spacebattle.sprite.other.ExpodeParticle;
-import au.com.spacebattle.sprite.other.Score;
 import au.com.spacebattle.sprite.spaceship.Spaceship;
 import au.com.spacebattle.sprite.spaceship.friend.MySpaceship;
-import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.lang.Math.abs;
+import static java.lang.Math.pow;
 import javax.swing.Timer;
 
 /**
@@ -51,7 +50,7 @@ public class Enemy extends Spaceship implements ActionListener
         this.collisionCategory = Common.CATEGORY_ENEMY_SHIP;
         this.collisionTargetCategory = Common.CATEGORY_FRIEND_SHIP;
 
-        this.layer = Common.LAYER_ENEMY_SHIP;
+        this.setLayer(Common.LAYER_ENEMY_SHIP);
         this.theTimerAutoadjust.start();
         this.theTimerFire.start();
         this.theTimerForAutoFollowMissile.start();
@@ -63,9 +62,10 @@ public class Enemy extends Spaceship implements ActionListener
     }
 
     @Override
-    public void onDead()
+    public void onWillDead()
     {
-        super.onDead(); //To change body of generated methods, choose Tools | Templates.
+        super.onWillDead(); //To change body of generated methods, choose Tools | Templates.
+
         this.theTimerAutoadjust.stop();
         this.theTimerFire.stop();
         this.theTimerForAutoFollowMissile.stop();
@@ -98,7 +98,7 @@ public class Enemy extends Spaceship implements ActionListener
             this.decreaseLife(300);
         }
 
-        if (this.isAlive() == false)
+        if (this.getShouldDie() == true)
         {
             if (this.theScene instanceof SpaceShipScene)
             {
@@ -114,8 +114,8 @@ public class Enemy extends Spaceship implements ActionListener
 
         for (int i = 0; i < number; i++)
         {
-            double tmpX = power(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE;
-            double tmpY = power(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE;
+            double tmpX = pow(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE;
+            double tmpY = pow(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE;
 
             ExpodeParticle aFire = new ExpodeParticle();
             aFire.setX(this.getCentreX());
@@ -151,11 +151,11 @@ public class Enemy extends Spaceship implements ActionListener
         if (changeY >= 0)
         {
             double delta = Math.asin(changeX / distance);
-            this.angle = -delta;
+            this.setAngle(-delta);
         } else
         {
             double delta = Math.asin(changeX / distance);
-            this.angle = delta + Math.PI;
+            this.setAngle(delta + Math.PI);
         }
     }
 
@@ -171,16 +171,16 @@ public class Enemy extends Spaceship implements ActionListener
 //        aMissile.setVelocityX(Common.SPEED_MISSILE_ENEMY * Math.sin(-aMissile.getAngle()));
         aMissile.setVelocityY(Common.SPEED_MISSILE_ENEMY);
 
-        aMissile.layer = this.layer;
+        aMissile.setLayer(this.getLayer());
 
         this.theScene.addSprite(aMissile);
 
         EnemyFire aFire = new EnemyFire();
         aFire.setCentreX(aMissile.getCentreX());
         aFire.setCentreY(aMissile.getCentreY() + aMissile.getHeight() / 2);
-        aFire.layer = this.layer;
-        aFire.setVelocityX(this.velocityX);
-        aFire.setVelocityY(this.velocityY);
+        aFire.setLayer(this.getLayer());
+        aFire.setVelocityX(this.getVelocityX());
+        aFire.setVelocityY(this.getVelocityY());
 
         this.theScene.addSprite(aFire);
     }
@@ -193,12 +193,12 @@ public class Enemy extends Spaceship implements ActionListener
 //        aMissile.bDrawFrame = true;
         aMissile.setX(this.getCentreX() - aMissile.getWidth() / 2);
         aMissile.setY(this.getCentreY() + this.getHeight() / 2);
-        aMissile.setAngle(this.angle);
+        aMissile.setAngle(this.getAngle());
 
         aMissile.setVelocityX(Common.SPEED_MISSILE_ENEMY * Math.sin(-aMissile.getAngle()));
         aMissile.setVelocityY(Common.SPEED_MISSILE_ENEMY * Math.cos(-aMissile.getAngle()));
 
-        aMissile.layer = this.layer;
+        aMissile.setLayer(this.getLayer());
         aMissile.fire();
 
         this.theScene.addSprite(aMissile);
@@ -207,9 +207,9 @@ public class Enemy extends Spaceship implements ActionListener
         EnemyFire aFire = new EnemyFire();
         aFire.setCentreX(aMissile.getCentreX());
         aFire.setCentreY(aMissile.getCentreY() + aMissile.getHeight() / 2);
-        aFire.layer = this.layer;
-        aFire.setVelocityX(this.velocityX);
-        aFire.setVelocityY(this.velocityY);
+        aFire.setLayer(this.getLayer());
+        aFire.setVelocityX(this.getVelocityX());
+        aFire.setVelocityY(this.getVelocityY());
 
         this.theScene.addSprite(aFire);
     }

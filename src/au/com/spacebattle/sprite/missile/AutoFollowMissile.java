@@ -9,10 +9,10 @@ import au.com.rmit.Game2dEngine.action.AlphaToAction;
 import au.com.spacebattle.common.Common;
 import au.com.spacebattle.common.MovingObject;
 import au.com.spacebattle.sprite.other.ExpodeParticle;
-import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.lang.Math.abs;
+import static java.lang.Math.pow;
 import javax.swing.Timer;
 
 /**
@@ -31,7 +31,7 @@ public class AutoFollowMissile extends Missile implements ActionListener
     public AutoFollowMissile(String imagename)
     {
         super(imagename);
-        this.lifetime = 5;
+        this.setLifeTime(5);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class AutoFollowMissile extends Missile implements ActionListener
             if (changeY >= 0)
             {
                 double delta = Math.asin(changeX / distance);
-                this.angle = -delta;
+                this.setAngle(-delta);
                 //adjust velocity
                 this.setVelocityX(Common.SPEED_MISSILE_ENEMY * Math.sin(delta));
                 this.setVelocityY(Common.SPEED_MISSILE_ENEMY * Math.cos(delta));
@@ -76,7 +76,7 @@ public class AutoFollowMissile extends Missile implements ActionListener
             else
             {
                 double delta = Math.asin(changeX / distance);
-                this.angle = delta + Math.PI;
+                this.setAngle(delta + Math.PI);
                 //adjust velocity
                 this.setVelocityX(Common.SPEED_MISSILE_ENEMY * Math.sin(delta));
                 this.setVelocityY(-Common.SPEED_MISSILE_ENEMY * Math.cos(delta));
@@ -90,23 +90,23 @@ public class AutoFollowMissile extends Missile implements ActionListener
     }
 
     @Override
-    public void onDead()
+    public void onWillDead()
     {
-        super.onDead(); //To change body of generated methods, choose Tools | Templates.
+        super.onWillDead(); //To change body of generated methods, choose Tools | Templates.
 
         this.theTimer.stop();
         this.explode();
     }
 
     @Override
-    public void explode()
+    protected void explode()
     {
         int number = abs(theRandom.nextInt()) % 10 + 30;
 
         for (int i = 0; i < number; i++)
         {
-            double tmpX = power(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE;
-            double tmpY = power(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE;
+            double tmpX = pow(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE;
+            double tmpY = pow(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE;
 
             ExpodeParticle aFire = new ExpodeParticle();
             aFire.setX(this.getCentreX());
@@ -122,6 +122,7 @@ public class AutoFollowMissile extends Missile implements ActionListener
             aAction.alphaTo(0, 0.5f);
             aFire.addAction(aAction);
 
+            if (this.theScene == null) break;
             this.theScene.addSprite(aFire);
         }
     }

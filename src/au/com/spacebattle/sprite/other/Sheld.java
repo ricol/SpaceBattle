@@ -6,7 +6,7 @@
 package au.com.spacebattle.sprite.other;
 
 import au.com.rmit.Game2dEngine.action.ExpandByAction;
-import au.com.rmit.Game2dEngine.node.MovingSprite;
+import au.com.rmit.Game2dEngine.node.Sprite;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -15,7 +15,7 @@ import java.awt.Graphics2D;
  *
  * @author ricolwang
  */
-public class Sheld extends MovingSprite
+public class Sheld extends Sprite
 {
 
     public Sheld(double x, double y, double width, double height, double mass, double velocityX, double velocityY)
@@ -23,7 +23,7 @@ public class Sheld extends MovingSprite
         super(x, y, width, height, mass, velocityX, velocityY);
 
         this.bCustomDrawing = true;
-        this.red = 255;
+        this.setRed(255);
         this.bDeadIfNoActions = true;
 
         ExpandByAction aAction = new ExpandByAction();
@@ -39,8 +39,7 @@ public class Sheld extends MovingSprite
         Color blackTransparent = new Color(0, 0, 0, 0);
         theGraphics2D.setColor(blackTransparent);
         theGraphics2D.fillRect(0, 0, (int) getWidth(), (int) getHeight());
-        Color theColor = new Color(red / 255.0f, green / 255.0f, blue / 255.0f, alpha);
-        theGraphics2D.setColor(theColor);
+        theGraphics2D.setColor(this.getColor());
         theGraphics2D.setStroke(new BasicStroke(5, 2, 1));
         theGraphics2D.drawArc(0, 0, (int) getWidth(), (int) getHeight(), 0, 360);
     }
