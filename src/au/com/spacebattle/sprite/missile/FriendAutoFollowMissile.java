@@ -95,6 +95,8 @@ public class FriendAutoFollowMissile extends AutoFollowMissile
         {
             return;
         }
+        
+        if (!theShip.isAlive()) return;
 
         //adjust gesture
         double targetCentreX = theShip.getCentreX();

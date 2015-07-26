@@ -102,8 +102,9 @@ public class Spaceship extends MovingObject implements ActionListener
     {
         super.onWillDead(); //To change body of generated methods, choose Tools | Templates.
 
-        this.explode();
         this.theTimerForEngine.stop();
+
+        this.explode();
     }
 
     public void engine()
@@ -139,6 +140,8 @@ public class Spaceship extends MovingObject implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
+        if (this.getShouldDie()) return;
+        
         if (e.getSource().equals(this.theTimerForEngine))
         {
             engine();

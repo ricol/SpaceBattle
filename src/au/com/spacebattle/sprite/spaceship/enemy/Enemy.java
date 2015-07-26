@@ -217,17 +217,22 @@ public class Enemy extends Spaceship implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
+        if (this.getShouldDie()) return;
+        
         if (e.getSource().equals(this.theTimerAutoadjust))
         {
+            if (this.getShouldDie()) return;
             if (bAutoAdjustGesture)
             {
                 adjustGesture(theTarget);
             }
         } else if (e.getSource().equals(this.theTimerFire))
         {
+            if (this.getShouldDie()) return;
             fire();
         } else if (e.getSource().equals(this.theTimerForAutoFollowMissile))
         {
+            if (this.getShouldDie()) return;
             if (abs(theRandom.nextInt()) % 100 > 80)
             {
                 fireAutoFollowMissile();

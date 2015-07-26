@@ -288,6 +288,8 @@ public class MySpaceship extends Spaceship implements ActionListener
     {
         super.actionPerformed(e);
 
+        if (this.getShouldDie()) return;
+        
         if (e.getSource().equals(this.timerForLaser))
         {
             if (bLaser)
