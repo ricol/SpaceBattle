@@ -10,8 +10,8 @@ import au.com.spacebattle.common.Common;
 import au.com.spacebattle.common.MovingObject;
 import au.com.spacebattle.scene.SpaceShipScene;
 import au.com.spacebattle.sprite.other.ExpodeParticle;
-import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
 import static java.lang.Math.abs;
+import static java.lang.Math.pow;
 
 /**
  *
@@ -44,8 +44,8 @@ public class FriendAutoFollowMissile extends AutoFollowMissile
 
         for (int i = 0; i < number; i++)
         {
-            double tmpX = power(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE;
-            double tmpY = power(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE;
+            double tmpX = pow(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE;
+            double tmpY = pow(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE;
 
             ExpodeParticle aFire = new ExpodeParticle();
             aFire.setX(this.getCentreX());

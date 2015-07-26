@@ -25,17 +25,17 @@ public class FriendLaserWeapon extends FriendMissile
 
     public FriendLaserWeapon(MySpaceship ship)
     {
-        super(0, 0, 0, HEIGHT, 0, 0, -10000);
+        super(0, 0, 0, HEIGHT, 0, 0, 0);
         this.setRed(abs(theRandom.nextInt()) % 255);
         this.setGreen(abs(theRandom.nextInt()) % 255);
         this.setBlue(abs(theRandom.nextInt()) % 255);
-        this.setWidth(WIDTH * abs(theRandom.nextFloat()));
+        this.setWidth(WIDTH * abs(theRandom.nextFloat()) + 5);
         this.setCentreX(ship.getCentreX());
         this.setCentreY(ship.getCentreY() - this.getHeight() / 2 - ship.getHeight() / 2);
         theShip = ship;
 
         this.setLayer(ship.getLayer());
-        this.setLifeTime(0.1f);
+        this.setLifeTime(0.001f);
 
         this.bCustomDrawing = true;
     }

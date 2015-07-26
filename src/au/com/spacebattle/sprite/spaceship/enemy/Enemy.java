@@ -19,13 +19,12 @@ import au.com.spacebattle.sprite.missile.Missile;
 import au.com.spacebattle.sprite.missile.NormalWeanponFriendMissile;
 import au.com.spacebattle.sprite.other.EnemyFire;
 import au.com.spacebattle.sprite.other.ExpodeParticle;
-import au.com.spacebattle.sprite.other.Score;
 import au.com.spacebattle.sprite.spaceship.Spaceship;
 import au.com.spacebattle.sprite.spaceship.friend.MySpaceship;
-import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.lang.Math.abs;
+import static java.lang.Math.pow;
 import javax.swing.Timer;
 
 /**
@@ -114,8 +113,8 @@ public class Enemy extends Spaceship implements ActionListener
 
         for (int i = 0; i < number; i++)
         {
-            double tmpX = power(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE;
-            double tmpY = power(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE;
+            double tmpX = pow(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE;
+            double tmpY = pow(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE;
 
             ExpodeParticle aFire = new ExpodeParticle();
             aFire.setX(this.getCentreX());

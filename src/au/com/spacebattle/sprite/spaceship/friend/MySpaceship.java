@@ -23,10 +23,10 @@ import au.com.spacebattle.sprite.other.ExpodeParticle;
 import au.com.spacebattle.sprite.other.FriendFire;
 import au.com.spacebattle.sprite.spaceship.Spaceship;
 import au.com.spacebattle.sprite.missile.FriendLaserWeapon;
-import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.lang.Math.abs;
+import static java.lang.Math.pow;
 import javax.swing.Timer;
 
 /**
@@ -129,7 +129,7 @@ public class MySpaceship extends Spaceship implements ActionListener
         aCentreYAction.MoveCentreYTo(y, 0);
         this.addAction(aCentreYAction);
     }
-    
+
     public void moveToXYInSequence(int x, int y, float duration)
     {
         double theShipCentreX = this.getCentreX();
@@ -189,7 +189,7 @@ public class MySpaceship extends Spaceship implements ActionListener
         aAction.moveXBy(value, duration);
         this.addAction(aAction);
     }
-    
+
     public void moveDownInSequence(float value, float duration)
     {
         //move down
@@ -248,8 +248,8 @@ public class MySpaceship extends Spaceship implements ActionListener
 
         for (int i = 0; i < number; i++)
         {
-            double tmpX = power(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE * 2;
-            double tmpY = power(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE * 2;
+            double tmpX = pow(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE * 2;
+            double tmpY = pow(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE * 2;
 
             ExpodeParticle aFire = new ExpodeParticle();
             aFire.setX(this.getCentreX());

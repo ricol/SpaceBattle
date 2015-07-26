@@ -9,13 +9,13 @@ import au.com.rmit.Game2dEngine.action.AlphaToAction;
 import au.com.spacebattle.common.Common;
 import au.com.spacebattle.common.MovingObject;
 import au.com.spacebattle.sprite.other.ExpodeParticle;
-import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import static java.lang.Math.abs;
+import static java.lang.Math.pow;
 import javax.imageio.ImageIO;
 import javax.swing.Timer;
 
@@ -112,7 +112,7 @@ public class Spaceship extends MovingObject implements ActionListener
 
         for (int i = 0; i < number; i++)
         {
-            double tmpX = power(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_ENGINE_X * 4;
+            double tmpX = pow(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_ENGINE_X * 4;
             double tmpY = theRandom.nextFloat() * Common.SPEED_ENGINE_Y * 10;
 
             int size = 6;

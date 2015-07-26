@@ -8,10 +8,10 @@ package au.com.spacebattle.sprite.missile;
 import au.com.rmit.Game2dEngine.action.AlphaToAction;
 import au.com.spacebattle.common.Common;
 import au.com.spacebattle.sprite.other.ExpodeParticle;
-import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.lang.Math.abs;
+import static java.lang.Math.pow;
 import javax.swing.Timer;
 
 /**
@@ -36,8 +36,8 @@ public class MainWeapanFriendMissile extends FriendMissile implements ActionList
 
         for (int i = 0; i < number; i++)
         {
-            double tmpX = power(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE;
-            double tmpY = power(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE;
+            double tmpX = pow(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE;
+            double tmpY = pow(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE;
 
             ExpodeParticle aFire = new ExpodeParticle();
             aFire.setX(this.getCentreX());
@@ -81,7 +81,7 @@ public class MainWeapanFriendMissile extends FriendMissile implements ActionList
 
         for (int i = 0; i < number; i++)
         {
-            double tmpX = power(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_ENGINE_X * 4;
+            double tmpX = pow(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_ENGINE_X * 4;
             double tmpY = theRandom.nextFloat() * Common.SPEED_ENGINE_Y * 10;
 
             int size = 6;

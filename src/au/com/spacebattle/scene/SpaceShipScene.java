@@ -19,12 +19,12 @@ import au.com.spacebattle.sprite.other.SpaceBackground;
 import au.com.spacebattle.sprite.spaceship.enemy.Boss;
 import au.com.spacebattle.sprite.spaceship.enemy.Enemy;
 import au.com.spacebattle.sprite.spaceship.friend.MySpaceship;
-import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.lang.Math.abs;
+import static java.lang.Math.pow;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -105,7 +105,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         Boss aBoss = new Boss();
         boolean b = theRandom.nextBoolean();
         int index = b ? 1 : 0;
-        index = (int) power(-1, index);
+        index = (int) pow(-1, index);
         int size = (int) (this.getWidth() * (1 / 4.0));
 
         aBoss.setX(this.getWidth() / 2 + index * abs(theRandom.nextInt()) % size);
@@ -113,7 +113,7 @@ public class SpaceShipScene extends Scene implements ActionListener
 
         b = theRandom.nextBoolean();
         index = b ? 1 : 0;
-        index = (int) power(-1, index);
+        index = (int) pow(-1, index);
 
         float velocityX = index * abs(theRandom.nextInt()) % Common.SPEED_ENEMY_SHIP_CHANGE_X + Common.SPEED_ENEMY_SHIP_X;
         float velocttyY = abs(theRandom.nextInt()) % Common.SPEED_ENEMY_SHIP_CHANGE_Y + Common.SPEED_ENEMY_SHIP_Y;
@@ -144,7 +144,7 @@ public class SpaceShipScene extends Scene implements ActionListener
 
         boolean b = theRandom.nextBoolean();
         index = b ? 1 : 0;
-        index = (int) power(-1, index);
+        index = (int) pow(-1, index);
         int size = (int) (this.getWidth() * (1 / 4.0));
 
         aEnemy.setX(this.getWidth() / 2 + index * abs(theRandom.nextInt()) % size);
@@ -152,7 +152,7 @@ public class SpaceShipScene extends Scene implements ActionListener
 
         b = theRandom.nextBoolean();
         index = b ? 1 : 0;
-        index = (int) power(-1, index);
+        index = (int) pow(-1, index);
 
         float velocityXTmp = index * abs(theRandom.nextInt()) % Common.SPEED_ENEMY_SHIP_CHANGE_X + Common.SPEED_ENEMY_SHIP_X;
         float velocttyYTmp = abs(theRandom.nextInt()) % Common.SPEED_ENEMY_SHIP_CHANGE_Y + Common.SPEED_ENEMY_SHIP_Y;
