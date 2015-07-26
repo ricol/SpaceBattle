@@ -257,6 +257,8 @@ public class SpaceShipScene extends Scene implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
+        if (!this.bGameRunning) return;
+        
         if (e.getSource().equals(this.timerForEnemy))
         {
             if (abs(theRandom.nextInt()) % 100 > 90)
@@ -266,8 +268,6 @@ public class SpaceShipScene extends Scene implements ActionListener
             {
                 this.addAEnemy();
             }
-//            this.addAEnemy();
-//            this.timerForEnemy.stop();
         } else if (e.getSource().equals(this.timerForFire))
         {
             if (this.theShip.bAutoshot)
