@@ -9,13 +9,13 @@ import au.com.rmit.Game2dEngine.action.AlphaToAction;
 import au.com.spacebattle.common.Common;
 import au.com.spacebattle.common.MovingObject;
 import au.com.spacebattle.sprite.other.ExpodeParticle;
-import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import static java.lang.Math.abs;
+import static java.lang.Math.pow;
 import javax.imageio.ImageIO;
 import javax.swing.Timer;
 
@@ -34,14 +34,14 @@ public class Spaceship extends MovingObject implements ActionListener
     public Spaceship(double x, double y, double width, double height, double mass, double velocityX, double velocityY)
     {
         super(x, y, width, height, mass, velocityX, velocityY);
-        this.lifetime = 20;
+        this.setLifeTime(20);
         theTimerForEngine.start();
     }
 
     public Spaceship(String imagename)
     {
         super(0, 0, 0, 0, 0, 0, 0);
-        this.lifetime = 20;
+        this.setLifeTime(20);
         BufferedImage aImage;
 
         try
@@ -55,7 +55,7 @@ public class Spaceship extends MovingObject implements ActionListener
         {
 
         }
-        
+
         theTimerForEngine.start();
     }
 
@@ -77,11 +77,11 @@ public class Spaceship extends MovingObject implements ActionListener
         this.currentLife -= value;
         if (this.currentLife <= 0)
         {
-            this.setDead();
+            this.setShouldDie();
         }
     }
 
-    public int getLife()
+    public int getCurrentLife()
     {
         return currentLife;
     }
@@ -98,9 +98,9 @@ public class Spaceship extends MovingObject implements ActionListener
     }
 
     @Override
-    public void onDead()
+    public void onWillDead()
     {
-        super.onDead(); //To change body of generated methods, choose Tools | Templates.
+        super.onWillDead(); //To change body of generated methods, choose Tools | Templates.
 
         this.explode();
         this.theTimerForEngine.stop();
@@ -112,7 +112,7 @@ public class Spaceship extends MovingObject implements ActionListener
 
         for (int i = 0; i < number; i++)
         {
-            double tmpX = power(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_ENGINE_X * 4;
+            double tmpX = pow(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_ENGINE_X * 4;
             double tmpY = theRandom.nextFloat() * Common.SPEED_ENGINE_Y * 10;
 
             int size = 6;

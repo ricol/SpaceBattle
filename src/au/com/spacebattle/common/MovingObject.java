@@ -5,13 +5,13 @@
  */
 package au.com.spacebattle.common;
 
-import au.com.rmit.Game2dEngine.node.MovingSprite;
+import au.com.rmit.Game2dEngine.node.Sprite;
 
 /**
  *
  * @author ricolwang
  */
-public class MovingObject extends MovingSprite
+public class MovingObject extends Sprite
 {
 
     public MovingObject(double x, double y, double width, double height, double mass, double velocityX, double velocityY)

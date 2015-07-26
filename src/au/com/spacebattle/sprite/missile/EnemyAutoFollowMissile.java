@@ -9,8 +9,8 @@ import au.com.rmit.Game2dEngine.action.AlphaToAction;
 import au.com.spacebattle.common.Common;
 import au.com.spacebattle.scene.SpaceShipScene;
 import au.com.spacebattle.sprite.other.ExpodeParticle;
-import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
 import static java.lang.Math.abs;
+import static java.lang.Math.pow;
 
 /**
  *
@@ -29,14 +29,14 @@ public class EnemyAutoFollowMissile extends AutoFollowMissile
     }
 
     @Override
-    public void explode()
+    protected void explode()
     {
         int number = abs(theRandom.nextInt()) % 10 + 30;
 
         for (int i = 0; i < number; i++)
         {
-            double tmpX = power(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE;
-            double tmpY = power(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE;
+            double tmpX = pow(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE;
+            double tmpY = pow(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE;
 
             ExpodeParticle aFire = new ExpodeParticle();
             aFire.setX(this.getCentreX());
@@ -52,14 +52,15 @@ public class EnemyAutoFollowMissile extends AutoFollowMissile
             aAction.alphaTo(0, 0.5f);
             aFire.addAction(aAction);
 
+            if (this.theScene == null) break;
             this.theScene.addSprite(aFire);
         }
     }
 
     @Override
-    public void onDead()
+    public void onWillDead()
     {
-        super.onDead(); //To change body of generated methods, choose Tools | Templates.
+        super.onWillDead(); //To change body of generated methods, choose Tools | Templates.
         ((SpaceShipScene) this.theScene).deleteAEnemyMissile(this);
     }
 }

@@ -19,12 +19,12 @@ import au.com.spacebattle.sprite.other.SpaceBackground;
 import au.com.spacebattle.sprite.spaceship.enemy.Boss;
 import au.com.spacebattle.sprite.spaceship.enemy.Enemy;
 import au.com.spacebattle.sprite.spaceship.friend.MySpaceship;
-import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.lang.Math.abs;
+import static java.lang.Math.pow;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -105,7 +105,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         Boss aBoss = new Boss();
         boolean b = theRandom.nextBoolean();
         int index = b ? 1 : 0;
-        index = (int) power(-1, index);
+        index = (int) pow(-1, index);
         int size = (int) (this.getWidth() * (1 / 4.0));
 
         aBoss.setX(this.getWidth() / 2 + index * abs(theRandom.nextInt()) % size);
@@ -113,7 +113,7 @@ public class SpaceShipScene extends Scene implements ActionListener
 
         b = theRandom.nextBoolean();
         index = b ? 1 : 0;
-        index = (int) power(-1, index);
+        index = (int) pow(-1, index);
 
         float velocityX = index * abs(theRandom.nextInt()) % Common.SPEED_ENEMY_SHIP_CHANGE_X + Common.SPEED_ENEMY_SHIP_X;
         float velocttyY = abs(theRandom.nextInt()) % Common.SPEED_ENEMY_SHIP_CHANGE_Y + Common.SPEED_ENEMY_SHIP_Y;
@@ -121,7 +121,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         aBoss.setVelocityX(velocityX / 2);
         aBoss.setVelocityY(velocttyY / 2);
 
-        aBoss.lifetime = 10;
+        aBoss.setLifeTime(10);
 
         aBoss.theTarget = this.theShip;
         aBoss.bAutoAdjustGesture = true;
@@ -144,7 +144,7 @@ public class SpaceShipScene extends Scene implements ActionListener
 
         boolean b = theRandom.nextBoolean();
         index = b ? 1 : 0;
-        index = (int) power(-1, index);
+        index = (int) pow(-1, index);
         int size = (int) (this.getWidth() * (1 / 4.0));
 
         aEnemy.setX(this.getWidth() / 2 + index * abs(theRandom.nextInt()) % size);
@@ -152,14 +152,14 @@ public class SpaceShipScene extends Scene implements ActionListener
 
         b = theRandom.nextBoolean();
         index = b ? 1 : 0;
-        index = (int) power(-1, index);
+        index = (int) pow(-1, index);
 
         float velocityXTmp = index * abs(theRandom.nextInt()) % Common.SPEED_ENEMY_SHIP_CHANGE_X + Common.SPEED_ENEMY_SHIP_X;
         float velocttyYTmp = abs(theRandom.nextInt()) % Common.SPEED_ENEMY_SHIP_CHANGE_Y + Common.SPEED_ENEMY_SHIP_Y;
 
         aEnemy.setVelocityX(velocityXTmp);
         aEnemy.setVelocityY(velocttyYTmp);
-        aEnemy.lifetime = 10;
+        aEnemy.setLifeTime(10);
 
         aEnemy.theTarget = this.theShip;
         this.addSprite(aEnemy);
@@ -169,13 +169,10 @@ public class SpaceShipScene extends Scene implements ActionListener
 
     private void addLabels()
     {
-        int tmpY = 10;
-        int tmpMarginRight = 140;
         int tmpWidth = 150;
         int tmpHeight = 20;
-        int tmpGap = 1;
 
-        lblMyLife = new LabelSprite(this.getWidth() - tmpMarginRight, tmpY, "My Life: " + this.mylife, null);
+        lblMyLife = new LabelSprite(0, 0, "My Life: " + this.mylife, null);
 
         lblMyLife.setWidth(tmpWidth);
 
@@ -184,11 +181,11 @@ public class SpaceShipScene extends Scene implements ActionListener
         lblMyLife.setRed(
             255);
         lblMyLife.bTextFrame = false;
-        lblMyLife.layer = Common.LAYER_TEXT;
+        lblMyLife.setLayer(Common.LAYER_TEXT);
 
         addSprite(lblMyLife);
 
-        lblEnemyKilled = new LabelSprite(this.getWidth() - tmpMarginRight, tmpY + tmpHeight + tmpGap, "Enemy Killed: " + this.enemyKilled, null);
+        lblEnemyKilled = new LabelSprite(0, 0, "Enemy Killed: " + this.enemyKilled, null);
 
         lblEnemyKilled.setWidth(tmpWidth);
 
@@ -197,11 +194,11 @@ public class SpaceShipScene extends Scene implements ActionListener
         lblEnemyKilled.setRed(
             255);
         lblEnemyKilled.bTextFrame = false;
-        lblEnemyKilled.layer = Common.LAYER_TEXT;
+        lblEnemyKilled.setLayer(Common.LAYER_TEXT);
 
         addSprite(lblEnemyKilled);
 
-        lblBossKilled = new LabelSprite(this.getWidth() - tmpMarginRight, tmpY + (tmpHeight + tmpGap) * 2, "Boss Killed: " + this.bossKilled, null);
+        lblBossKilled = new LabelSprite(0, 0, "Boss Killed: " + this.bossKilled, null);
 
         lblBossKilled.setWidth(tmpWidth);
 
@@ -210,11 +207,11 @@ public class SpaceShipScene extends Scene implements ActionListener
         lblBossKilled.setRed(
             255);
         lblBossKilled.bTextFrame = false;
-        lblBossKilled.layer = Common.LAYER_TEXT;
+        lblBossKilled.setLayer(Common.LAYER_TEXT);
 
         addSprite(lblBossKilled);
 
-        lblScore = new LabelSprite(this.getWidth() - tmpMarginRight, tmpY + (tmpHeight + tmpGap) * 3, "Score: " + this.score, null);
+        lblScore = new LabelSprite(0, 0, "Score: " + this.score, null);
 
         lblScore.setWidth(tmpWidth);
 
@@ -223,14 +220,15 @@ public class SpaceShipScene extends Scene implements ActionListener
         lblScore.setRed(
             255);
         lblScore.bTextFrame = false;
-        lblScore.layer = Common.LAYER_TEXT;
+        lblScore.setLayer(Common.LAYER_TEXT);
 
         addSprite(lblScore);
+        this.adjustLabelPos();
     }
 
     void adjustLabelPos()
     {
-        int tmpY = 10;
+        int tmpY = 20;
         int tmpMarginRight = 140;
         int tmpHeight = 20;
         int tmpGap = 1;
@@ -268,6 +266,8 @@ public class SpaceShipScene extends Scene implements ActionListener
             {
                 this.addAEnemy();
             }
+//            this.addAEnemy();
+//            this.timerForEnemy.stop();
         } else if (e.getSource().equals(this.timerForFire))
         {
             if (this.theShip.bAutoshot)
@@ -295,16 +295,9 @@ public class SpaceShipScene extends Scene implements ActionListener
         this.score += Common.SCORE_ENEMY;
 
         this.enemyKilled++;
-        if (this.lblEnemyKilled != null)
-        {
-            this.lblEnemyKilled.setText("Enemy Killed: " + this.enemyKilled);
-        }
-        if (this.lblScore != null)
-        {
-            this.lblScore.setText("Score: " + this.score);
-        }
+        this.updateLabels();
     }
-
+    
     public void killABoss(Boss aBoss)
     {
         Score aScore = new Score("+" + Common.SCORE_BOSS);
@@ -317,19 +310,29 @@ public class SpaceShipScene extends Scene implements ActionListener
         this.score += Common.SCORE_BOSS;
 
         this.bossKilled++;
-        if (this.lblBossKilled != null)
-        {
-            this.lblBossKilled.setText("Boss Killed: " + this.bossKilled);
-        }
-        if (this.lblScore != null)
-        {
-            this.lblScore.setText("Score: " + this.score);
-        }
+        this.updateLabels();
     }
 
     public void lostALife()
     {
         this.mylife--;
+        this.updateLabels();
+    }
+    
+    public void updateLabels()
+    {
+        if (this.lblBossKilled != null)
+        {
+            this.lblBossKilled.setText("Boss Killed: " + this.bossKilled);
+        }
+        if (this.lblEnemyKilled != null)
+        {
+            this.lblEnemyKilled.setText("Enemy Killed: " + this.enemyKilled);
+        }
+        if (this.lblScore != null)
+        {
+            this.lblScore.setText("Score: " + this.score);
+        }
         if (this.lblMyLife != null)
         {
             this.lblMyLife.setText("My Life: " + this.mylife);
@@ -451,6 +454,12 @@ public class SpaceShipScene extends Scene implements ActionListener
 
     public void gameStart()
     {
+        enemyKilled = 0;
+        bossKilled = 0;
+        mylife = 3;
+        score = 0;
+        this.updateLabels();
+        
         LabelSprite aLabel = new LabelSprite("Game Start", new Font("TimesRoman", Font.PLAIN, 30));
         aLabel.setWidth(150);
         aLabel.setHeight(30);
@@ -468,7 +477,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         this.addSprite(aLabel);
 
         theShip = new MySpaceship();
-        theShip.lifetime = Sprite.EVER;
+        theShip.setLifeTime(Sprite.EVER);
         theShip.bAutoMissile = false;
 
         theShip.setCentreX(this.getWidth() / 2.0f);
@@ -519,12 +528,14 @@ public class SpaceShipScene extends Scene implements ActionListener
         this.timerForEnemy.stop();
         this.timerForFirMainWeapon.stop();
         this.timerForFire.stop();
-        
+
         if (this.theShip != null)
         {
             AlphaByAction aAction = new AlphaByAction();
             aAction.alphaBy(-1, 1);
             theShip.addAction(aAction);
+
+            theShip.setVelocityY(-500);
             theShip.bDeadIfNoActions = true;
         }
 
@@ -543,6 +554,12 @@ public class SpaceShipScene extends Scene implements ActionListener
             aEnemy.addAction(aAction);
             aEnemy.bDeadIfNoActions = true;
         }
+
+        enemyKilled = 0;
+        bossKilled = 0;
+        mylife = 3;
+        score = 0;
+        this.updateLabels();
 
         LabelSprite aLabel = new LabelSprite("Game End", new Font("TimesRoman", Font.PLAIN, 30));
         aLabel.setWidth(150);

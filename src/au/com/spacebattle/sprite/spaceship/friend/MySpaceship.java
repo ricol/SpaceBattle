@@ -5,6 +5,7 @@
  */
 package au.com.spacebattle.sprite.spaceship.friend;
 
+import au.com.rmit.Game2dEngine.action.Action;
 import au.com.rmit.Game2dEngine.action.AlphaToAction;
 import au.com.rmit.Game2dEngine.action.MoveCentreXToAction;
 import au.com.rmit.Game2dEngine.action.MoveCentreYToAction;
@@ -23,10 +24,12 @@ import au.com.spacebattle.sprite.other.ExpodeParticle;
 import au.com.spacebattle.sprite.other.FriendFire;
 import au.com.spacebattle.sprite.spaceship.Spaceship;
 import au.com.spacebattle.sprite.missile.FriendLaserWeapon;
-import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.lang.Math.abs;
+import static java.lang.Math.pow;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.Timer;
 
 /**
@@ -38,7 +41,7 @@ public class MySpaceship extends Spaceship implements ActionListener
 
     Timer timerForLaser = new Timer(10, this);
     Timer timerForStop = new Timer(3000, this);
-    Timer theTimerForAutoFollowMissile = new Timer(1000, this);
+    Timer theTimerForAutoFollowMissile = new Timer(300, this);
 
     boolean bLaser = false;
     public boolean bAutoshot;
@@ -47,12 +50,12 @@ public class MySpaceship extends Spaceship implements ActionListener
     public MySpaceship()
     {
         super("my-spaceship.png");
-        this.lifetime = Sprite.EVER;
+        this.setLifeTime(Sprite.EVER);
         this.bCollisionDetect = true;
         this.collisionCategory = Common.CATEGORY_FRIEND_SHIP;
         this.collisionTargetCategory = Common.CATEGORY_ENEMY_SHIP;
 
-        this.layer = Common.LAYER_FRIEND_SHIP;
+        this.setLayer(Common.LAYER_FRIEND_SHIP);
         this.resetTotalLife(500);
         this.timerForLaser.start();
         theTimerForAutoFollowMissile.start();
@@ -73,7 +76,7 @@ public class MySpaceship extends Spaceship implements ActionListener
         FriendFire aLeftFire = new FriendFire();
         aLeftFire.setCentreX(aMissile.getCentreX());
         aLeftFire.setCentreY(aMissile.getCentreY() + 10);
-        aLeftFire.layer = this.layer;
+        aLeftFire.setLayer(this.getLayer());
         aLeftFire.setVelocityX(this.getVelocityX());
         aLeftFire.setVelocityY(this.getVelocityY());
 
@@ -89,7 +92,7 @@ public class MySpaceship extends Spaceship implements ActionListener
         FriendFire aRightFire = new FriendFire();
         aRightFire.setCentreX(aMissile.getCentreX());
         aRightFire.setCentreY(aMissile.getCentreY() + 10);
-        aRightFire.layer = this.layer;
+        aRightFire.setLayer(this.getLayer());
         aRightFire.setVelocityX(this.getVelocityX());
         aRightFire.setVelocityY(this.getVelocityY());
 
@@ -109,7 +112,7 @@ public class MySpaceship extends Spaceship implements ActionListener
         FriendFire aFire = new FriendFire();
         aFire.setCentreX(aMissile.getCentreX());
         aFire.setCentreY(aMissile.getCentreY() + aMissile.getHeight() / 2);
-        aFire.layer = this.layer;
+        aFire.setLayer(this.getLayer());
         aFire.setVelocityX(this.getVelocityX());
         aFire.setVelocityY(this.getVelocityY());
 
@@ -129,19 +132,22 @@ public class MySpaceship extends Spaceship implements ActionListener
         aCentreYAction.MoveCentreYTo(y, 0);
         this.addAction(aCentreYAction);
     }
-    
+
     public void moveToXYInSequence(int x, int y, float duration)
     {
         double theShipCentreX = this.getCentreX();
         double theShipCentreY = this.getCentreY();
 
+        Set<Action> aSetOfActions = new HashSet<>();
+
         MoveCentreXToAction aCentreXAction = new MoveCentreXToAction(this);
         aCentreXAction.MoveCentreXTo(x, duration);
-        this.enQueueAction(aCentreXAction);
+        aSetOfActions.add(aCentreXAction);
 
         MoveCentreYToAction aCentreYAction = new MoveCentreYToAction(this);
         aCentreYAction.MoveCentreYTo(y, duration);
-        this.enQueueAction(aCentreYAction);
+        aSetOfActions.add(aCentreYAction);
+        this.enQueueActions(aSetOfActions);
     }
 
     public void openSheld()
@@ -189,34 +195,42 @@ public class MySpaceship extends Spaceship implements ActionListener
         aAction.moveXBy(value, duration);
         this.addAction(aAction);
     }
-    
+
     public void moveDownInSequence(float value, float duration)
     {
         //move down
         MoveYByAction aAction = new MoveYByAction();
         aAction.moveYBy(value, duration);
-        this.enQueueAction(aAction);
+        Set<Action> aSetOfActions = new HashSet<>();
+        aSetOfActions.add(aAction);
+        this.enQueueActions(aSetOfActions);
     }
 
     public void moveUpInSequence(float value, float duration)
     {
         MoveYByAction aAction = new MoveYByAction();
         aAction.moveYBy(value, duration);
-        this.enQueueAction(aAction);
+        Set<Action> aSetOfActions = new HashSet<>();
+        aSetOfActions.add(aAction);
+        this.enQueueActions(aSetOfActions);
     }
 
     public void moveLeftInSequence(float value, float duration)
     {
         MoveXByAction aAction = new MoveXByAction();
         aAction.moveXBy(value, duration);
-        this.enQueueAction(aAction);
+        Set<Action> aSetOfActions = new HashSet<>();
+        aSetOfActions.add(aAction);
+        this.enQueueActions(aSetOfActions);
     }
 
     public void moveRightInSequence(float value, float duration)
     {
         MoveXByAction aAction = new MoveXByAction();
         aAction.moveXBy(value, duration);
-        this.enQueueAction(aAction);
+        Set<Action> aSetOfActions = new HashSet<>();
+        aSetOfActions.add(aAction);
+        this.enQueueActions(aSetOfActions);
     }
 
     @Override
@@ -248,8 +262,8 @@ public class MySpaceship extends Spaceship implements ActionListener
 
         for (int i = 0; i < number; i++)
         {
-            double tmpX = power(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE * 2;
-            double tmpY = power(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE * 2;
+            double tmpX = pow(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE * 2;
+            double tmpY = pow(-1, theRandom.nextInt() % 10) * theRandom.nextFloat() * Common.SPEED_EXPLODE_PARTICLE * 2;
 
             ExpodeParticle aFire = new ExpodeParticle();
             aFire.setX(this.getCentreX());
@@ -295,9 +309,9 @@ public class MySpaceship extends Spaceship implements ActionListener
     }
 
     @Override
-    public void onDead()
+    public void onWillDead()
     {
-        super.onDead(); //To change body of generated methods, choose Tools | Templates.
+        super.onWillDead(); //To change body of generated methods, choose Tools | Templates.
 
         this.timerForLaser.stop();
         this.timerForStop.stop();
@@ -335,12 +349,12 @@ public class MySpaceship extends Spaceship implements ActionListener
 //        aMissile.bDrawFrame = true;
         aMissile.setCentreX(this.getCentreX());
         aMissile.setCentreY(this.getCentreY() - aMissile.getHeight());
-        aMissile.setAngle(this.angle);
+        aMissile.setAngle(this.getAngle());
 
 //        aMissile.setVelocityX(Common.SPEED_MISSILE_FRIEND * Math.sin(aMissile.getAngle()));
         aMissile.setVelocityY(-Common.SPEED_MISSILE_FRIEND);
 
-        aMissile.layer = this.layer;
+        aMissile.setLayer(this.getLayer());
         aMissile.fire();
 
         this.theScene.addSprite(aMissile);
@@ -348,7 +362,7 @@ public class MySpaceship extends Spaceship implements ActionListener
         FriendFire aFire = new FriendFire();
         aFire.setCentreX(aMissile.getCentreX());
         aFire.setCentreY(aMissile.getCentreY() + aMissile.getHeight() / 2);
-        aFire.layer = this.layer;
+        aFire.setLayer(this.getLayer());
         aFire.setVelocityX(this.getVelocityX());
         aFire.setVelocityY(this.getVelocityY());
 
