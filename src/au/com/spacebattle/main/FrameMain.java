@@ -27,6 +27,7 @@ import javax.swing.Timer;
 public class FrameMain extends javax.swing.JFrame implements MouseListener, MouseMotionListener, ActionListener, KeyListener, ComponentListener
 
 {
+    boolean bAlreadyRun;
     MouseEvent mouseEvent;
     Random theRandom = new Random();
     SpaceShipScene theScene;
@@ -93,6 +94,10 @@ public class FrameMain extends javax.swing.JFrame implements MouseListener, Mous
     {//GEN-HEADEREND:event_formWindowActivated
         // TODO add your handling code here:
 
+        if (bAlreadyRun) return;
+        
+        bAlreadyRun = true;
+        
         this.addComponentListener(this);
 
         this.addKeyListener(this);
