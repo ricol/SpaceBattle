@@ -167,6 +167,7 @@ public class FrameMain extends javax.swing.JFrame implements MouseListener, Mous
             {
                 if (this.mouseEvent != null)
                 {
+//                    theScene.theShip.moveToXYInSequence(this.mouseEvent.getX(), this.mouseEvent.getY(), 0.05f);
                     theScene.theShip.moveToXY(this.mouseEvent.getX(), this.mouseEvent.getY());
                 }
             }

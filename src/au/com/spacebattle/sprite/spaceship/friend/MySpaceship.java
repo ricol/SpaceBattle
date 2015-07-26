@@ -5,6 +5,7 @@
  */
 package au.com.spacebattle.sprite.spaceship.friend;
 
+import au.com.rmit.Game2dEngine.action.Action;
 import au.com.rmit.Game2dEngine.action.AlphaToAction;
 import au.com.rmit.Game2dEngine.action.MoveCentreXToAction;
 import au.com.rmit.Game2dEngine.action.MoveCentreYToAction;
@@ -27,6 +28,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.lang.Math.abs;
 import static java.lang.Math.pow;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.Timer;
 
 /**
@@ -134,14 +137,17 @@ public class MySpaceship extends Spaceship implements ActionListener
     {
         double theShipCentreX = this.getCentreX();
         double theShipCentreY = this.getCentreY();
+        
+        Set<Action> aSetOfActions = new HashSet<>();
 
         MoveCentreXToAction aCentreXAction = new MoveCentreXToAction(this);
         aCentreXAction.MoveCentreXTo(x, duration);
-        this.enQueueAction(aCentreXAction);
+        aSetOfActions.add(aCentreXAction);
 
         MoveCentreYToAction aCentreYAction = new MoveCentreYToAction(this);
         aCentreYAction.MoveCentreYTo(y, duration);
-        this.enQueueAction(aCentreYAction);
+        aSetOfActions.add(aCentreYAction);
+        this.enQueueActions(aSetOfActions);
     }
 
     public void openSheld()
@@ -195,28 +201,36 @@ public class MySpaceship extends Spaceship implements ActionListener
         //move down
         MoveYByAction aAction = new MoveYByAction();
         aAction.moveYBy(value, duration);
-        this.enQueueAction(aAction);
+        Set<Action> aSetOfActions = new HashSet<>();
+        aSetOfActions.add(aAction);
+        this.enQueueActions(aSetOfActions);
     }
 
     public void moveUpInSequence(float value, float duration)
     {
         MoveYByAction aAction = new MoveYByAction();
         aAction.moveYBy(value, duration);
-        this.enQueueAction(aAction);
+        Set<Action> aSetOfActions = new HashSet<>();
+        aSetOfActions.add(aAction);
+        this.enQueueActions(aSetOfActions);
     }
 
     public void moveLeftInSequence(float value, float duration)
     {
         MoveXByAction aAction = new MoveXByAction();
         aAction.moveXBy(value, duration);
-        this.enQueueAction(aAction);
+        Set<Action> aSetOfActions = new HashSet<>();
+        aSetOfActions.add(aAction);
+        this.enQueueActions(aSetOfActions);
     }
 
     public void moveRightInSequence(float value, float duration)
     {
         MoveXByAction aAction = new MoveXByAction();
         aAction.moveXBy(value, duration);
-        this.enQueueAction(aAction);
+        Set<Action> aSetOfActions = new HashSet<>();
+        aSetOfActions.add(aAction);
+        this.enQueueActions(aSetOfActions);
     }
 
     @Override
