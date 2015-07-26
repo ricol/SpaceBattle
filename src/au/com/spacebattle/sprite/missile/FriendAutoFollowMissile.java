@@ -32,13 +32,7 @@ public class FriendAutoFollowMissile extends AutoFollowMissile
     }
 
     @Override
-    public void onDead()
-    {
-        super.onDead(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void explode()
+    protected void explode()
     {
         int number = abs(theRandom.nextInt()) % 10 + 40;
 
@@ -61,6 +55,7 @@ public class FriendAutoFollowMissile extends AutoFollowMissile
             aAction.alphaTo(0, 0.5f);
             aFire.addAction(aAction);
 
+            if (this.theScene == null) break;
             this.theScene.addSprite(aFire);
         }
     }

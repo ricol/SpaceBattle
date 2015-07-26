@@ -266,6 +266,8 @@ public class SpaceShipScene extends Scene implements ActionListener
             {
                 this.addAEnemy();
             }
+//            this.addAEnemy();
+//            this.timerForEnemy.stop();
         } else if (e.getSource().equals(this.timerForFire))
         {
             if (this.theShip.bAutoshot)
@@ -296,26 +298,6 @@ public class SpaceShipScene extends Scene implements ActionListener
         this.updateLabels();
     }
     
-    public void updateLabels()
-    {
-        if (this.lblBossKilled != null)
-        {
-            this.lblBossKilled.setText("Boss Killed: " + this.bossKilled);
-        }
-        if (this.lblEnemyKilled != null)
-        {
-            this.lblEnemyKilled.setText("Enemy Killed: " + this.enemyKilled);
-        }
-        if (this.lblScore != null)
-        {
-            this.lblScore.setText("Score: " + this.score);
-        }
-        if (this.lblMyLife != null)
-        {
-            this.lblMyLife.setText("My Life: " + this.mylife);
-        }
-    }
-
     public void killABoss(Boss aBoss)
     {
         Score aScore = new Score("+" + Common.SCORE_BOSS);
@@ -335,6 +317,26 @@ public class SpaceShipScene extends Scene implements ActionListener
     {
         this.mylife--;
         this.updateLabels();
+    }
+    
+    public void updateLabels()
+    {
+        if (this.lblBossKilled != null)
+        {
+            this.lblBossKilled.setText("Boss Killed: " + this.bossKilled);
+        }
+        if (this.lblEnemyKilled != null)
+        {
+            this.lblEnemyKilled.setText("Enemy Killed: " + this.enemyKilled);
+        }
+        if (this.lblScore != null)
+        {
+            this.lblScore.setText("Score: " + this.score);
+        }
+        if (this.lblMyLife != null)
+        {
+            this.lblMyLife.setText("My Life: " + this.mylife);
+        }
     }
 
     @Override

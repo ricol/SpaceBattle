@@ -55,7 +55,7 @@ public class Spaceship extends MovingObject implements ActionListener
         {
 
         }
-        
+
         theTimerForEngine.start();
     }
 
@@ -77,7 +77,7 @@ public class Spaceship extends MovingObject implements ActionListener
         this.currentLife -= value;
         if (this.currentLife <= 0)
         {
-            this.setDead();
+            this.setShouldDie();
         }
     }
 
@@ -98,9 +98,9 @@ public class Spaceship extends MovingObject implements ActionListener
     }
 
     @Override
-    public void onDead()
+    public void onWillDead()
     {
-        super.onDead(); //To change body of generated methods, choose Tools | Templates.
+        super.onWillDead(); //To change body of generated methods, choose Tools | Templates.
 
         this.explode();
         this.theTimerForEngine.stop();

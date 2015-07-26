@@ -28,15 +28,15 @@ public class BossMainWeaponMissile extends Missile
     }
     
     @Override
-    public void onDead()
+    public void onWillDead()
     {
-        super.onDead(); //To change body of generated methods, choose Tools | Templates.
+        super.onWillDead(); //To change body of generated methods, choose Tools | Templates.
 
         this.explode();
     }
 
     @Override
-    public void explode()
+    protected void explode()
     {
         int number = abs(theRandom.nextInt()) % 10 + 30;
 
@@ -59,6 +59,7 @@ public class BossMainWeaponMissile extends Missile
             aAction.alphaTo(0, 0.5f);
             aFire.addAction(aAction);
 
+            if (this.theScene == null) break;
             this.theScene.addSprite(aFire);
         }
     }

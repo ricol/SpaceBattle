@@ -91,7 +91,7 @@ public class Boss extends Enemy
             this.decreaseLife(100);
         }
 
-        if (this.isAlive() == false)
+        if (this.getShouldDie() == true)
         {
             if (this.theScene instanceof SpaceShipScene)
             {
@@ -101,9 +101,10 @@ public class Boss extends Enemy
     }
 
     @Override
-    public void onDead()
+    public void onWillDead()
     {
-        super.onDead(); //To change body of generated methods, choose Tools | Templates.
+        super.onWillDead(); //To change body of generated methods, choose Tools | Templates.
+
         this.theTimerForMainWealpon.stop();
 
         if (this.theScene instanceof SpaceShipScene)

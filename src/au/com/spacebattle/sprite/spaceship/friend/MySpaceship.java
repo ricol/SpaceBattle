@@ -137,7 +137,7 @@ public class MySpaceship extends Spaceship implements ActionListener
     {
         double theShipCentreX = this.getCentreX();
         double theShipCentreY = this.getCentreY();
-        
+
         Set<Action> aSetOfActions = new HashSet<>();
 
         MoveCentreXToAction aCentreXAction = new MoveCentreXToAction(this);
@@ -309,9 +309,9 @@ public class MySpaceship extends Spaceship implements ActionListener
     }
 
     @Override
-    public void onDead()
+    public void onWillDead()
     {
-        super.onDead(); //To change body of generated methods, choose Tools | Templates.
+        super.onWillDead(); //To change body of generated methods, choose Tools | Templates.
 
         this.timerForLaser.stop();
         this.timerForStop.stop();

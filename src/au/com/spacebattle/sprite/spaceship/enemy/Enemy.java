@@ -62,9 +62,10 @@ public class Enemy extends Spaceship implements ActionListener
     }
 
     @Override
-    public void onDead()
+    public void onWillDead()
     {
-        super.onDead(); //To change body of generated methods, choose Tools | Templates.
+        super.onWillDead(); //To change body of generated methods, choose Tools | Templates.
+
         this.theTimerAutoadjust.stop();
         this.theTimerFire.stop();
         this.theTimerForAutoFollowMissile.stop();
@@ -97,7 +98,7 @@ public class Enemy extends Spaceship implements ActionListener
             this.decreaseLife(300);
         }
 
-        if (this.isAlive() == false)
+        if (this.getShouldDie() == true)
         {
             if (this.theScene instanceof SpaceShipScene)
             {

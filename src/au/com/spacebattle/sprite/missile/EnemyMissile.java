@@ -28,7 +28,7 @@ public class EnemyMissile extends Missile
     }
 
     @Override
-    public void explode()
+    protected void explode()
     {
         int number = abs(theRandom.nextInt()) % 10 + 10;
 
@@ -51,6 +51,7 @@ public class EnemyMissile extends Missile
             aAction.alphaTo(0, 0.2f);
             aFire.addAction(aAction);
 
+            if (this.theScene == null) break;
             this.theScene.addSprite(aFire);
         }
     }
