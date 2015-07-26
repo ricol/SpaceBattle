@@ -27,7 +27,6 @@ public class AutoFollowMissile extends Missile implements ActionListener
     int currentTimers = 0;
     Timer theTimer = new Timer(50, this);
 
-
     public AutoFollowMissile(String imagename)
     {
         super(imagename);
@@ -37,14 +36,19 @@ public class AutoFollowMissile extends Missile implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        if (theTarget != null)
+        if (this.getShouldDie()) return;
+        
+        if (e.getSource().equals(this.theTimer))
         {
-            if (currentTimers < times)
+            if (theTarget != null)
             {
-                currentTimers++;
+                if (currentTimers < times)
+                {
+                    currentTimers++;
 
-                //adjust
-                this.adjustGesture(theTarget);
+                    //adjust
+                    this.adjustGesture(theTarget);
+                }
             }
         }
     }
@@ -72,8 +76,7 @@ public class AutoFollowMissile extends Missile implements ActionListener
                 //adjust velocity
                 this.setVelocityX(Common.SPEED_MISSILE_ENEMY * Math.sin(delta));
                 this.setVelocityY(Common.SPEED_MISSILE_ENEMY * Math.cos(delta));
-            } 
-            else
+            } else
             {
                 double delta = Math.asin(changeX / distance);
                 this.setAngle(delta + Math.PI);
@@ -122,7 +125,10 @@ public class AutoFollowMissile extends Missile implements ActionListener
             aAction.alphaTo(0, 0.5f);
             aFire.addAction(aAction);
 
-            if (this.theScene == null) break;
+            if (this.theScene == null)
+            {
+                break;
+            }
             this.theScene.addSprite(aFire);
         }
     }

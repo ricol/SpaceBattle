@@ -201,6 +201,8 @@ public class Boss extends Enemy
     @Override
     public void actionPerformed(ActionEvent e)
     {
+        if (this.getShouldDie()) return;
+        
         if (e.getSource().equals(this.theTimerFire))
         {
             fire();
