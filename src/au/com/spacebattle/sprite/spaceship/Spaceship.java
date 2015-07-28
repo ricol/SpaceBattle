@@ -36,6 +36,8 @@ public class Spaceship extends MovingObject implements ActionListener
         super(x, y, width, height, mass, velocityX, velocityY);
         this.setLifeTime(20);
         theTimerForEngine.start();
+
+//        this.bDrawFrame = true;
     }
 
     public Spaceship(String imagename)
@@ -57,16 +59,8 @@ public class Spaceship extends MovingObject implements ActionListener
         }
 
         theTimerForEngine.start();
-    }
 
-    public void fire()
-    {
-
-    }
-
-    public void fireAutoFollowMissile()
-    {
-
+//        this.bDrawFrame = true;
     }
 
     public void decreaseLife(int value)
@@ -140,8 +134,11 @@ public class Spaceship extends MovingObject implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        if (this.getShouldDie()) return;
-        
+        if (this.getShouldDie())
+        {
+            return;
+        }
+
         if (e.getSource().equals(this.theTimerForEngine))
         {
             engine();
