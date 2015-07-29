@@ -11,16 +11,16 @@ import au.com.rmit.Game2dEngine.action.ExpandByAction;
 import au.com.rmit.Game2dEngine.node.Sprite;
 import au.com.spacebattle.common.Common;
 import au.com.spacebattle.scene.SpaceShipScene;
-import au.com.spacebattle.sprite.missile.BossAutoFollowMissile;
-import au.com.spacebattle.sprite.missile.BossMainWeaponMissile;
 import au.com.spacebattle.sprite.missile.FriendAutoFollowMissile;
 import au.com.spacebattle.sprite.missile.FriendLaserWeapon;
 import au.com.spacebattle.sprite.missile.MainWeapanFriendMissile;
-import au.com.spacebattle.sprite.missile.Missile;
 import au.com.spacebattle.sprite.missile.NormalWeanponFriendMissile;
-import au.com.spacebattle.sprite.other.EnemyFire;
 import au.com.spacebattle.sprite.other.ExpodeParticle;
 import au.com.spacebattle.sprite.spaceship.friend.MySpaceship;
+import au.com.spacebattle.sprite.spaceship.weapon.BossAlternativeWeapon;
+import au.com.spacebattle.sprite.spaceship.weapon.BossAutoMissileWeapon;
+import au.com.spacebattle.sprite.spaceship.weapon.BossMainWeapon;
+import au.com.spacebattle.sprite.spaceship.weapon.Weapon;
 import java.awt.event.ActionEvent;
 import static java.lang.Math.abs;
 import static java.lang.Math.pow;
@@ -33,6 +33,7 @@ import javax.swing.Timer;
 public class Boss extends Enemy
 {
 
+    protected Weapon theWeaponAlternative;
     protected Timer theTimerForMainWealpon = new Timer(2000, this);
 
     public Boss()
@@ -49,6 +50,26 @@ public class Boss extends Enemy
         this.setLayer(Common.LAYER_BOSS_SHIP);
         this.resetTotalLife(500);
         this.theTimerForMainWealpon.start();
+        this.theWeaponMain = new BossMainWeapon(this);
+        this.theWeaponAutoMissile = new BossAutoMissileWeapon(this);
+        this.theWeaponAlternative = new BossAlternativeWeapon(this);
+    }
+
+    @Override
+    public void loadWeapon()
+    {
+        this.addAChild(this.theWeaponMain);
+        this.addAChild(this.theWeaponAutoMissile);
+        this.addAChild(this.theWeaponAlternative);
+
+        this.theWeaponMain.setCentreX(this.getWidth() / 2);
+        this.theWeaponMain.setCentreY(this.getHeight() / 2 + this.theWeaponMain.getHeight());
+
+        this.theWeaponAutoMissile.setCentreX(this.getWidth() / 2);
+        this.theWeaponAutoMissile.setCentreY(this.getHeight() / 2 + this.theWeaponMain.getHeight());
+
+        this.theWeaponAlternative.setCentreX(this.getWidth() / 2);
+        this.theWeaponAlternative.setCentreY(this.getHeight() / 2 + this.theWeaponAlternative.getHeight());
     }
 
     @Override
@@ -142,75 +163,22 @@ public class Boss extends Enemy
         }
     }
 
-    void fireMainWeapon()
-    {
-        Missile aMissile = new BossMainWeaponMissile("red-enemy-missile.png");
-//        aMissile.bDrawFrame = true;
-
-        aMissile.setCentreX(this.getCentreX());
-        aMissile.setY(this.getCentreY() + this.getHeight() / 2);
-
-//        aMissile.setAngle(this.getAngle());
-//        aMissile.setVelocityX(Common.SPEED_MAIN_MISSILE_ENEMY * Math.sin(-aMissile.getAngle()));
-        aMissile.setVelocityY(Common.SPEED_MAIN_MISSILE_ENEMY);
-
-        aMissile.setLayer(this.getLayer());
-
-        this.theScene.addSprite(aMissile);
-
-        EnemyFire aFire = new EnemyFire();
-        aFire.setCentreX(aMissile.getCentreX());
-        aFire.setCentreY(aMissile.getCentreY() + aMissile.getHeight() / 2);
-        aFire.setLayer(this.getLayer());
-        aFire.setVelocityX(this.getVelocityX());
-        aFire.setVelocityY(this.getVelocityY());
-
-        this.theScene.addSprite(aFire);
-    }
-
-    @Override
-    public void fireAutoFollowMissile()
-    {
-        BossAutoFollowMissile aMissile = new BossAutoFollowMissile();
-        aMissile.theTarget = this.theTarget;
-//        aMissile.bDrawFrame = true;
-        aMissile.setX(this.getCentreX() - aMissile.getWidth() / 2);
-        aMissile.setY(this.getCentreY() + this.getHeight() / 2);
-        aMissile.setAngle(this.getAngle());
-
-        aMissile.setVelocityX(Common.SPEED_MISSILE_ENEMY * Math.sin(-aMissile.getAngle()));
-        aMissile.setVelocityY(Common.SPEED_MISSILE_ENEMY * Math.cos(-aMissile.getAngle()));
-
-        aMissile.setLayer(this.getLayer());
-        aMissile.fire();
-
-        this.theScene.addSprite(aMissile);
-        ((SpaceShipScene) this.theScene).addABossMissile(aMissile);
-
-        EnemyFire aFire = new EnemyFire();
-        aFire.setCentreX(aMissile.getCentreX());
-        aFire.setCentreY(aMissile.getCentreY() + aMissile.getHeight() / 2);
-        aFire.setLayer(this.getLayer());
-        aFire.setVelocityX(this.getVelocityX());
-        aFire.setVelocityY(this.getVelocityY());
-
-        this.theScene.addSprite(aFire);
-
-    }
-
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        if (this.getShouldDie()) return;
-        
+        if (this.getShouldDie())
+        {
+            return;
+        }
+
         if (e.getSource().equals(this.theTimerFire))
         {
-            fire();
+            this.theWeaponAlternative.fire();
         } else if (e.getSource().equals(this.theTimerForAutoFollowMissile))
         {
             if (abs(theRandom.nextInt()) % 100 > 80)
             {
-                fireAutoFollowMissile();
+                this.theWeaponAutoMissile.fire();
             }
         }
 
@@ -218,7 +186,7 @@ public class Boss extends Enemy
         {
             if (theRandom.nextBoolean())
             {
-                this.fireMainWeapon();
+                this.theWeaponMain.fire();
             }
         }
     }

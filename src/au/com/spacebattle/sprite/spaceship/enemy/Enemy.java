@@ -5,22 +5,21 @@
  */
 package au.com.spacebattle.sprite.spaceship.enemy;
 
-import au.com.rmit.Game2dEngine.action.Action;
 import au.com.rmit.Game2dEngine.action.AlphaToAction;
 import au.com.rmit.Game2dEngine.node.Sprite;
+import au.com.rmit.Game2dEngine.scene.Layer;
 import au.com.spacebattle.common.Common;
 import au.com.spacebattle.scene.SpaceShipScene;
-import au.com.spacebattle.sprite.missile.EnemyAutoFollowMissile;
-import au.com.spacebattle.sprite.missile.EnemyMissile;
 import au.com.spacebattle.sprite.missile.FriendAutoFollowMissile;
 import au.com.spacebattle.sprite.missile.FriendLaserWeapon;
 import au.com.spacebattle.sprite.missile.MainWeapanFriendMissile;
-import au.com.spacebattle.sprite.missile.Missile;
 import au.com.spacebattle.sprite.missile.NormalWeanponFriendMissile;
-import au.com.spacebattle.sprite.other.EnemyFire;
 import au.com.spacebattle.sprite.other.ExpodeParticle;
 import au.com.spacebattle.sprite.spaceship.Spaceship;
 import au.com.spacebattle.sprite.spaceship.friend.MySpaceship;
+import au.com.spacebattle.sprite.spaceship.weapon.EnemyAutoMissileWeapon;
+import au.com.spacebattle.sprite.spaceship.weapon.EnemyMainWeapon;
+import au.com.spacebattle.sprite.spaceship.weapon.Weapon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.lang.Math.abs;
@@ -41,6 +40,8 @@ public class Enemy extends Spaceship implements ActionListener
     protected Timer theTimerForAutoFollowMissile = new Timer(3000, this);
 
     public Spaceship theTarget;
+    protected Weapon theWeaponMain;
+    protected Weapon theWeaponAutoMissile;
 
     public Enemy(String imagename)
     {
@@ -54,11 +55,20 @@ public class Enemy extends Spaceship implements ActionListener
         this.theTimerAutoadjust.start();
         this.theTimerFire.start();
         this.theTimerForAutoFollowMissile.start();
+        this.theWeaponMain = new EnemyMainWeapon(this);
+        this.theWeaponAutoMissile = new EnemyAutoMissileWeapon(this);
     }
 
-    @Override
-    public void onActionComplete(Action theAction)
+    public void loadWeapon()
     {
+        this.addAChild(this.theWeaponMain);
+        this.addAChild(this.theWeaponAutoMissile);
+
+        this.theWeaponMain.setCentreX(this.getWidth() / 2);
+        this.theWeaponMain.setCentreY(this.getHeight() / 2 + this.theWeaponMain.getHeight());
+
+        this.theWeaponAutoMissile.setCentreX(this.getWidth() / 2);
+        this.theWeaponAutoMissile.setCentreY(this.getHeight() / 2 + this.theWeaponMain.getHeight());
     }
 
     @Override
@@ -76,6 +86,14 @@ public class Enemy extends Spaceship implements ActionListener
             SpaceShipScene theSpaceShipScene = (SpaceShipScene) this.theScene;
             theSpaceShipScene.deleteAEnemy(this);
         }
+    }
+
+    @Override
+    public void onAddToLayer(Layer theLayer)
+    {
+        super.onAddToLayer(theLayer); //To change body of generated methods, choose Tools | Templates.
+
+        this.loadWeapon();
     }
 
     @Override
@@ -160,82 +178,40 @@ public class Enemy extends Spaceship implements ActionListener
     }
 
     @Override
-    public void fire()
-    {
-        Missile aMissile = new EnemyMissile("enemy-missile.png");
-//        aMissile.bDrawFrame = true;
-        aMissile.setX(this.getCentreX() - aMissile.getWidth() / 2);
-        aMissile.setY(this.getCentreY() + this.getHeight() / 2);
-//        aMissile.setAngle(this.angle);
-
-//        aMissile.setVelocityX(Common.SPEED_MISSILE_ENEMY * Math.sin(-aMissile.getAngle()));
-        aMissile.setVelocityY(Common.SPEED_MISSILE_ENEMY);
-
-        aMissile.setLayer(this.getLayer());
-
-        this.theScene.addSprite(aMissile);
-
-        EnemyFire aFire = new EnemyFire();
-        aFire.setCentreX(aMissile.getCentreX());
-        aFire.setCentreY(aMissile.getCentreY() + aMissile.getHeight() / 2);
-        aFire.setLayer(this.getLayer());
-        aFire.setVelocityX(this.getVelocityX());
-        aFire.setVelocityY(this.getVelocityY());
-
-        this.theScene.addSprite(aFire);
-    }
-
-    @Override
-    public void fireAutoFollowMissile()
-    {
-        EnemyAutoFollowMissile aMissile = new EnemyAutoFollowMissile();
-        aMissile.theTarget = this.theTarget;
-//        aMissile.bDrawFrame = true;
-        aMissile.setX(this.getCentreX() - aMissile.getWidth() / 2);
-        aMissile.setY(this.getCentreY() + this.getHeight() / 2);
-        aMissile.setAngle(this.getAngle());
-
-        aMissile.setVelocityX(Common.SPEED_MISSILE_ENEMY * Math.sin(-aMissile.getAngle()));
-        aMissile.setVelocityY(Common.SPEED_MISSILE_ENEMY * Math.cos(-aMissile.getAngle()));
-
-        aMissile.setLayer(this.getLayer());
-        aMissile.fire();
-
-        this.theScene.addSprite(aMissile);
-        ((SpaceShipScene) this.theScene).addAEnemyMissile(aMissile);
-
-        EnemyFire aFire = new EnemyFire();
-        aFire.setCentreX(aMissile.getCentreX());
-        aFire.setCentreY(aMissile.getCentreY() + aMissile.getHeight() / 2);
-        aFire.setLayer(this.getLayer());
-        aFire.setVelocityX(this.getVelocityX());
-        aFire.setVelocityY(this.getVelocityY());
-
-        this.theScene.addSprite(aFire);
-    }
-
-    @Override
     public void actionPerformed(ActionEvent e)
     {
-        if (this.getShouldDie()) return;
-        
+        if (this.getShouldDie())
+        {
+            return;
+        }
+
         if (e.getSource().equals(this.theTimerAutoadjust))
         {
-            if (this.getShouldDie()) return;
+            if (this.getShouldDie())
+            {
+                return;
+            }
             if (bAutoAdjustGesture)
             {
                 adjustGesture(theTarget);
             }
         } else if (e.getSource().equals(this.theTimerFire))
         {
-            if (this.getShouldDie()) return;
-            fire();
+            if (this.getShouldDie())
+            {
+                return;
+            }
+
+            this.theWeaponMain.fire();
         } else if (e.getSource().equals(this.theTimerForAutoFollowMissile))
         {
-            if (this.getShouldDie()) return;
+            if (this.getShouldDie())
+            {
+                return;
+            }
             if (abs(theRandom.nextInt()) % 100 > 80)
             {
-                fireAutoFollowMissile();
+                this.theWeaponAutoMissile.fire();
             }
         }
     }

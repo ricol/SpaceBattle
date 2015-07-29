@@ -57,15 +57,6 @@ public class Spaceship extends MovingObject implements ActionListener
         }
 
         theTimerForEngine.start();
-    }
-
-    public void fire()
-    {
-
-    }
-
-    public void fireAutoFollowMissile()
-    {
 
     }
 
@@ -140,8 +131,11 @@ public class Spaceship extends MovingObject implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        if (this.getShouldDie()) return;
-        
+        if (this.getShouldDie())
+        {
+            return;
+        }
+
         if (e.getSource().equals(this.theTimerForEngine))
         {
             engine();
