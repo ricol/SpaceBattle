@@ -6,7 +6,7 @@
 package au.com.spacebattle.sprite.missile;
 
 import au.com.rmit.Game2dEngine.node.Sprite;
-import au.com.spacebattle.sprite.spaceship.friend.MySpaceship;
+import au.com.spacebattle.sprite.spaceship.Spaceship;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import static java.lang.Math.abs;
@@ -21,9 +21,9 @@ public class FriendLaserWeapon extends FriendMissile
     public static final int HEIGHT = 1000;
     public static final int WIDTH = 20;
 
-    MySpaceship theShip;
+    Spaceship theShip;
 
-    public FriendLaserWeapon(MySpaceship ship)
+    public FriendLaserWeapon(Spaceship ship)
     {
         super(0, 0, 0, HEIGHT, 0, 0, 0);
         this.setRed(abs(theRandom.nextInt()) % 255);

@@ -144,7 +144,7 @@ public class FrameMain extends javax.swing.JFrame implements MouseListener, Mous
         {
             if (this.theScene.bGameRunning)
             {
-                theScene.theShip.openSheld();
+                theScene.theShip.openLaser();
             }
         }
     }
