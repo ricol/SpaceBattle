@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package au.com.spacebattle.sprite.missile;
+package au.com.spacebattle.sprite.spaceship.weapon.missile;
 
 import au.com.rmit.Game2dEngine.action.AlphaToAction;
 import au.com.spacebattle.common.Common;
@@ -15,10 +15,10 @@ import static java.lang.Math.pow;
  *
  * @author ricolwang
  */
-public class BossMainWeaponMissile extends Missile
+public class EnemyMissile extends Missile
 {
 
-    public BossMainWeaponMissile(String imagename)
+    public EnemyMissile(String imagename)
     {
         super(imagename);
 
@@ -26,19 +26,11 @@ public class BossMainWeaponMissile extends Missile
         this.setCollisionCategory(Common.CATEGORY_ENEMY_SHIP);
         this.addTargetCollisionCategory(Common.CATEGORY_FRIEND_SHIP);
     }
-    
-    @Override
-    public void onWillDead()
-    {
-        super.onWillDead(); //To change body of generated methods, choose Tools | Templates.
-
-        this.explode();
-    }
 
     @Override
     protected void explode()
     {
-        int number = abs(theRandom.nextInt()) % 10 + 30;
+        int number = abs(theRandom.nextInt()) % 10 + 10;
 
         for (int i = 0; i < number; i++)
         {
@@ -56,7 +48,7 @@ public class BossMainWeaponMissile extends Missile
             aFire.bDeadIfNoActions = true;
 
             AlphaToAction aAction = new AlphaToAction(aFire);
-            aAction.alphaTo(0, 0.5f);
+            aAction.alphaTo(0, 0.2f);
             aFire.addAction(aAction);
 
             if (this.theScene == null) break;

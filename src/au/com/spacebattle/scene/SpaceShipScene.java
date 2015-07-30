@@ -12,8 +12,8 @@ import au.com.rmit.Game2dEngine.node.LabelSprite;
 import au.com.rmit.Game2dEngine.node.Sprite;
 import au.com.rmit.Game2dEngine.scene.Scene;
 import au.com.spacebattle.common.Common;
-import au.com.spacebattle.sprite.missile.BossAutoFollowMissile;
-import au.com.spacebattle.sprite.missile.EnemyAutoFollowMissile;
+import au.com.spacebattle.sprite.spaceship.weapon.missile.BossAutoFollowMissile;
+import au.com.spacebattle.sprite.spaceship.weapon.missile.EnemyAutoFollowMissile;
 import au.com.spacebattle.sprite.other.Score;
 import au.com.spacebattle.sprite.other.SpaceBackground;
 import au.com.spacebattle.sprite.spaceship.enemy.Boss;
@@ -125,6 +125,7 @@ public class SpaceShipScene extends Scene implements ActionListener
 
         aBoss.theTarget = this.theShip;
         aBoss.bAutoAdjustGesture = true;
+        aBoss.rebuildTheCircleShape();
         this.addSprite(aBoss);
 
         this.addABoss(aBoss);
@@ -162,6 +163,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         aEnemy.setLifeTime(10);
 
         aEnemy.theTarget = this.theShip;
+        aEnemy.rebuildTheCircleShape();
         this.addSprite(aEnemy);
 
         this.addAEnemy(aEnemy);

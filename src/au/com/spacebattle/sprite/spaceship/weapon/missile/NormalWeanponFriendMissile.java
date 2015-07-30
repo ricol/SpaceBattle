@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package au.com.spacebattle.sprite.missile;
+package au.com.spacebattle.sprite.spaceship.weapon.missile;
 
 import au.com.rmit.Game2dEngine.action.AlphaToAction;
 import au.com.spacebattle.common.Common;
@@ -15,10 +15,10 @@ import static java.lang.Math.pow;
  *
  * @author ricolwang
  */
-public class MainWeapanFriendMissile extends FriendMissile
+public class NormalWeanponFriendMissile extends FriendMissile
 {
 
-    public MainWeapanFriendMissile(String imagename)
+    public NormalWeanponFriendMissile(String imagename)
     {
         super(imagename);
     }
@@ -26,7 +26,7 @@ public class MainWeapanFriendMissile extends FriendMissile
     @Override
     protected void explode()
     {
-        int number = abs(theRandom.nextInt()) % 10 + 20;
+        int number = abs(theRandom.nextInt()) % 10 + 10;
 
         for (int i = 0; i < number; i++)
         {
@@ -38,26 +38,17 @@ public class MainWeapanFriendMissile extends FriendMissile
             aFire.setY(this.getCentreY());
             aFire.setVelocityX(tmpX);
             aFire.setVelocityY(tmpY);
-            aFire.setRed(255);
+            aFire.setRed(0);
             aFire.setGreen(255);
-            aFire.setBlue(255);
+            aFire.setBlue(0);
             aFire.bDeadIfNoActions = true;
 
             AlphaToAction aAction = new AlphaToAction(aFire);
-            aAction.alphaTo(0, 0.3f);
+            aAction.alphaTo(0, 0.2f);
             aFire.addAction(aAction);
 
             if (this.theScene == null) break;
             this.theScene.addSprite(aFire);
         }
     }
-
-    @Override
-    public void onWillDead()
-    {
-        super.onWillDead(); //To change body of generated methods, choose Tools | Templates.
-
-        this.explode();
-    }
-
 }

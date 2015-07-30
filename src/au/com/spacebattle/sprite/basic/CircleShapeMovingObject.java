@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package au.com.spacebattle.common;
+package au.com.spacebattle.sprite.basic;
 
 import au.com.rmit.Game2dEngine.node.Sprite;
 
@@ -11,19 +11,18 @@ import au.com.rmit.Game2dEngine.node.Sprite;
  *
  * @author ricolwang
  */
-public class MovingObject extends Sprite
+public class CircleShapeMovingObject extends MovingObject
 {
 
-    public MovingObject(double x, double y, double width, double height, double mass, double velocityX, double velocityY)
+    public CircleShapeMovingObject(double x, double y, double width, double height, double mass, double velocityX, double velocityY)
     {
         super(x, y, width, height, mass, velocityX, velocityY);
-        
-//        this.bDrawFrame = true;
     }
 
     @Override
     public boolean collideWith(Sprite target)
     {
-        return super.rectangleOverlaps(target);
+        return super.circleOverlaps(target);
     }
+
 }

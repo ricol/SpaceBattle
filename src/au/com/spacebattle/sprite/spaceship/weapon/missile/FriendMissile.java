@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package au.com.spacebattle.sprite.missile;
+package au.com.spacebattle.sprite.spaceship.weapon.missile;
 
 import au.com.spacebattle.common.Common;
 

@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package au.com.spacebattle.sprite.missile;
+package au.com.spacebattle.sprite.spaceship.weapon.missile;
 
 import au.com.rmit.Game2dEngine.node.Sprite;
-import au.com.spacebattle.common.MovingObject;
+import au.com.spacebattle.sprite.basic.CircleShapeMovingObject;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +16,7 @@ import javax.imageio.ImageIO;
  *
  * @author ricolwang
  */
-public class Missile extends MovingObject
+public class Missile extends CircleShapeMovingObject
 {
 
     public Missile(double x, double y, double width, double height, double mass, double velocityX, double velocityY)
@@ -49,6 +49,7 @@ public class Missile extends MovingObject
         }
 
         this.setLifeTime(1);
+        this.rebuildTheCircleShape();
     }
 
 

@@ -6,8 +6,8 @@
 package au.com.spacebattle.sprite.spaceship;
 
 import au.com.rmit.Game2dEngine.action.AlphaToAction;
+import au.com.spacebattle.sprite.basic.CircleShapeMovingObject;
 import au.com.spacebattle.common.Common;
-import au.com.spacebattle.common.MovingObject;
 import au.com.spacebattle.sprite.other.ExpodeParticle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,7 +23,7 @@ import javax.swing.Timer;
  *
  * @author ricolwang
  */
-public class Spaceship extends MovingObject implements ActionListener
+public class Spaceship extends CircleShapeMovingObject implements ActionListener
 {
 
     private int totalLife = 100;

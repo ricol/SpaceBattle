@@ -3,19 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package au.com.spacebattle.sprite.missile;
+package au.com.spacebattle.sprite.spaceship.weapon.laser;
 
-import au.com.rmit.Game2dEngine.node.Sprite;
+import au.com.spacebattle.common.Common;
+import au.com.spacebattle.sprite.basic.RectangleShapeMovingObject;
 import au.com.spacebattle.sprite.spaceship.Spaceship;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import static java.lang.Math.abs;
+import javax.imageio.ImageIO;
 
 /**
  *
  * @author ricolwang
  */
-public class FriendLaserWeapon extends FriendMissile
+public class FriendLaserWeapon extends RectangleShapeMovingObject
 {
 
     public static final int HEIGHT = 1000;
@@ -38,6 +43,40 @@ public class FriendLaserWeapon extends FriendMissile
         this.setLifeTime(0.001f);
 
         this.bCustomDrawing = true;
+
+        this.bCollisionDetect = true;
+        this.setCollisionCategory(Common.CATEGORY_FRIEND_SHIP);
+        this.addTargetCollisionCategory(Common.CATEGORY_ENEMY_SHIP);
+    }
+
+    public FriendLaserWeapon(String imagename)
+    {
+        super(0, 0, 0, 0, 0, 0, 0);
+
+        BufferedImage aImage;
+
+        try
+        {
+            aImage = ImageIO.read(new File(imagename));
+            int max = aImage.getWidth();
+            if (aImage.getWidth() < aImage.getHeight())
+            {
+                max = aImage.getHeight();
+            }
+            this.setWidth(max);
+            this.setHeight(max);
+
+            this.setImage(imagename);
+        } catch (IOException e)
+        {
+
+        }
+
+        this.setLifeTime(1);
+
+        this.bCollisionDetect = true;
+        this.setCollisionCategory(Common.CATEGORY_FRIEND_SHIP);
+        this.addTargetCollisionCategory(Common.CATEGORY_ENEMY_SHIP);
     }
 
     @Override
@@ -48,11 +87,6 @@ public class FriendLaserWeapon extends FriendMissile
         theGraphics2D.fillRect(0, 0, (int) getWidth(), (int) getHeight());
         theGraphics2D.setColor(getColor());
         theGraphics2D.fillRect(0, 0, (int) getWidth(), (int) getHeight());
-    }
-
-    @Override
-    public void onCollideWith(Sprite target)
-    {
     }
 
 }
