@@ -6,6 +6,7 @@
 package au.com.spacebattle.sprite.basic;
 
 import au.com.rmit.Game2dEngine.node.Sprite;
+import au.com.spacebattle.sprite.spaceship.weapon.laser.FriendLaserWeapon;
 
 /**
  *
@@ -22,7 +23,13 @@ public class CircleShapeMovingObject extends MovingObject
     @Override
     public boolean collideWith(Sprite target)
     {
-        return super.circleOverlaps(target);
+        if (target instanceof FriendLaserWeapon)
+        {
+            return super.rectangleOverlaps(target);
+        } else
+        {
+            return super.circleOverlaps(target);
+        }
     }
 
 }

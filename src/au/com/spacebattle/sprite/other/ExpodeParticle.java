@@ -31,7 +31,7 @@ public class ExpodeParticle extends Sprite
     public void onCustomDraw(Graphics2D theGraphics2D)
     {
         theGraphics2D.setColor(this.getColor());
-        theGraphics2D.fillOval(0, 0, (int)width - 1, (int)height - 1);
+        theGraphics2D.fillOval(0, 0, (int)getWidth() - 1, (int)getHeight() - 1);
     }
     
 }

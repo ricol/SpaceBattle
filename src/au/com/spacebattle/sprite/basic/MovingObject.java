@@ -18,7 +18,8 @@ public abstract class MovingObject extends Sprite
     {
         super(x, y, width, height, mass, velocityX, velocityY);
 
-        this.bDrawCircle = true;
+//        this.bDrawCircle = true;
+//        this.bDrawFrame = true;
     }
 
 }
