@@ -128,7 +128,6 @@ public class SpaceShipScene extends Scene implements ActionListener
 
         aBoss.theTarget = this.theShip;
         aBoss.bAutoAdjustGesture = true;
-        aBoss.rebuildTheCircleShape();
         this.addSprite(aBoss);
 
         this.addABoss(aBoss);
@@ -166,7 +165,6 @@ public class SpaceShipScene extends Scene implements ActionListener
         aEnemy.setLifeTime(10);
 
         aEnemy.theTarget = this.theShip;
-        aEnemy.rebuildTheCircleShape();
         this.addSprite(aEnemy);
 
         this.addAEnemy(aEnemy);

@@ -49,7 +49,6 @@ public class Missile extends CircleShapeMovingObject
         }
 
         this.setLifeTime(1);
-        this.rebuildTheCircleShape();
     }
 
 
