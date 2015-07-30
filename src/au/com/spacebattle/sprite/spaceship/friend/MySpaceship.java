@@ -15,13 +15,13 @@ import au.com.rmit.Game2dEngine.node.Sprite;
 import au.com.rmit.Game2dEngine.scene.Layer;
 import au.com.spacebattle.common.Common;
 import au.com.spacebattle.scene.SpaceShipScene;
-import au.com.spacebattle.sprite.spaceship.weapon.laser.FriendLaserWeapon;
 import au.com.spacebattle.sprite.other.ExpodeParticle;
 import au.com.spacebattle.sprite.spaceship.Spaceship;
 import au.com.spacebattle.sprite.spaceship.weapon.FriendAlternativeWeapon;
 import au.com.spacebattle.sprite.spaceship.weapon.FriendAutoMissileWeapon;
 import au.com.spacebattle.sprite.spaceship.weapon.FriendMainWeapon;
 import au.com.spacebattle.sprite.spaceship.weapon.Weapon;
+import au.com.spacebattle.sprite.spaceship.weapon.laser.FriendLaserWeapon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.lang.Math.abs;
@@ -61,8 +61,6 @@ public class MySpaceship extends Spaceship implements ActionListener
         this.timerForLaser.start();
         theTimerForAutoFollowMissile.start();
         
-        this.rebuildTheCircleShape();
-
         this.addAChild(this.theWeaponMain);
         this.addAChild(this.theWeaponAlternative);
         this.addAChild(this.theWeaponAutoMissile);
