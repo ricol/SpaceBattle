@@ -23,8 +23,8 @@ public class EnemyMissile extends Missile
         super(imagename);
 
         this.bCollisionDetect = true;
-        this.collisionCategory = Common.CATEGORY_ENEMY_SHIP;
-        this.collisionTargetCategory = Common.CATEGORY_FRIEND_SHIP;
+        this.setCollisionCategory(Common.CATEGORY_ENEMY_SHIP);
+        this.addTargetCollisionCategory(Common.CATEGORY_FRIEND_SHIP);
     }
 
     @Override

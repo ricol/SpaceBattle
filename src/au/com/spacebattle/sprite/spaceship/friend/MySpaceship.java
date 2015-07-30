@@ -53,8 +53,8 @@ public class MySpaceship extends Spaceship implements ActionListener
         super("my-spaceship.png");
         this.setLifeTime(Sprite.EVER);
         this.bCollisionDetect = true;
-        this.collisionCategory = Common.CATEGORY_FRIEND_SHIP;
-        this.collisionTargetCategory = Common.CATEGORY_ENEMY_SHIP;
+        this.setCollisionCategory(Common.CATEGORY_FRIEND_SHIP);
+        this.addTargetCollisionCategory(Common.CATEGORY_ENEMY_SHIP);
 
         this.setLayer(Common.LAYER_FRIEND_SHIP);
         this.resetTotalLife(500);

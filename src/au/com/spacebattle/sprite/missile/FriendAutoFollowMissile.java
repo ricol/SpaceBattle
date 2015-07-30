@@ -27,8 +27,8 @@ public class FriendAutoFollowMissile extends AutoFollowMissile
         this.setLifeTime(5);
         this.times = 100;
         this.bCollisionDetect = true;
-        this.collisionCategory = Common.CATEGORY_FRIEND_SHIP;
-        this.collisionTargetCategory = Common.CATEGORY_ENEMY_SHIP;
+        this.setCollisionCategory(Common.CATEGORY_FRIEND_SHIP);
+        this.addTargetCollisionCategory(Common.CATEGORY_ENEMY_SHIP);
     }
 
     @Override

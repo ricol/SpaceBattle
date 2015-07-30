@@ -18,15 +18,15 @@ public class FriendMissile extends Missile
     {
         super(x, y, width, height, mass, velocityX, velocityY);
         this.bCollisionDetect = true;
-        this.collisionCategory = Common.CATEGORY_FRIEND_SHIP;
-        this.collisionTargetCategory = Common.CATEGORY_ENEMY_SHIP;
+        this.setCollisionCategory(Common.CATEGORY_FRIEND_SHIP);
+        this.addTargetCollisionCategory(Common.CATEGORY_ENEMY_SHIP);
     }
 
     public FriendMissile(String imagename)
     {
         super(imagename);
         this.bCollisionDetect = true;
-        this.collisionCategory = Common.CATEGORY_FRIEND_SHIP;
-        this.collisionTargetCategory = Common.CATEGORY_ENEMY_SHIP;
+        this.setCollisionCategory(Common.CATEGORY_FRIEND_SHIP);
+        this.addTargetCollisionCategory(Common.CATEGORY_ENEMY_SHIP);
     }
 }

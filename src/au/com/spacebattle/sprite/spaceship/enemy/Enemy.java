@@ -48,9 +48,9 @@ public class Enemy extends Spaceship implements ActionListener
         super(imagename);
 
         this.bCollisionDetect = true;
-        this.collisionCategory = Common.CATEGORY_ENEMY_SHIP;
-        this.collisionTargetCategory = Common.CATEGORY_FRIEND_SHIP;
-
+        this.setCollisionCategory(Common.CATEGORY_ENEMY_SHIP);
+        this.addTargetCollisionCategory(Common.CATEGORY_FRIEND_SHIP);
+        
         this.setLayer(Common.LAYER_ENEMY_SHIP);
         this.theTimerAutoadjust.start();
         this.theTimerFire.start();
