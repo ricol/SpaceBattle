@@ -12,22 +12,25 @@ import au.com.rmit.Game2dEngine.node.LabelSprite;
 import au.com.rmit.Game2dEngine.node.Sprite;
 import au.com.rmit.Game2dEngine.scene.Scene;
 import au.com.spacebattle.common.Common;
-import au.com.spacebattle.sprite.missile.BossAutoFollowMissile;
-import au.com.spacebattle.sprite.missile.EnemyAutoFollowMissile;
 import au.com.spacebattle.sprite.other.Score;
 import au.com.spacebattle.sprite.other.SpaceBackground;
 import au.com.spacebattle.sprite.spaceship.enemy.Boss;
 import au.com.spacebattle.sprite.spaceship.enemy.Enemy;
 import au.com.spacebattle.sprite.spaceship.friend.MySpaceship;
+import au.com.spacebattle.sprite.spaceship.weapon.missile.BossAutoFollowMissile;
+import au.com.spacebattle.sprite.spaceship.weapon.missile.EnemyAutoFollowMissile;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import static java.lang.Math.abs;
 import static java.lang.Math.pow;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
@@ -64,12 +67,12 @@ public class SpaceShipScene extends Scene implements ActionListener
 
     public SpaceShipScene()
     {
-//        try
-//        {
-//            this.theImageBackground = ImageIO.read(new File("space-background.jpg"));
-//        } catch (IOException ex)
-//        {
-//        }
+        try
+        {
+            this.theImageBackground = ImageIO.read(new File("space.jpg"));
+        } catch (IOException ex)
+        {
+        }
 
 //        this.theBackgroundFirst = new SpaceBackground();
 //        this.addSprite(this.theBackgroundFirst);
@@ -125,6 +128,7 @@ public class SpaceShipScene extends Scene implements ActionListener
 
         aBoss.theTarget = this.theShip;
         aBoss.bAutoAdjustGesture = true;
+        aBoss.rebuildTheCircleShape();
         this.addSprite(aBoss);
 
         this.addABoss(aBoss);
@@ -162,6 +166,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         aEnemy.setLifeTime(10);
 
         aEnemy.theTarget = this.theShip;
+        aEnemy.rebuildTheCircleShape();
         this.addSprite(aEnemy);
 
         this.addAEnemy(aEnemy);

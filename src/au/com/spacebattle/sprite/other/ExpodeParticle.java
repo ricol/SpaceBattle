@@ -6,6 +6,7 @@
 package au.com.spacebattle.sprite.other;
 
 import au.com.rmit.Game2dEngine.node.Sprite;
+import java.awt.Graphics2D;
 
 /**
  *
@@ -18,6 +19,7 @@ public class ExpodeParticle extends Sprite
     {
         super(x, y, width, height, mass, velocityX, velocityY);
 
+        this.bCustomDrawing = true;
     }
 
     public ExpodeParticle()
@@ -25,4 +27,11 @@ public class ExpodeParticle extends Sprite
         this(0, 0, 7, 7, 0, 0, 0);
     }
 
+    @Override
+    public void onCustomDraw(Graphics2D theGraphics2D)
+    {
+        theGraphics2D.setColor(this.getColor());
+        theGraphics2D.fillOval(0, 0, (int)getWidth() - 1, (int)getHeight() - 1);
+    }
+    
 }

@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package au.com.spacebattle.sprite.missile;
+package au.com.spacebattle.sprite.spaceship.weapon.missile;
 
 import au.com.rmit.Game2dEngine.action.AlphaToAction;
 import au.com.spacebattle.common.Common;
-import au.com.spacebattle.common.MovingObject;
+import au.com.spacebattle.sprite.basic.MovingObject;
 import au.com.spacebattle.scene.SpaceShipScene;
 import au.com.spacebattle.sprite.other.ExpodeParticle;
 import static java.lang.Math.abs;
@@ -27,8 +27,8 @@ public class FriendAutoFollowMissile extends AutoFollowMissile
         this.setLifeTime(5);
         this.times = 100;
         this.bCollisionDetect = true;
-        this.collisionCategory = Common.CATEGORY_FRIEND_SHIP;
-        this.collisionTargetCategory = Common.CATEGORY_ENEMY_SHIP;
+        this.setCollisionCategory(Common.CATEGORY_FRIEND_SHIP);
+        this.addTargetCollisionCategory(Common.CATEGORY_ENEMY_SHIP);
     }
 
     @Override

@@ -10,10 +10,10 @@ import au.com.rmit.Game2dEngine.node.Sprite;
 import au.com.rmit.Game2dEngine.scene.Layer;
 import au.com.spacebattle.common.Common;
 import au.com.spacebattle.scene.SpaceShipScene;
-import au.com.spacebattle.sprite.missile.FriendAutoFollowMissile;
-import au.com.spacebattle.sprite.missile.FriendLaserWeapon;
-import au.com.spacebattle.sprite.missile.MainWeapanFriendMissile;
-import au.com.spacebattle.sprite.missile.NormalWeanponFriendMissile;
+import au.com.spacebattle.sprite.spaceship.weapon.missile.FriendAutoFollowMissile;
+import au.com.spacebattle.sprite.spaceship.weapon.laser.FriendLaserWeapon;
+import au.com.spacebattle.sprite.spaceship.weapon.missile.MainWeapanFriendMissile;
+import au.com.spacebattle.sprite.spaceship.weapon.missile.NormalWeanponFriendMissile;
 import au.com.spacebattle.sprite.other.ExpodeParticle;
 import au.com.spacebattle.sprite.spaceship.Spaceship;
 import au.com.spacebattle.sprite.spaceship.friend.MySpaceship;
@@ -48,9 +48,9 @@ public class Enemy extends Spaceship implements ActionListener
         super(imagename);
 
         this.bCollisionDetect = true;
-        this.collisionCategory = Common.CATEGORY_ENEMY_SHIP;
-        this.collisionTargetCategory = Common.CATEGORY_FRIEND_SHIP;
-
+        this.setCollisionCategory(Common.CATEGORY_ENEMY_SHIP);
+        this.addTargetCollisionCategory(Common.CATEGORY_FRIEND_SHIP);
+        
         this.setLayer(Common.LAYER_ENEMY_SHIP);
         this.theTimerAutoadjust.start();
         this.theTimerFire.start();

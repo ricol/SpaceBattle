@@ -7,7 +7,7 @@ package au.com.spacebattle.sprite.spaceship.weapon;
 
 import au.com.spacebattle.common.Common;
 import au.com.spacebattle.scene.SpaceShipScene;
-import au.com.spacebattle.sprite.missile.EnemyAutoFollowMissile;
+import au.com.spacebattle.sprite.spaceship.weapon.missile.EnemyAutoFollowMissile;
 import au.com.spacebattle.sprite.other.EnemyFire;
 import au.com.spacebattle.sprite.spaceship.Spaceship;
 import au.com.spacebattle.sprite.spaceship.enemy.Enemy;

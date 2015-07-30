@@ -5,7 +5,7 @@
  */
 package au.com.spacebattle.sprite.spaceship.weapon;
 
-import au.com.spacebattle.sprite.missile.FriendLaserWeapon;
+import au.com.spacebattle.sprite.spaceship.weapon.laser.FriendLaserWeapon;
 import au.com.spacebattle.sprite.spaceship.Spaceship;
 
 /**

@@ -15,9 +15,9 @@ import au.com.rmit.Game2dEngine.node.Sprite;
 import au.com.rmit.Game2dEngine.scene.Layer;
 import au.com.spacebattle.common.Common;
 import au.com.spacebattle.scene.SpaceShipScene;
+import au.com.spacebattle.sprite.spaceship.weapon.laser.FriendLaserWeapon;
 import au.com.spacebattle.sprite.other.ExpodeParticle;
 import au.com.spacebattle.sprite.spaceship.Spaceship;
-import au.com.spacebattle.sprite.missile.FriendLaserWeapon;
 import au.com.spacebattle.sprite.spaceship.weapon.FriendAlternativeWeapon;
 import au.com.spacebattle.sprite.spaceship.weapon.FriendAutoMissileWeapon;
 import au.com.spacebattle.sprite.spaceship.weapon.FriendMainWeapon;
@@ -53,13 +53,15 @@ public class MySpaceship extends Spaceship implements ActionListener
         super("my-spaceship.png");
         this.setLifeTime(Sprite.EVER);
         this.bCollisionDetect = true;
-        this.collisionCategory = Common.CATEGORY_FRIEND_SHIP;
-        this.collisionTargetCategory = Common.CATEGORY_ENEMY_SHIP;
+        this.setCollisionCategory(Common.CATEGORY_FRIEND_SHIP);
+        this.addTargetCollisionCategory(Common.CATEGORY_ENEMY_SHIP);
 
         this.setLayer(Common.LAYER_FRIEND_SHIP);
         this.resetTotalLife(500);
         this.timerForLaser.start();
         theTimerForAutoFollowMissile.start();
+        
+        this.rebuildTheCircleShape();
 
         this.addAChild(this.theWeaponMain);
         this.addAChild(this.theWeaponAlternative);
