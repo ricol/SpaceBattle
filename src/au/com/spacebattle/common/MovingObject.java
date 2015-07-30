@@ -20,5 +20,10 @@ public class MovingObject extends Sprite
         
 //        this.bDrawFrame = true;
     }
-    
+
+    @Override
+    public boolean collideWith(Sprite target)
+    {
+        return super.rectangleOverlaps(target);
+    }
 }
