@@ -5,7 +5,7 @@
  */
 package au.com.spacebattle.sprite.spaceship.weapon;
 
-import au.com.rmit.Game2dEngine.node.Sprite;
+import au.com.rmit.Game2dEngine.sprite.Sprite;
 import au.com.spacebattle.sprite.spaceship.Spaceship;
 import java.awt.Graphics2D;
 

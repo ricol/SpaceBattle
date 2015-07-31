@@ -5,7 +5,7 @@
  */
 package au.com.spacebattle.sprite.spaceship.weapon.missile;
 
-import au.com.rmit.Game2dEngine.node.Sprite;
+import au.com.rmit.Game2dEngine.sprite.Sprite;
 import au.com.spacebattle.sprite.basic.CircleShapeMovingObject;
 import java.awt.image.BufferedImage;
 import java.io.File;

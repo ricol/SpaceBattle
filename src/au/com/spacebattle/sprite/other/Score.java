@@ -6,7 +6,7 @@
 package au.com.spacebattle.sprite.other;
 
 import au.com.rmit.Game2dEngine.action.AlphaToAction;
-import au.com.rmit.Game2dEngine.node.LabelSprite;
+import au.com.rmit.Game2dEngine.sprite.LabelSprite;
 import au.com.spacebattle.common.Common;
 import java.awt.Font;
 
