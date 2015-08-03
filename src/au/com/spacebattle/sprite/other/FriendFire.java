@@ -6,7 +6,7 @@
 package au.com.spacebattle.sprite.other;
 
 import au.com.rmit.Game2dEngine.action.ExpandByAction;
-import au.com.rmit.Game2dEngine.node.Sprite;
+import au.com.rmit.Game2dEngine.sprite.Sprite;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;

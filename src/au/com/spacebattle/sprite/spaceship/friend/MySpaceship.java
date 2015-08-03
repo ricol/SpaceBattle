@@ -11,7 +11,7 @@ import au.com.rmit.Game2dEngine.action.MoveCentreXToAction;
 import au.com.rmit.Game2dEngine.action.MoveCentreYToAction;
 import au.com.rmit.Game2dEngine.action.MoveXByAction;
 import au.com.rmit.Game2dEngine.action.MoveYByAction;
-import au.com.rmit.Game2dEngine.node.Sprite;
+import au.com.rmit.Game2dEngine.sprite.Sprite;
 import au.com.rmit.Game2dEngine.scene.Layer;
 import au.com.spacebattle.common.Common;
 import au.com.spacebattle.scene.SpaceShipScene;

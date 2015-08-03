@@ -5,7 +5,7 @@
  */
 package au.com.spacebattle.sprite.basic;
 
-import au.com.rmit.Game2dEngine.node.Sprite;
+import au.com.rmit.Game2dEngine.sprite.Sprite;
 
 /**
  *
