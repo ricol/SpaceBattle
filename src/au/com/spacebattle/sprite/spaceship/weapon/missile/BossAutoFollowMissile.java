@@ -16,7 +16,7 @@ import static java.lang.Math.pow;
  *
  * @author ricolwang
  */
-public class BossAutoFollowMissile extends AutoFollowMissile
+public class BossAutoFollowMissile extends BadAutoFollowMissile
 {
 
     public BossAutoFollowMissile()

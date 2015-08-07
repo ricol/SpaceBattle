@@ -16,7 +16,7 @@ import static java.lang.Math.pow;
  *
  * @author ricolwang
  */
-public class EnemyAutoFollowMissile extends AutoFollowMissile
+public class EnemyAutoFollowMissile extends BadAutoFollowMissile
 {
 
     public EnemyAutoFollowMissile()

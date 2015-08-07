@@ -36,8 +36,9 @@ public class AutoFollowMissile extends Missile implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        if (this.getShouldDie()) return;
-        
+        if (this.getShouldDie())
+            return;
+
         if (e.getSource().equals(this.theTimer))
         {
             if (theTarget != null)
@@ -55,36 +56,7 @@ public class AutoFollowMissile extends Missile implements ActionListener
 
     public void adjustGesture(MovingObject theShip)
     {
-        if (theShip == null)
-        {
-            return;
-        }
-
-        if (theShip.isAlive())
-        {
-            //adjust gesture
-            double targetCentreX = theShip.getCentreX();
-            double targetCentreY = theShip.getCentreY();
-            double changeX = targetCentreX - this.getCentreX();
-            double changeY = targetCentreY - this.getCentreY();
-            double distance = Math.sqrt(changeX * changeX + changeY * changeY);
-
-            if (changeY >= 0)
-            {
-                double delta = Math.asin(changeX / distance);
-                this.setAngle(-delta);
-                //adjust velocity
-                this.setVelocityX(Common.SPEED_MISSILE_ENEMY * Math.sin(delta));
-                this.setVelocityY(Common.SPEED_MISSILE_ENEMY * Math.cos(delta));
-            } else
-            {
-                double delta = Math.asin(changeX / distance);
-                this.setAngle(delta + Math.PI);
-                //adjust velocity
-                this.setVelocityX(Common.SPEED_MISSILE_ENEMY * Math.sin(delta));
-                this.setVelocityY(-Common.SPEED_MISSILE_ENEMY * Math.cos(delta));
-            }
-        }
+        
     }
 
     public void fire()
