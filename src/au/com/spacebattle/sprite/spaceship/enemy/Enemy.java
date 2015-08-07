@@ -6,20 +6,21 @@
 package au.com.spacebattle.sprite.spaceship.enemy;
 
 import au.com.rmit.Game2dEngine.action.AlphaToAction;
-import au.com.rmit.Game2dEngine.sprite.Sprite;
+import au.com.rmit.Game2dEngine.math.Vector;
 import au.com.rmit.Game2dEngine.scene.Layer;
+import au.com.rmit.Game2dEngine.sprite.Sprite;
 import au.com.spacebattle.common.Common;
 import au.com.spacebattle.scene.SpaceShipScene;
-import au.com.spacebattle.sprite.spaceship.weapon.missile.FriendAutoFollowMissile;
-import au.com.spacebattle.sprite.spaceship.weapon.laser.FriendLaserWeapon;
-import au.com.spacebattle.sprite.spaceship.weapon.missile.MainWeapanFriendMissile;
-import au.com.spacebattle.sprite.spaceship.weapon.missile.NormalWeanponFriendMissile;
 import au.com.spacebattle.sprite.other.ExpodeParticle;
 import au.com.spacebattle.sprite.spaceship.Spaceship;
 import au.com.spacebattle.sprite.spaceship.friend.MySpaceship;
 import au.com.spacebattle.sprite.spaceship.weapon.EnemyAutoMissileWeapon;
 import au.com.spacebattle.sprite.spaceship.weapon.EnemyMainWeapon;
 import au.com.spacebattle.sprite.spaceship.weapon.Weapon;
+import au.com.spacebattle.sprite.spaceship.weapon.laser.FriendLaserWeapon;
+import au.com.spacebattle.sprite.spaceship.weapon.missile.FriendAutoFollowMissile;
+import au.com.spacebattle.sprite.spaceship.weapon.missile.MainWeapanFriendMissile;
+import au.com.spacebattle.sprite.spaceship.weapon.missile.NormalWeanponFriendMissile;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.lang.Math.abs;
@@ -50,7 +51,7 @@ public class Enemy extends Spaceship implements ActionListener
         this.bCollisionDetect = true;
         this.setCollisionCategory(Common.CATEGORY_ENEMY_SHIP);
         this.addTargetCollisionCategory(Common.CATEGORY_FRIEND_SHIP);
-        
+
         this.setLayer(Common.LAYER_ENEMY_SHIP);
         this.theTimerAutoadjust.start();
         this.theTimerFire.start();
@@ -160,21 +161,15 @@ public class Enemy extends Spaceship implements ActionListener
             return;
         }
 
-        double targetCentreX = theShip.getCentreX();
-        double targetCentreY = theShip.getCentreY();
-        double changeX = targetCentreX - this.getCentreX();
-        double changeY = targetCentreY - this.getCentreY();
-        double distance = Math.sqrt(changeX * changeX + changeY * changeY);
-
-        if (changeY >= 0)
-        {
-            double delta = Math.asin(changeX / distance);
-            this.setAngle(-delta);
-        } else
-        {
-            double delta = Math.asin(changeX / distance);
-            this.setAngle(delta + Math.PI);
-        }
+        double changeX = theShip.getCentreX() - this.getCentreX();
+        double changeY = theShip.getCentreY() - this.getCentreY();
+        Vector DISPLACEMENT = new Vector(changeX, changeY);
+        Vector Y = new Vector(0, -1);
+        double angle = DISPLACEMENT.getNegativeVector().getCosValueForAngleToVector(Y);
+        angle = Math.acos(angle);
+        if (changeX > 0)
+            angle = Math.PI * 2 - angle;
+        this.setAngle(angle);
     }
 
     @Override
