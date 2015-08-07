@@ -67,6 +67,8 @@ public class SpaceShipScene extends Scene implements ActionListener
 
     public SpaceShipScene()
     {
+        this.enableCollisionDetect();
+        
         try
         {
             this.theImageBackground = ImageIO.read(new File("space.jpg"));
