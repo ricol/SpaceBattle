@@ -5,6 +5,7 @@
  */
 package au.com.spacebattle.sprite.spaceship.weapon.laser;
 
+import au.com.rmit.Game2dEngine.geometry.shape.RectangleShape;
 import au.com.spacebattle.common.Common;
 import au.com.spacebattle.sprite.basic.RectangleShapeMovingObject;
 import au.com.spacebattle.sprite.spaceship.Spaceship;
@@ -47,6 +48,7 @@ public class FriendLaserWeapon extends RectangleShapeMovingObject
         this.bCollisionDetect = true;
         this.setCollisionCategory(Common.CATEGORY_FRIEND_SHIP);
         this.addTargetCollisionCategory(Common.CATEGORY_ENEMY_SHIP);
+        this.setTheShape(new RectangleShape(0, 0, 0, 0));
     }
 
     public FriendLaserWeapon(String imagename)

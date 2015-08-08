@@ -27,7 +27,7 @@ public class SpaceBackground extends Sprite
 
         if (this.theScene != null)
         {
-            if (y > this.theScene.getHeight())
+            if (this.getY() > this.theScene.getHeight())
             {
                 this.setY(-1 * (this.getHeight() + this.theScene.getHeight()));
             }
