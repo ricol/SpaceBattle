@@ -11,8 +11,8 @@ import au.com.rmit.Game2dEngine.action.MoveCentreXToAction;
 import au.com.rmit.Game2dEngine.action.MoveCentreYToAction;
 import au.com.rmit.Game2dEngine.action.MoveXByAction;
 import au.com.rmit.Game2dEngine.action.MoveYByAction;
-import au.com.rmit.Game2dEngine.sprite.Sprite;
 import au.com.rmit.Game2dEngine.scene.Layer;
+import au.com.rmit.Game2dEngine.sprite.Sprite;
 import au.com.spacebattle.common.Common;
 import au.com.spacebattle.scene.SpaceShipScene;
 import au.com.spacebattle.sprite.other.ExpodeParticle;
@@ -39,7 +39,7 @@ public class MySpaceship extends Spaceship implements ActionListener
 
     Timer timerForLaser = new Timer(10, this);
     Timer timerForStop = new Timer(3000, this);
-    Timer theTimerForAutoFollowMissile = new Timer(300, this);
+    Timer theTimerForAutoFollowMissile = new Timer(500, this);
 
     boolean bLaser = false;
     public boolean bAutoshot;
@@ -50,7 +50,7 @@ public class MySpaceship extends Spaceship implements ActionListener
 
     public MySpaceship()
     {
-        super("my-spaceship.png");
+        super("resource/my-spaceship.png");
         this.setLifeTime(Sprite.EVER);
         this.bCollisionDetect = true;
         this.setCollisionCategory(Common.CATEGORY_FRIEND_SHIP);

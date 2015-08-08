@@ -6,10 +6,10 @@
 package au.com.spacebattle.sprite.spaceship.weapon;
 
 import au.com.spacebattle.common.Common;
-import au.com.spacebattle.sprite.spaceship.weapon.missile.Missile;
-import au.com.spacebattle.sprite.spaceship.weapon.missile.NormalWeanponFriendMissile;
 import au.com.spacebattle.sprite.other.FriendFire;
 import au.com.spacebattle.sprite.spaceship.Spaceship;
+import au.com.spacebattle.sprite.spaceship.weapon.missile.Missile;
+import au.com.spacebattle.sprite.spaceship.weapon.missile.NormalWeanponFriendMissile;
 
 /**
  *
@@ -30,7 +30,7 @@ public class FriendAlternativeWeapon extends FriendWeapon
 
         //fire
         float speed = Common.SPEED_MISSILE_FRIEND;
-        Missile aMissile = new NormalWeanponFriendMissile("red-missile.png");
+        Missile aMissile = new NormalWeanponFriendMissile("resource/red-missile.png");
         aMissile.setX(this.theShip.getX() - aMissile.getWidth() / 2);
         aMissile.setY(this.theShip.getY() + 20);
         aMissile.setVelocityY(-speed);
@@ -46,7 +46,7 @@ public class FriendAlternativeWeapon extends FriendWeapon
 
         this.theShip.theScene.addSprite(aLeftFire);
 
-        aMissile = new NormalWeanponFriendMissile("red-missile.png");
+        aMissile = new NormalWeanponFriendMissile("resource/red-missile.png");
         aMissile.setX(this.theShip.getX() + this.theShip.getWidth() - aMissile.getWidth() / 2);
         aMissile.setY(this.theShip.getY() + 20);
         aMissile.setVelocityY(-speed);

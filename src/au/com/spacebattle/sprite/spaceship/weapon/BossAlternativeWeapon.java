@@ -6,10 +6,10 @@
 package au.com.spacebattle.sprite.spaceship.weapon;
 
 import au.com.spacebattle.common.Common;
-import au.com.spacebattle.sprite.spaceship.weapon.missile.EnemyMissile;
-import au.com.spacebattle.sprite.spaceship.weapon.missile.Missile;
 import au.com.spacebattle.sprite.other.EnemyFire;
 import au.com.spacebattle.sprite.spaceship.Spaceship;
+import au.com.spacebattle.sprite.spaceship.weapon.missile.EnemyMissile;
+import au.com.spacebattle.sprite.spaceship.weapon.missile.Missile;
 
 /**
  *
@@ -28,7 +28,7 @@ public class BossAlternativeWeapon extends EnemyWeapon
     {
         super.fire(); //To change body of generated methods, choose Tools | Templates.
 
-        Missile aMissile = new EnemyMissile("enemy-missile.png");
+        Missile aMissile = new EnemyMissile("resource/enemy-missile.png");
 //        aMissile.bDrawFrame = true;
         aMissile.setX(this.theShip.getCentreX() - aMissile.getWidth() / 2);
         aMissile.setY(this.theShip.getCentreY() + this.theShip.getHeight() / 2);

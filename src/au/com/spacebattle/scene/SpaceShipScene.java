@@ -8,9 +8,9 @@ package au.com.spacebattle.scene;
 import au.com.rmit.Game2dEngine.action.AlphaByAction;
 import au.com.rmit.Game2dEngine.action.AlphaToAction;
 import au.com.rmit.Game2dEngine.action.MoveYToAction;
+import au.com.rmit.Game2dEngine.scene.Scene;
 import au.com.rmit.Game2dEngine.sprite.LabelSprite;
 import au.com.rmit.Game2dEngine.sprite.Sprite;
-import au.com.rmit.Game2dEngine.scene.Scene;
 import au.com.spacebattle.common.Common;
 import au.com.spacebattle.sprite.other.Score;
 import au.com.spacebattle.sprite.other.SpaceBackground;
@@ -23,14 +23,11 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 import static java.lang.Math.abs;
 import static java.lang.Math.pow;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
@@ -67,12 +64,14 @@ public class SpaceShipScene extends Scene implements ActionListener
 
     public SpaceShipScene()
     {
-        try
-        {
-            this.theImageBackground = ImageIO.read(new File("space.jpg"));
-        } catch (IOException ex)
-        {
-        }
+        this.enableCollisionDetect();
+        
+//        try
+//        {
+//            this.theImageBackground = ImageIO.read(new File("space.jpg"));
+//        } catch (IOException ex)
+//        {
+//        }
 
 //        this.theBackgroundFirst = new SpaceBackground();
 //        this.addSprite(this.theBackgroundFirst);
@@ -141,7 +140,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         };
 
         int index = abs(theRandom.nextInt()) % data.length;
-        Enemy aEnemy = new Enemy(data[index]);
+        Enemy aEnemy = new Enemy("resource/" + data[index]);
 //        if (index == 1) 
         aEnemy.bAutoAdjustGesture = true;
 

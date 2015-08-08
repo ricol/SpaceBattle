@@ -5,8 +5,6 @@
  */
 package au.com.spacebattle.sprite.basic;
 
-import au.com.rmit.Game2dEngine.sprite.Sprite;
-
 /**
  *
  * @author ricolwang
@@ -18,10 +16,5 @@ public class RectangleShapeMovingObject extends MovingObject
     {
         super(x, y, width, height, mass, velocityX, velocityY);
     }
-    
-    @Override
-    public boolean collideWith(Sprite target)
-    {
-        return super.rectangleOverlaps(target);
-    }
+
 }

@@ -16,12 +16,12 @@ import static java.lang.Math.pow;
  *
  * @author ricolwang
  */
-public class BossAutoFollowMissile extends AutoFollowMissile
+public class BossAutoFollowMissile extends BadAutoFollowMissile
 {
 
     public BossAutoFollowMissile()
     {
-        super("nuclear-enemy-missile.png");
+        super("resource/nuclear-enemy-missile.png");
 
         this.times = 50;
         this.bCollisionDetect = true;
