@@ -21,7 +21,7 @@ public class EnemyAutoFollowMissile extends BadAutoFollowMissile
 
     public EnemyAutoFollowMissile()
     {
-        super("enemy-auto-follow-missile.png");
+        super("resource/enemy-auto-follow-missile.png");
 
         this.bCollisionDetect = true;
         this.setCollisionCategory(Common.CATEGORY_ENEMY_SHIP);

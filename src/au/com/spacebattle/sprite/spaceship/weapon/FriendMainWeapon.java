@@ -6,10 +6,10 @@
 package au.com.spacebattle.sprite.spaceship.weapon;
 
 import au.com.spacebattle.common.Common;
-import au.com.spacebattle.sprite.spaceship.weapon.missile.MainWeapanFriendMissile;
-import au.com.spacebattle.sprite.spaceship.weapon.missile.Missile;
 import au.com.spacebattle.sprite.other.FriendFire;
 import au.com.spacebattle.sprite.spaceship.Spaceship;
+import au.com.spacebattle.sprite.spaceship.weapon.missile.MainWeapanFriendMissile;
+import au.com.spacebattle.sprite.spaceship.weapon.missile.Missile;
 
 /**
  *
@@ -29,7 +29,7 @@ public class FriendMainWeapon extends FriendWeapon
         super.fire(); //To change body of generated methods, choose Tools | Templates.
 
         float speed = Common.SPEED_MISSILE_FRIEND;
-        Missile aMissile = new MainWeapanFriendMissile("blue-missile.png");
+        Missile aMissile = new MainWeapanFriendMissile("resource/blue-missile.png");
         aMissile.setCentreX(this.theShip.getCentreX());
         aMissile.setCentreY(this.theShip.getCentreY() - aMissile.getHeight());
 

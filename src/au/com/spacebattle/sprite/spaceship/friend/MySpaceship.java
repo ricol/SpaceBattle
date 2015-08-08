@@ -50,7 +50,7 @@ public class MySpaceship extends Spaceship implements ActionListener
 
     public MySpaceship()
     {
-        super("my-spaceship.png");
+        super("resource/my-spaceship.png");
         this.setLifeTime(Sprite.EVER);
         this.bCollisionDetect = true;
         this.setCollisionCategory(Common.CATEGORY_FRIEND_SHIP);

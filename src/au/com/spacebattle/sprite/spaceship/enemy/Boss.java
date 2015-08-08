@@ -11,16 +11,16 @@ import au.com.rmit.Game2dEngine.action.ExpandByAction;
 import au.com.rmit.Game2dEngine.sprite.Sprite;
 import au.com.spacebattle.common.Common;
 import au.com.spacebattle.scene.SpaceShipScene;
-import au.com.spacebattle.sprite.spaceship.weapon.missile.FriendAutoFollowMissile;
-import au.com.spacebattle.sprite.spaceship.weapon.laser.FriendLaserWeapon;
-import au.com.spacebattle.sprite.spaceship.weapon.missile.MainWeapanFriendMissile;
-import au.com.spacebattle.sprite.spaceship.weapon.missile.NormalWeanponFriendMissile;
 import au.com.spacebattle.sprite.other.ExpodeParticle;
 import au.com.spacebattle.sprite.spaceship.friend.MySpaceship;
 import au.com.spacebattle.sprite.spaceship.weapon.BossAlternativeWeapon;
 import au.com.spacebattle.sprite.spaceship.weapon.BossAutoMissileWeapon;
 import au.com.spacebattle.sprite.spaceship.weapon.BossMainWeapon;
 import au.com.spacebattle.sprite.spaceship.weapon.Weapon;
+import au.com.spacebattle.sprite.spaceship.weapon.laser.FriendLaserWeapon;
+import au.com.spacebattle.sprite.spaceship.weapon.missile.FriendAutoFollowMissile;
+import au.com.spacebattle.sprite.spaceship.weapon.missile.MainWeapanFriendMissile;
+import au.com.spacebattle.sprite.spaceship.weapon.missile.NormalWeanponFriendMissile;
 import java.awt.event.ActionEvent;
 import static java.lang.Math.abs;
 import static java.lang.Math.pow;
@@ -38,7 +38,7 @@ public class Boss extends Enemy
 
     public Boss()
     {
-        super("PlaneBoss.png");
+        super("resource/PlaneBoss.png");
 
         float num = abs(theRandom.nextInt()) % 50;
         float time = abs(theRandom.nextInt()) % 2 + 1;

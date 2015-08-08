@@ -20,7 +20,7 @@ public class FriendAutoFollowMissile extends GoodAutoFollowMissile
 
     public FriendAutoFollowMissile()
     {
-        super("nuclear.png");
+        super("resource/nuclear.png");
 
         this.setLifeTime(5);
         this.times = 100;
