@@ -2,16 +2,14 @@ package au.com.spacebattle.main;
 
 import au.com.rmit.Game2dEngine.director.Director;
 import au.com.spacebattle.scene.SpaceShipScene;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import static java.lang.System.exit;
 import java.util.Random;
 import javax.swing.Timer;
 
@@ -24,9 +22,10 @@ import javax.swing.Timer;
  *
  * @author ricolwang
  */
-public class FrameMain extends javax.swing.JFrame implements MouseListener, MouseMotionListener, ActionListener, KeyListener, ComponentListener
+public class FrameMain extends javax.swing.JFrame implements MouseListener, MouseMotionListener, ActionListener, KeyListener
 
 {
+
     boolean bAlreadyRun;
     MouseEvent mouseEvent;
     Random theRandom = new Random();
@@ -44,8 +43,17 @@ public class FrameMain extends javax.swing.JFrame implements MouseListener, Mous
     {
 
         panelGame = new javax.swing.JPanel();
+        btnStart = new javax.swing.JButton();
+        btnClose = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addComponentListener(new java.awt.event.ComponentAdapter()
+        {
+            public void componentResized(java.awt.event.ComponentEvent evt)
+            {
+                formComponentResized(evt);
+            }
+        });
         addWindowListener(new java.awt.event.WindowAdapter()
         {
             public void windowOpened(java.awt.event.WindowEvent evt)
@@ -68,18 +76,48 @@ public class FrameMain extends javax.swing.JFrame implements MouseListener, Mous
         );
         panelGameLayout.setVerticalGroup(
             panelGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 577, Short.MAX_VALUE)
+            .addGap(0, 532, Short.MAX_VALUE)
         );
+
+        btnStart.setText("Start");
+        btnStart.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnStartActionPerformed(evt);
+            }
+        });
+
+        btnClose.setText("Close");
+        btnClose.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnCloseActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelGame, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnStart)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnClose)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelGame, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnClose)
+                    .addComponent(btnStart))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -92,22 +130,39 @@ public class FrameMain extends javax.swing.JFrame implements MouseListener, Mous
 
     private void formWindowActivated(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowActivated
     {//GEN-HEADEREND:event_formWindowActivated
-        // TODO add your handling code here:
-
-        if (bAlreadyRun) return;
-        
-        bAlreadyRun = true;
-        
-        this.addComponentListener(this);
-
         this.addKeyListener(this);
-
-        this.launchGame();
-
         this.requestFocus();
     }//GEN-LAST:event_formWindowActivated
 
+    private void btnStartActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnStartActionPerformed
+    {//GEN-HEADEREND:event_btnStartActionPerformed
+        if (theScene == null)
+            this.launchGame();
+        else
+            theScene.pause();
+
+        if (theScene.isScenePaused())
+            btnStart.setText("Continue");
+        else
+            btnStart.setText("Pause");
+        
+        this.requestFocus();
+    }//GEN-LAST:event_btnStartActionPerformed
+
+    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCloseActionPerformed
+    {//GEN-HEADEREND:event_btnCloseActionPerformed
+        exit(0);
+    }//GEN-LAST:event_btnCloseActionPerformed
+
+    private void formComponentResized(java.awt.event.ComponentEvent evt)//GEN-FIRST:event_formComponentResized
+    {//GEN-HEADEREND:event_formComponentResized
+        if (theScene != null)
+            theScene.adjustLabelPos();
+    }//GEN-LAST:event_formComponentResized
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnClose;
+    private javax.swing.JButton btnStart;
     private javax.swing.JPanel panelGame;
     // End of variables declaration//GEN-END:variables
 
@@ -234,31 +289,6 @@ public class FrameMain extends javax.swing.JFrame implements MouseListener, Mous
 
     @Override
     public void keyReleased(KeyEvent e)
-    {
-    }
-
-    @Override
-    public void componentResized(ComponentEvent evt)
-    {
-        int x = 10, y = 10;
-        panelGame.setLocation(x, y);
-        panelGame.setSize(new Dimension(getWidth() - 2 * x, getHeight() - 4 * y));
-        Director.getSharedInstance().updatePosition(0, 0, panelGame.getWidth(), panelGame.getHeight());
-    }
-
-    @Override
-    public void componentMoved(ComponentEvent e)
-
-    {
-    }
-
-    @Override
-    public void componentShown(ComponentEvent e)
-    {
-    }
-
-    @Override
-    public void componentHidden(ComponentEvent e)
     {
     }
 }
