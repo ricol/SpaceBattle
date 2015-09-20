@@ -35,21 +35,16 @@ public class Boss extends Enemy
 
     protected Weapon theWeaponAlternative;
     protected Timer theTimerForMainWealpon = new Timer(2000, this);
+    protected Timer theTimerForExpand = new Timer(6000, this);
 
     public Boss()
     {
         super("resource/PlaneBoss.png");
 
-        float num = abs(theRandom.nextInt()) % 50;
-        float time = abs(theRandom.nextInt()) % 2 + 1;
-        ExpandByAction aAction = new ExpandByAction();
-        aAction.expandBy(num, time);
-        aAction.identifer = "ActionExpand";
-        this.addAction(aAction);
-
         this.setLayer(Common.LAYER_BOSS_SHIP);
         this.resetTotalLife(500);
         this.theTimerForMainWealpon.start();
+        this.theTimerForExpand.start();
         this.theWeaponMain = new BossMainWeapon(this);
         this.theWeaponAutoMissile = new BossAutoMissileWeapon(this);
         this.theWeaponAlternative = new BossAlternativeWeapon(this);
@@ -81,13 +76,7 @@ public class Boss extends Enemy
         {
             if (theAction instanceof ExpandByAction)
             {
-                ExpandByAction action = (ExpandByAction) theAction;
-                ExpandByAction aAction = new ExpandByAction();
-                float value = action.getExpandBy();
-                float time = action.getExpandByDuration();
-                aAction.expandBy(-action.getExpandBy(), action.getExpandByDuration() / 1000.0f);
-                aAction.identifer = "ActionExpandBack";
-                this.addAction(aAction);
+                this.shrinkShape((ExpandByAction)theAction);
             }
         }
     }
@@ -188,6 +177,31 @@ public class Boss extends Enemy
             {
                 this.theWeaponMain.fire();
             }
+        }else if (e.getSource().equals(this.theTimerForExpand))
+        {
+            Action aAction = this.expandShape();
+            this.addAction(aAction);
+            this.theTimerForExpand.stop();
         }
+    }
+
+    ExpandByAction expandShape()
+    {
+        float num = abs(theRandom.nextInt()) % 50;
+        float time = abs(theRandom.nextInt()) % 2 + 1;
+        ExpandByAction aAction = new ExpandByAction();
+        aAction.expandBy(num, time);
+        aAction.identifer = "ActionExpand";
+        return aAction;
+    }
+
+    void shrinkShape(ExpandByAction action)
+    {
+        ExpandByAction aAction = new ExpandByAction();
+        float value = action.getExpandBy();
+        float time = action.getExpandByDuration();
+        aAction.expandBy(-action.getExpandBy(), action.getExpandByDuration() / 1000.0f);
+        aAction.identifer = "ActionExpandBack";
+        this.addAction(aAction);
     }
 }
