@@ -20,6 +20,9 @@ public abstract class MovingObject extends Sprite
 
 //        this.bDrawShape = true;
 //        this.bDrawFrame = true;
+        
+//        this.bDrawVelocityVector = true;
+//        this.DrawVelocityBase = 0.2;
     }
 
 }

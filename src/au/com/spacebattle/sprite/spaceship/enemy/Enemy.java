@@ -6,7 +6,7 @@
 package au.com.spacebattle.sprite.spaceship.enemy;
 
 import au.com.rmit.Game2dEngine.action.AlphaToAction;
-import au.com.rmit.Game2dEngine.math.Vector;
+import au.com.rmit.Game2dEngine.math.vector.Vector;
 import au.com.rmit.Game2dEngine.scene.Layer;
 import au.com.rmit.Game2dEngine.sprite.Sprite;
 import au.com.spacebattle.common.Common;
@@ -165,7 +165,7 @@ public class Enemy extends Spaceship implements ActionListener
         double changeY = theShip.getCentreY() - this.getCentreY();
         Vector DISPLACEMENT = new Vector(changeX, changeY);
         Vector Y = new Vector(0, -1);
-        double angle = DISPLACEMENT.getNegativeVector().getCosValueForAngleToVector(Y);
+        double angle = DISPLACEMENT.getTheNegativeVector().getCosValueForAngleToVector(Y);
         angle = Math.acos(angle);
         if (changeX > 0)
             angle = Math.PI * 2 - angle;
