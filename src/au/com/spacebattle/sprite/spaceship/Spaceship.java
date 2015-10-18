@@ -6,9 +6,11 @@
 package au.com.spacebattle.sprite.spaceship;
 
 import au.com.rmit.Game2dEngine.action.AlphaToAction;
-import au.com.spacebattle.sprite.basic.CircleShapeMovingObject;
+import au.com.rmit.Game2dEngine.scene.Layer;
 import au.com.spacebattle.common.Common;
+import au.com.spacebattle.sprite.basic.CircleShapeMovingObject;
 import au.com.spacebattle.sprite.other.ExpodeParticle;
+import au.com.spacebattle.sprite.other.LifeBar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -26,6 +28,7 @@ import javax.swing.Timer;
 public class Spaceship extends CircleShapeMovingObject implements ActionListener
 {
 
+    private LifeBar theLifeBar;
     private int totalLife = 100;
     private int currentLife = totalLife;
 
@@ -60,16 +63,32 @@ public class Spaceship extends CircleShapeMovingObject implements ActionListener
 
     }
 
+    @Override
+    public void onAddToLayer(Layer theLayer)
+    {
+        super.onAddToLayer(theLayer); //To change body of generated methods, choose Tools | Templates.
+
+        if (this.theLifeBar == null)
+        {
+            this.theLifeBar = new LifeBar((int) this.getWidth(), 5, this.totalLife);
+            this.theLifeBar.setCentreX(this.getCentreX());
+            this.theLifeBar.setY(this.getY() + this.getHeight() + 20);
+            this.addAttached(this.theLifeBar);
+        }
+    }
+
     public void decreaseLife(int value)
     {
-        AlphaToAction aAction = new AlphaToAction(this);
-        aAction.alphaTo((this.currentLife - value) / (this.totalLife * 1.0f), 0);
-        this.addAction(aAction);
+//        AlphaToAction aAction = new AlphaToAction(this);
+//        aAction.alphaTo((this.currentLife - value) / (this.totalLife * 1.0f), 0);
+//        this.addAction(aAction);
         this.currentLife -= value;
         if (this.currentLife <= 0)
         {
             this.setShouldDie();
         }
+
+        this.theLifeBar.decreaseLifeBy(value);
     }
 
     public int getCurrentLife()

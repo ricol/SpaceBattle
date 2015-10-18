@@ -102,19 +102,19 @@ public class Enemy extends Spaceship implements ActionListener
     {
         if (target instanceof MainWeapanFriendMissile)
         {
-            this.decreaseLife(200);
+            this.decreaseLife(50);
         } else if (target instanceof NormalWeanponFriendMissile)
         {
             this.decreaseLife(20);
         } else if (target instanceof MySpaceship)
         {
-            this.decreaseLife(300);
+            this.decreaseLife(50);
         } else if (target instanceof FriendLaserWeapon)
         {
-            this.decreaseLife(100);
+            this.decreaseLife(50);
         } else if (target instanceof FriendAutoFollowMissile)
         {
-            this.decreaseLife(300);
+            this.decreaseLife(100);
         }
 
         if (this.getShouldDie() == true)

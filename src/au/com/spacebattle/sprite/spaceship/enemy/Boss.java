@@ -86,16 +86,16 @@ public class Boss extends Enemy
     {
         if (target instanceof MainWeapanFriendMissile)
         {
-            this.decreaseLife(100);
+            this.decreaseLife(50);
         } else if (target instanceof NormalWeanponFriendMissile)
         {
             this.decreaseLife(20);
         } else if (target instanceof MySpaceship)
         {
-            this.decreaseLife(200);
+            this.decreaseLife(50);
         } else if (target instanceof FriendLaserWeapon)
         {
-            this.decreaseLife(100);
+            this.decreaseLife(50);
         } else if (target instanceof FriendAutoFollowMissile)
         {
             this.decreaseLife(100);
