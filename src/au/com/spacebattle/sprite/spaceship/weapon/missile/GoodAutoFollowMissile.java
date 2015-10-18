@@ -5,7 +5,7 @@
  */
 package au.com.spacebattle.sprite.spaceship.weapon.missile;
 
-import au.com.rmit.Game2dEngine.math.Vector;
+import au.com.rmit.Game2dEngine.math.vector.Vector;
 import au.com.spacebattle.common.Common;
 import au.com.spacebattle.scene.SpaceShipScene;
 import au.com.spacebattle.sprite.basic.MovingObject;
