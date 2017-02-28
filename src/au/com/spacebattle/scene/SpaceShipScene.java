@@ -45,6 +45,8 @@ public class SpaceShipScene extends Scene implements ActionListener
     public LabelSprite lblBossKilled;
     public LabelSprite lblMyLife;
     public LabelSprite lblScore;
+    public LabelSprite lblHelpLeft;
+    public LabelSprite lblHelpRight;
     SpaceBackground theBackgroundFirst;
     SpaceBackground theBackgroundSecond;
 
@@ -65,14 +67,13 @@ public class SpaceShipScene extends Scene implements ActionListener
     public SpaceShipScene()
     {
         this.enableCollisionDetect();
-        
+
 //        try
 //        {
 //            this.theImageBackground = ImageIO.read(new File("space.jpg"));
 //        } catch (IOException ex)
 //        {
 //        }
-
 //        this.theBackgroundFirst = new SpaceBackground();
 //        this.addSprite(this.theBackgroundFirst);
 //
@@ -225,7 +226,30 @@ public class SpaceShipScene extends Scene implements ActionListener
         lblScore.setLayer(Common.LAYER_TEXT);
 
         addSprite(lblScore);
+
         this.adjustLabelPos();
+
+        //add usage
+        int tmpBottom = 25;
+        int tmpMarginRight = 140;
+        int tmpGap = 1;
+        lblHelpLeft = new LabelSprite(this.getWidth() - tmpMarginRight, this.getHeight() - (tmpBottom + tmpGap) * 2, "Left Mouse - Fire", null);
+        lblHelpLeft.setWidth(tmpWidth);
+        lblHelpLeft.setHeight(tmpHeight);
+        lblHelpLeft.setRed(255);
+        lblHelpLeft.bTextFrame = false;
+        lblHelpLeft.setLayer(Common.LAYER_TEXT);
+
+        addSprite(lblHelpLeft);
+        
+        lblHelpRight = new LabelSprite(this.getWidth() - tmpMarginRight, this.getHeight() - (tmpBottom + tmpGap), "Right Mouse - Laser", null);
+        lblHelpRight.setWidth(tmpWidth);
+        lblHelpRight.setHeight(tmpHeight);
+        lblHelpRight.setRed(255);
+        lblHelpRight.bTextFrame = false;
+        lblHelpRight.setLayer(Common.LAYER_TEXT);
+
+        addSprite(lblHelpRight);
     }
 
     public void adjustLabelPos()
@@ -259,8 +283,9 @@ public class SpaceShipScene extends Scene implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        if (!this.bGameRunning) return;
-        
+        if (!this.bGameRunning)
+            return;
+
         if (e.getSource().equals(this.timerForEnemy))
         {
             if (abs(theRandom.nextInt()) % 100 > 90)
@@ -299,7 +324,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         this.enemyKilled++;
         this.updateLabels();
     }
-    
+
     public void killABoss(Boss aBoss)
     {
         Score aScore = new Score("+" + Common.SCORE_BOSS);
@@ -320,7 +345,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         this.mylife--;
         this.updateLabels();
     }
-    
+
     public void updateLabels()
     {
         if (this.lblBossKilled != null)
@@ -461,7 +486,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         mylife = 3;
         score = 0;
         this.updateLabels();
-        
+
         LabelSprite aLabel = new LabelSprite("Game Start", new Font("TimesRoman", Font.PLAIN, 30));
         aLabel.setWidth(150);
         aLabel.setHeight(30);
