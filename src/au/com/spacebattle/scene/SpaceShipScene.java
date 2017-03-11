@@ -227,8 +227,6 @@ public class SpaceShipScene extends Scene implements ActionListener
 
         addSprite(lblScore);
 
-        this.adjustLabelPos();
-
         //add usage
         int tmpBottom = 25;
         int tmpMarginRight = 140;
@@ -241,7 +239,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         lblHelpLeft.setLayer(Common.LAYER_TEXT);
 
         addSprite(lblHelpLeft);
-        
+
         lblHelpRight = new LabelSprite(this.getWidth() - tmpMarginRight, this.getHeight() - (tmpBottom + tmpGap), "Right Mouse - Laser", null);
         lblHelpRight.setWidth(tmpWidth);
         lblHelpRight.setHeight(tmpHeight);
@@ -250,6 +248,8 @@ public class SpaceShipScene extends Scene implements ActionListener
         lblHelpRight.setLayer(Common.LAYER_TEXT);
 
         addSprite(lblHelpRight);
+
+        this.adjustLabelPos();
     }
 
     public void adjustLabelPos()
@@ -277,6 +277,18 @@ public class SpaceShipScene extends Scene implements ActionListener
         {
             lblScore.setX(this.getWidth() - tmpMarginRight);
             lblScore.setY(tmpY + (tmpHeight + tmpGap) * 3);
+        }
+        if (lblHelpLeft != null)
+        {
+            int tmpBottom = 25;
+            lblHelpLeft.setX(this.getWidth() - tmpMarginRight);
+            lblHelpLeft.setY(this.getHeight() - (tmpBottom + tmpGap) * 2);
+        }
+        if (lblHelpRight != null)
+        {
+            int tmpBottom = 25;
+            lblHelpRight.setX(this.getWidth() - tmpMarginRight);
+            lblHelpRight.setY(this.getHeight() - (tmpBottom + tmpGap));
         }
     }
 
