@@ -64,6 +64,8 @@ public class MySpaceship extends Spaceship implements ActionListener
         this.addAChild(this.theWeaponMain);
         this.addAChild(this.theWeaponAlternative);
         this.addAChild(this.theWeaponAutoMissile);
+        
+        this.bShowLifeBar = false;
     }
 
     @Override
