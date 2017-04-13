@@ -29,6 +29,7 @@ public class Spaceship extends CircleShapeMovingObject implements ActionListener
 {
 
     private LifeBar theLifeBar;
+    protected boolean bShowLifeBar = true;
     private int totalLife = 100;
     private int currentLife = totalLife;
 
@@ -68,7 +69,7 @@ public class Spaceship extends CircleShapeMovingObject implements ActionListener
     {
         super.onAddToLayer(theLayer); //To change body of generated methods, choose Tools | Templates.
 
-        if (this.theLifeBar == null)
+        if (this.theLifeBar == null && this.bShowLifeBar)
         {
             this.theLifeBar = new LifeBar((int) this.getWidth(), 5, this.totalLife);
             this.theLifeBar.setCentreX(this.getCentreX());
