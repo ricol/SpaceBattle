@@ -26,7 +26,7 @@ public class BossMainWeaponMissile extends Missile
         this.setCollisionCategory(Common.CATEGORY_ENEMY_SHIP);
         this.addTargetCollisionCategory(Common.CATEGORY_FRIEND_SHIP);
     }
-    
+
     @Override
     public void onWillDead()
     {
@@ -59,7 +59,10 @@ public class BossMainWeaponMissile extends Missile
             aAction.alphaTo(0, 0.5f);
             aFire.addAction(aAction);
 
-            if (this.theScene == null) break;
+            if (this.theScene == null)
+            {
+                break;
+            }
             this.theScene.addSprite(aFire);
         }
     }

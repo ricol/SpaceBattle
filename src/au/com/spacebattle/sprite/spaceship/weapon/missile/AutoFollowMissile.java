@@ -37,7 +37,9 @@ public class AutoFollowMissile extends Missile implements ActionListener
     public void actionPerformed(ActionEvent e)
     {
         if (this.getShouldDie())
+        {
             return;
+        }
 
         if (e.getSource().equals(this.theTimer))
         {
@@ -56,7 +58,7 @@ public class AutoFollowMissile extends Missile implements ActionListener
 
     public void adjustGesture(MovingObject theShip)
     {
-        
+
     }
 
     public void fire()

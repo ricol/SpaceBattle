@@ -182,7 +182,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         lblMyLife.setHeight(tmpHeight);
 
         lblMyLife.setRed(
-            255);
+                255);
         lblMyLife.bTextFrame = false;
         lblMyLife.setLayer(Common.LAYER_TEXT);
 
@@ -195,7 +195,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         lblEnemyKilled.setHeight(tmpHeight);
 
         lblEnemyKilled.setRed(
-            255);
+                255);
         lblEnemyKilled.bTextFrame = false;
         lblEnemyKilled.setLayer(Common.LAYER_TEXT);
 
@@ -208,7 +208,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         lblBossKilled.setHeight(tmpHeight);
 
         lblBossKilled.setRed(
-            255);
+                255);
         lblBossKilled.bTextFrame = false;
         lblBossKilled.setLayer(Common.LAYER_TEXT);
 
@@ -221,7 +221,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         lblScore.setHeight(tmpHeight);
 
         lblScore.setRed(
-            255);
+                255);
         lblScore.bTextFrame = false;
         lblScore.setLayer(Common.LAYER_TEXT);
 
@@ -296,7 +296,9 @@ public class SpaceShipScene extends Scene implements ActionListener
     public void actionPerformed(ActionEvent e)
     {
         if (!this.bGameRunning)
+        {
             return;
+        }
 
         if (e.getSource().equals(this.timerForEnemy))
         {

@@ -5,7 +5,7 @@
  */
 package au.com.spacebattle.sprite.spaceship.weapon.missile;
 
-import au.com.rmit.Game2dEngine.math.vector.Vector;
+import au.com.rmit.math.vector.Vector;
 import au.com.spacebattle.common.Common;
 import au.com.spacebattle.scene.SpaceShipScene;
 import au.com.spacebattle.sprite.basic.MovingObject;
@@ -59,7 +59,9 @@ public class GoodAutoFollowMissile extends AutoFollowMissile
         }
 
         if (!theShip.isAlive())
+        {
             return;
+        }
 
         //adjust gesture
         double targetCentreX = theShip.getCentreX();
@@ -78,7 +80,9 @@ public class GoodAutoFollowMissile extends AutoFollowMissile
         double angle = VELOCITY.getCosValueForAngleToVector(Y);
         angle = Math.acos(angle);
         if (changeX <= 0)
+        {
             angle = -angle;
+        }
         this.setAngle(angle);
     }
 }

@@ -51,14 +51,12 @@ public class Missile extends CircleShapeMovingObject
         this.setLifeTime(1);
     }
 
-
     @Override
     public void onCollideWith(Sprite target)
     {
         this.setShouldDie();
     }
 
-    
     protected void explode()
     {
 

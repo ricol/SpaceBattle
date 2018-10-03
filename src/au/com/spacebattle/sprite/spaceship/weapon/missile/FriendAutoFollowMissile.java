@@ -54,7 +54,9 @@ public class FriendAutoFollowMissile extends GoodAutoFollowMissile
             aFire.addAction(aAction);
 
             if (this.theScene == null)
+            {
                 break;
+            }
             this.theScene.addSprite(aFire);
         }
     }

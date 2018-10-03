@@ -15,13 +15,14 @@ import java.awt.Graphics2D;
  */
 public abstract class Weapon extends Sprite
 {
+
     Spaceship theShip;
-    
+
     public Weapon(Spaceship theShip)
     {
         this.theShip = theShip;
         this.bCustomDrawing = true;
-        
+
         this.setWidth(10);
         this.setHeight(10);
         this.setBlue(255);
@@ -38,6 +39,6 @@ public abstract class Weapon extends Sprite
 
     public void fire()
     {
-        
+
     }
 }

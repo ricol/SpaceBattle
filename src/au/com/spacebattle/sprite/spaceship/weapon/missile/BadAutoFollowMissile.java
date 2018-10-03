@@ -5,7 +5,7 @@
  */
 package au.com.spacebattle.sprite.spaceship.weapon.missile;
 
-import au.com.rmit.Game2dEngine.math.vector.Vector;
+import au.com.rmit.math.vector.Vector;
 import au.com.spacebattle.common.Common;
 import au.com.spacebattle.sprite.basic.MovingObject;
 
@@ -48,7 +48,9 @@ public class BadAutoFollowMissile extends AutoFollowMissile
             double angle = VELOCITY.getTheNegativeVector().getCosValueForAngleToVector(Y);
             angle = Math.acos(angle);
             if (changeX > 0)
+            {
                 angle = Math.PI * 2 - angle;
+            }
             this.setAngle(angle);
         }
     }

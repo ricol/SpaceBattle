@@ -1,6 +1,6 @@
 package au.com.spacebattle.main;
 
-import au.com.philology.common.JavaTheme;
+import au.com.rmit.common.JavaTheme;
 import javax.swing.SwingUtilities;
 
 /*

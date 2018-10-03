@@ -76,7 +76,7 @@ public class Boss extends Enemy
         {
             if (theAction instanceof ExpandByAction)
             {
-                this.shrinkShape((ExpandByAction)theAction);
+                this.shrinkShape((ExpandByAction) theAction);
             }
         }
     }
@@ -177,7 +177,7 @@ public class Boss extends Enemy
             {
                 this.theWeaponMain.fire();
             }
-        }else if (e.getSource().equals(this.theTimerForExpand))
+        } else if (e.getSource().equals(this.theTimerForExpand))
         {
             Action aAction = this.expandShape();
             this.addAction(aAction);

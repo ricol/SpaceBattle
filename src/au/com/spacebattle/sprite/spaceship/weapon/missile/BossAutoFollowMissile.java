@@ -53,7 +53,10 @@ public class BossAutoFollowMissile extends BadAutoFollowMissile
             aAction.alphaTo(0, 0.5f);
             aFire.addAction(aAction);
 
-            if (this.theScene == null) break;
+            if (this.theScene == null)
+            {
+                break;
+            }
             this.theScene.addSprite(aFire);
         }
     }
