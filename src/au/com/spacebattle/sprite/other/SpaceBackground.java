@@ -13,6 +13,7 @@ import au.com.rmit.Game2dEngine.sprite.Sprite;
  */
 public class SpaceBackground extends Sprite
 {
+
     public SpaceBackground()
     {
         super("space-background.jpg");

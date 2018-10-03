@@ -27,7 +27,7 @@ public class EnemyMainWeapon extends EnemyWeapon
     public void fire()
     {
         super.fire(); //To change body of generated methods, choose Tools | Templates.
-        
+
         Missile aMissile = new EnemyMissile("resource/enemy-missile.png");
 //        aMissile.bDrawFrame = true;
         aMissile.setX(this.theShip.getCentreX() - aMissile.getWidth() / 2);
@@ -50,5 +50,5 @@ public class EnemyMainWeapon extends EnemyWeapon
 
         this.theShip.theScene.addSprite(aFire);
     }
-    
+
 }

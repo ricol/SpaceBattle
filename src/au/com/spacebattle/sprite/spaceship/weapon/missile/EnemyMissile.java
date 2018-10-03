@@ -51,7 +51,10 @@ public class EnemyMissile extends Missile
             aAction.alphaTo(0, 0.2f);
             aFire.addAction(aAction);
 
-            if (this.theScene == null) break;
+            if (this.theScene == null)
+            {
+                break;
+            }
             this.theScene.addSprite(aFire);
         }
     }

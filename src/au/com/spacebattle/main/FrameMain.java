@@ -137,15 +137,21 @@ public class FrameMain extends javax.swing.JFrame implements MouseListener, Mous
     private void btnStartActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnStartActionPerformed
     {//GEN-HEADEREND:event_btnStartActionPerformed
         if (theScene == null)
+        {
             this.launchGame();
-        else
+        } else
+        {
             theScene.pause();
+        }
 
         if (theScene.isScenePaused())
+        {
             btnStart.setText("Continue");
-        else
+        } else
+        {
             btnStart.setText("Pause");
-        
+        }
+
         this.requestFocus();
     }//GEN-LAST:event_btnStartActionPerformed
 
@@ -157,7 +163,9 @@ public class FrameMain extends javax.swing.JFrame implements MouseListener, Mous
     private void formComponentResized(java.awt.event.ComponentEvent evt)//GEN-FIRST:event_formComponentResized
     {//GEN-HEADEREND:event_formComponentResized
         if (theScene != null)
+        {
             theScene.adjustLabelPos();
+        }
     }//GEN-LAST:event_formComponentResized
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -227,8 +235,8 @@ public class FrameMain extends javax.swing.JFrame implements MouseListener, Mous
             {
                 if (this.mouseEvent != null)
                 {
-//                    theScene.theShip.moveToXYInSequence(this.mouseEvent.getX(), this.mouseEvent.getY(), 0.05f);
-                    theScene.theShip.moveToXY(this.mouseEvent.getX(), this.mouseEvent.getY());
+                    theScene.theShip.moveToXYInSequence(this.mouseEvent.getX(), this.mouseEvent.getY(), 0.06f);
+//                    theScene.theShip.moveToXY(this.mouseEvent.getX(), this.mouseEvent.getY());
                 }
             }
         }

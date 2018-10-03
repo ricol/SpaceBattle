@@ -28,9 +28,9 @@ public class EnemyAutoMissileWeapon extends EnemyWeapon
     public void fire()
     {
         super.fire(); //To change body of generated methods, choose Tools | Templates.
-        
+
         EnemyAutoFollowMissile aMissile = new EnemyAutoFollowMissile();
-        aMissile.theTarget = ((Enemy)this.theShip).theTarget;
+        aMissile.theTarget = ((Enemy) this.theShip).theTarget;
 //        aMissile.bDrawFrame = true;
         aMissile.setX(this.theShip.getCentreX() - aMissile.getWidth() / 2);
         aMissile.setY(this.theShip.getCentreY() + this.theShip.getHeight() / 2);
@@ -54,5 +54,5 @@ public class EnemyAutoMissileWeapon extends EnemyWeapon
 
         this.theShip.theScene.addSprite(aFire);
     }
-    
+
 }

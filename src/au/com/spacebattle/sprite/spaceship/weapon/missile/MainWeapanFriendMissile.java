@@ -47,7 +47,10 @@ public class MainWeapanFriendMissile extends FriendMissile
             aAction.alphaTo(0, 0.3f);
             aFire.addAction(aAction);
 
-            if (this.theScene == null) break;
+            if (this.theScene == null)
+            {
+                break;
+            }
             this.theScene.addSprite(aFire);
         }
     }

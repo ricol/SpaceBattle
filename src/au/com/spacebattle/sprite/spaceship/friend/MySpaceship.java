@@ -47,6 +47,7 @@ public class MySpaceship extends Spaceship implements ActionListener
     Weapon theWeaponMain = new FriendMainWeapon(this);
     Weapon theWeaponAlternative = new FriendAlternativeWeapon(this);
     Weapon theWeaponAutoMissile = new FriendAutoMissileWeapon(this);
+    Set<Action> oldActions = null;
 
     public MySpaceship()
     {
@@ -60,11 +61,11 @@ public class MySpaceship extends Spaceship implements ActionListener
         this.resetTotalLife(500);
         this.timerForLaser.start();
         theTimerForAutoFollowMissile.start();
-        
+
         this.addAChild(this.theWeaponMain);
         this.addAChild(this.theWeaponAlternative);
         this.addAChild(this.theWeaponAutoMissile);
-        
+
         this.bShowLifeBar = false;
     }
 
@@ -113,6 +114,12 @@ public class MySpaceship extends Spaceship implements ActionListener
 
     public void moveToXYInSequence(int x, int y, float duration)
     {
+        if (oldActions != null)
+        {
+            this.removeActions(oldActions);
+            oldActions = null;
+        }
+
         double theShipCentreX = this.getCentreX();
         double theShipCentreY = this.getCentreY();
 
@@ -126,6 +133,8 @@ public class MySpaceship extends Spaceship implements ActionListener
         aCentreYAction.MoveCentreYTo(y, duration);
         aSetOfActions.add(aCentreYAction);
         this.enQueueActions(aSetOfActions);
+
+        oldActions = aSetOfActions;
     }
 
     public void openLaser()

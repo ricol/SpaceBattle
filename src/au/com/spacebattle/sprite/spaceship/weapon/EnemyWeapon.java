@@ -18,5 +18,5 @@ public abstract class EnemyWeapon extends Weapon
     {
         super(theShip);
     }
-    
+
 }
