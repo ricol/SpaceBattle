@@ -5,9 +5,9 @@
  */
 package au.com.spacebattle.sprite.spaceship.weapon;
 
+import au.com.rmit.Game2dEngine.painter.interfaces.IEngineGraphics;
 import au.com.rmit.Game2dEngine.sprite.Sprite;
 import au.com.spacebattle.sprite.spaceship.Spaceship;
-import java.awt.Graphics2D;
 
 /**
  *
@@ -29,12 +29,12 @@ public abstract class Weapon extends Sprite
     }
 
     @Override
-    public void onCustomDraw(Graphics2D theGraphics2D)
+    public void onCustomDraw(IEngineGraphics theEngineGraphics)
     {
-        super.onCustomDraw(theGraphics2D);
+        super.onCustomDraw(theEngineGraphics);
 
-//        theGraphics2D.setColor(this.getColor());
-//        theGraphics2D.fillRect(0, 0, (int) this.getWidth() - 1, (int) this.getHeight() - 1);
+//        theEngineGraphics.setColor(this.getColor());
+//        theEngineGraphics.fillRect(0, 0, (int) this.getWidth() - 1, (int) this.getHeight() - 1);
     }
 
     public void fire()

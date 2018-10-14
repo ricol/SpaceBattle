@@ -6,11 +6,11 @@
 package au.com.spacebattle.sprite.spaceship.weapon.laser;
 
 import au.com.rmit.Game2dEngine.Shape.ESpecialRectangleShape;
+import au.com.rmit.Game2dEngine.painter.interfaces.IEngineGraphics;
 import au.com.spacebattle.common.Common;
 import au.com.spacebattle.sprite.basic.RectangleShapeMovingObject;
 import au.com.spacebattle.sprite.spaceship.Spaceship;
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -82,13 +82,13 @@ public class FriendLaserWeapon extends RectangleShapeMovingObject
     }
 
     @Override
-    public void onCustomDraw(Graphics2D theGraphics2D)
+    public void onCustomDraw(IEngineGraphics theEngineGraphics)
     {
         Color blackTransparent = new Color(0, 0, 0, 0);
-        theGraphics2D.setColor(blackTransparent);
-        theGraphics2D.fillRect(0, 0, (int) getWidth(), (int) getHeight());
-        theGraphics2D.setColor(getColor());
-        theGraphics2D.fillRect(0, 0, (int) getWidth(), (int) getHeight());
+        theEngineGraphics.setColor(blackTransparent);
+        theEngineGraphics.fillRect(0, 0, (int) getWidth(), (int) getHeight());
+        theEngineGraphics.setColor(getColor());
+        theEngineGraphics.fillRect(0, 0, (int) getWidth(), (int) getHeight());
     }
 
 }

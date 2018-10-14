@@ -6,10 +6,10 @@
 package au.com.spacebattle.sprite.other;
 
 import au.com.rmit.Game2dEngine.action.ExpandByAction;
+import au.com.rmit.Game2dEngine.painter.interfaces.IEngineGraphics;
 import au.com.rmit.Game2dEngine.sprite.Sprite;
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.Polygon;
 
 /**
@@ -38,15 +38,15 @@ public class FriendFire extends Sprite
     }
 
     @Override
-    public void onCustomDraw(Graphics2D theGraphics2D)
+    public void onCustomDraw(IEngineGraphics theEngineGraphics)
     {
-        super.onCustomDraw(theGraphics2D); //To change body of generated methods, choose Tools | Templates.
+        super.onCustomDraw(theEngineGraphics); //To change body of generated methods, choose Tools | Templates.
 
         Color blackTransparent = new Color(0, 0, 0, 0);
-        theGraphics2D.setColor(blackTransparent);
-        theGraphics2D.fillRect(0, 0, (int) getWidth(), (int) getHeight());
-        theGraphics2D.setColor(this.getColor());
-        theGraphics2D.setStroke(new BasicStroke(3, 2, 1));
+        theEngineGraphics.setColor(blackTransparent);
+        theEngineGraphics.fillRect(0, 0, (int) getWidth(), (int) getHeight());
+        theEngineGraphics.setColor(this.getColor());
+        theEngineGraphics.setStroke(new BasicStroke(3, 2, 1));
 
         Polygon p = new Polygon(new int[]
         {
@@ -56,6 +56,6 @@ public class FriendFire extends Sprite
             0, (int) getHeight() - 1, (int) getHeight() - 2
         }, 3);
 
-        theGraphics2D.drawPolygon(p);
+        theEngineGraphics.drawPolygon(p);
     }
 }

@@ -5,9 +5,9 @@
  */
 package au.com.spacebattle.sprite.other;
 
+import au.com.rmit.Game2dEngine.painter.interfaces.IEngineGraphics;
 import au.com.rmit.Game2dEngine.sprite.Sprite;
 import java.awt.Color;
-import java.awt.Graphics2D;
 
 /**
  *
@@ -30,7 +30,7 @@ public class LifeBar extends Sprite
     }
 
     @Override
-    public void onCustomDraw(Graphics2D theGraphics2D)
+    public void onCustomDraw(IEngineGraphics theGraphics2D)
     {
         super.onCustomDraw(theGraphics2D); //To change body of generated methods, choose Tools | Templates.
 

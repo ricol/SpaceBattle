@@ -5,8 +5,8 @@
  */
 package au.com.spacebattle.sprite.other;
 
+import au.com.rmit.Game2dEngine.painter.interfaces.IEngineGraphics;
 import au.com.rmit.Game2dEngine.sprite.Sprite;
-import java.awt.Graphics2D;
 
 /**
  *
@@ -28,7 +28,7 @@ public class ExpodeParticle extends Sprite
     }
 
     @Override
-    public void onCustomDraw(Graphics2D theGraphics2D)
+    public void onCustomDraw(IEngineGraphics theGraphics2D)
     {
         theGraphics2D.setColor(this.getColor());
         theGraphics2D.fillOval(0, 0, (int) getWidth() - 1, (int) getHeight() - 1);
