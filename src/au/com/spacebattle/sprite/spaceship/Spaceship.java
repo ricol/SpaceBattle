@@ -5,20 +5,18 @@
  */
 package au.com.spacebattle.sprite.spaceship;
 
+import au.com.rmit.Game2dEngine.Cache.ResourceCache;
 import au.com.rmit.Game2dEngine.action.AlphaToAction;
 import au.com.rmit.Game2dEngine.scene.Layer;
+import au.com.rmit.Game2dEngine.sprite.other.LifeBar;
 import au.com.spacebattle.common.Common;
 import au.com.spacebattle.sprite.basic.CircleShapeMovingObject;
 import au.com.spacebattle.sprite.other.ExpodeParticle;
-import au.com.spacebattle.sprite.other.LifeBar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import static java.lang.Math.abs;
 import static java.lang.Math.pow;
-import javax.imageio.ImageIO;
 import javax.swing.Timer;
 
 /**
@@ -48,17 +46,11 @@ public class Spaceship extends CircleShapeMovingObject implements ActionListener
         this.setLifeTime(20);
         BufferedImage aImage;
 
-        try
-        {
-            aImage = ImageIO.read(new File(imagename));
-            this.setWidth(aImage.getWidth());
-            this.setHeight(aImage.getHeight());
+        aImage = ResourceCache.getSharedInstance().getImage(imagename);
+        this.setWidth(aImage.getWidth());
+        this.setHeight(aImage.getHeight());
 
-            this.setImage(imagename);
-        } catch (IOException e)
-        {
-
-        }
+        this.setImage(imagename);
 
         theTimerForEngine.start();
 

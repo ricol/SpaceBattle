@@ -5,6 +5,7 @@
  */
 package au.com.spacebattle.sprite.spaceship.weapon.laser;
 
+import au.com.rmit.Game2dEngine.Cache.ResourceCache;
 import au.com.rmit.Game2dEngine.Shape.ESpecialRectangleShape;
 import au.com.rmit.Game2dEngine.painter.interfaces.IEngineGraphics;
 import au.com.spacebattle.common.Common;
@@ -12,10 +13,7 @@ import au.com.spacebattle.sprite.basic.RectangleShapeMovingObject;
 import au.com.spacebattle.sprite.spaceship.Spaceship;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import static java.lang.Math.abs;
-import javax.imageio.ImageIO;
 
 /**
  *
@@ -57,22 +55,16 @@ public class FriendLaserWeapon extends RectangleShapeMovingObject
 
         BufferedImage aImage;
 
-        try
+        aImage = ResourceCache.getSharedInstance().getImage(imagename);
+        int max = aImage.getWidth();
+        if (aImage.getWidth() < aImage.getHeight())
         {
-            aImage = ImageIO.read(new File(imagename));
-            int max = aImage.getWidth();
-            if (aImage.getWidth() < aImage.getHeight())
-            {
-                max = aImage.getHeight();
-            }
-            this.setWidth(max);
-            this.setHeight(max);
-
-            this.setImage(imagename);
-        } catch (IOException e)
-        {
-
+            max = aImage.getHeight();
         }
+        this.setWidth(max);
+        this.setHeight(max);
+
+        this.setImage(imagename);
 
         this.setLifeTime(1);
 

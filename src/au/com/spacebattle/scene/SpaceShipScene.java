@@ -8,6 +8,7 @@ package au.com.spacebattle.scene;
 import au.com.rmit.Game2dEngine.action.AlphaByAction;
 import au.com.rmit.Game2dEngine.action.AlphaToAction;
 import au.com.rmit.Game2dEngine.action.MoveYToAction;
+import au.com.rmit.Game2dEngine.monitor.MouseMonitor;
 import au.com.rmit.Game2dEngine.scene.Scene;
 import au.com.rmit.Game2dEngine.sprite.LabelSprite;
 import au.com.rmit.Game2dEngine.sprite.Sprite;
@@ -525,7 +526,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         theShip.setCentreY(this.getHeight());
 
         MoveYToAction aMoveAction = new MoveYToAction(theShip);
-        aMoveAction.moveYTo(getHeight() / 2 - theShip.getHeight() / 2, 1);
+        aMoveAction.moveYTo(getHeight() - theShip.getHeight() * 2, 1);
         theShip.addAction(aMoveAction);
 
         addSprite(theShip);
@@ -637,4 +638,31 @@ public class SpaceShipScene extends Scene implements ActionListener
         this.addSprite(aLabel);
         this.bGameRunning = false;
     }
+
+    @Override
+    protected void didUpdateModel()
+    {
+        super.didUpdateModel(); //To change body of generated methods, choose Tools | Templates.
+
+        if (bGameRunning)
+        {
+            if (MouseMonitor.getSharedInstance().rightButtonPressed)
+                theShip.openLaser();
+
+            if (MouseMonitor.getSharedInstance().leftButtonPressed)
+                theShip.bAutoshot = !theShip.bAutoshot;
+
+            if (MouseMonitor.getSharedInstance().mouseEntered)
+            {
+                int x = MouseMonitor.getSharedInstance().MouseX;
+                int y = MouseMonitor.getSharedInstance().MouseY;
+                if ((abs(theShip.getX() - x) > 0.1)
+                        || (abs(theShip.getY() - y) > 0.1))
+                {
+                    theShip.moveToXYInSequence(x, y, 0.1f);
+                }
+            }
+        }
+    }
+
 }

@@ -5,12 +5,10 @@
  */
 package au.com.spacebattle.sprite.spaceship.weapon.missile;
 
+import au.com.rmit.Game2dEngine.Cache.ResourceCache;
 import au.com.rmit.Game2dEngine.sprite.Sprite;
 import au.com.spacebattle.sprite.basic.CircleShapeMovingObject;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 
 /**
  *
@@ -31,22 +29,16 @@ public class Missile extends CircleShapeMovingObject
 
         BufferedImage aImage;
 
-        try
+        aImage = ResourceCache.getSharedInstance().getImage(imagename);
+        int max = aImage.getWidth();
+        if (aImage.getWidth() < aImage.getHeight())
         {
-            aImage = ImageIO.read(new File(imagename));
-            int max = aImage.getWidth();
-            if (aImage.getWidth() < aImage.getHeight())
-            {
-                max = aImage.getHeight();
-            }
-            this.setWidth(max);
-            this.setHeight(max);
-
-            this.setImage(imagename);
-        } catch (IOException e)
-        {
-
+            max = aImage.getHeight();
         }
+        this.setWidth(max);
+        this.setHeight(max);
+
+        this.setImage(imagename);
 
         this.setLifeTime(1);
     }

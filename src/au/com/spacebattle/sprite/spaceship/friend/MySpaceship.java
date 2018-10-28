@@ -100,9 +100,6 @@ public class MySpaceship extends Spaceship implements ActionListener
 
     public void moveToXY(int x, int y)
     {
-        double theShipCentreX = this.getCentreX();
-        double theShipCentreY = this.getCentreY();
-
         MoveCentreXToAction aCentreXAction = new MoveCentreXToAction(this);
         aCentreXAction.MoveCentreXTo(x, 0);
         this.addAction(aCentreXAction);
@@ -120,9 +117,6 @@ public class MySpaceship extends Spaceship implements ActionListener
             oldActions = null;
         }
 
-        double theShipCentreX = this.getCentreX();
-        double theShipCentreY = this.getCentreY();
-
         Set<Action> aSetOfActions = new HashSet<>();
 
         MoveCentreXToAction aCentreXAction = new MoveCentreXToAction(this);
@@ -139,6 +133,7 @@ public class MySpaceship extends Spaceship implements ActionListener
 
     public void openLaser()
     {
+        if (bLaser) return;
         bLaser = true;
         this.timerForStop.start();
     }
