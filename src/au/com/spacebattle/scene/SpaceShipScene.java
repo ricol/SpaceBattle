@@ -10,7 +10,7 @@ import au.com.rmit.Game2dEngine.action.AlphaToAction;
 import au.com.rmit.Game2dEngine.action.MoveYToAction;
 import au.com.rmit.Game2dEngine.monitor.MouseMonitor;
 import au.com.rmit.Game2dEngine.scene.Scene;
-import au.com.rmit.Game2dEngine.sprite.LabelSprite;
+import au.com.rmit.Game2dEngine.sprite.UI.SLabel;
 import au.com.rmit.Game2dEngine.sprite.Sprite;
 import au.com.spacebattle.common.Common;
 import au.com.spacebattle.sprite.other.Score;
@@ -42,12 +42,12 @@ public class SpaceShipScene extends Scene implements ActionListener
     public boolean bGameRunning;
     boolean bUp;
     public MySpaceship theShip;
-    public LabelSprite lblEnemyKilled;
-    public LabelSprite lblBossKilled;
-    public LabelSprite lblMyLife;
-    public LabelSprite lblScore;
-    public LabelSprite lblHelpLeft;
-    public LabelSprite lblHelpRight;
+    public SLabel lblEnemyKilled;
+    public SLabel lblBossKilled;
+    public SLabel lblMyLife;
+    public SLabel lblScore;
+    public SLabel lblHelpLeft;
+    public SLabel lblHelpRight;
     SpaceBackground theBackgroundFirst;
     SpaceBackground theBackgroundSecond;
 
@@ -176,7 +176,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         int tmpWidth = 150;
         int tmpHeight = 20;
 
-        lblMyLife = new LabelSprite(0, 0, "My Life: " + this.mylife, null);
+        lblMyLife = new SLabel(0, 0, "My Life: " + this.mylife, null);
 
         lblMyLife.setWidth(tmpWidth);
 
@@ -189,7 +189,7 @@ public class SpaceShipScene extends Scene implements ActionListener
 
         addSprite(lblMyLife);
 
-        lblEnemyKilled = new LabelSprite(0, 0, "Enemy Killed: " + this.enemyKilled, null);
+        lblEnemyKilled = new SLabel(0, 0, "Enemy Killed: " + this.enemyKilled, null);
 
         lblEnemyKilled.setWidth(tmpWidth);
 
@@ -202,7 +202,7 @@ public class SpaceShipScene extends Scene implements ActionListener
 
         addSprite(lblEnemyKilled);
 
-        lblBossKilled = new LabelSprite(0, 0, "Boss Killed: " + this.bossKilled, null);
+        lblBossKilled = new SLabel(0, 0, "Boss Killed: " + this.bossKilled, null);
 
         lblBossKilled.setWidth(tmpWidth);
 
@@ -215,7 +215,7 @@ public class SpaceShipScene extends Scene implements ActionListener
 
         addSprite(lblBossKilled);
 
-        lblScore = new LabelSprite(0, 0, "Score: " + this.score, null);
+        lblScore = new SLabel(0, 0, "Score: " + this.score, null);
 
         lblScore.setWidth(tmpWidth);
 
@@ -232,7 +232,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         int tmpBottom = 25;
         int tmpMarginRight = 140;
         int tmpGap = 1;
-        lblHelpLeft = new LabelSprite(this.getWidth() - tmpMarginRight, this.getHeight() - (tmpBottom + tmpGap) * 2, "Left Mouse - Fire", null);
+        lblHelpLeft = new SLabel(this.getWidth() - tmpMarginRight, this.getHeight() - (tmpBottom + tmpGap) * 2, "Left Mouse - Fire", null);
         lblHelpLeft.setWidth(tmpWidth);
         lblHelpLeft.setHeight(tmpHeight);
         lblHelpLeft.setRed(255);
@@ -241,7 +241,7 @@ public class SpaceShipScene extends Scene implements ActionListener
 
         addSprite(lblHelpLeft);
 
-        lblHelpRight = new LabelSprite(this.getWidth() - tmpMarginRight, this.getHeight() - (tmpBottom + tmpGap), "Right Mouse - Laser", null);
+        lblHelpRight = new SLabel(this.getWidth() - tmpMarginRight, this.getHeight() - (tmpBottom + tmpGap), "Right Mouse - Laser", null);
         lblHelpRight.setWidth(tmpWidth);
         lblHelpRight.setHeight(tmpHeight);
         lblHelpRight.setRed(255);
@@ -502,7 +502,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         score = 0;
         this.updateLabels();
 
-        LabelSprite aLabel = new LabelSprite("Game Start", new Font("TimesRoman", Font.PLAIN, 30));
+        SLabel aLabel = new SLabel("Game Start", new Font("TimesRoman", Font.PLAIN, 30));
         aLabel.setWidth(150);
         aLabel.setHeight(30);
         aLabel.textPosY = 25;
@@ -603,7 +603,7 @@ public class SpaceShipScene extends Scene implements ActionListener
         score = 0;
         this.updateLabels();
 
-        LabelSprite aLabel = new LabelSprite("Game End", new Font("TimesRoman", Font.PLAIN, 30));
+        SLabel aLabel = new SLabel("Game End", new Font("TimesRoman", Font.PLAIN, 30));
         aLabel.setWidth(150);
         aLabel.setHeight(30);
         aLabel.textPosY = 25;
@@ -623,7 +623,7 @@ public class SpaceShipScene extends Scene implements ActionListener
 
     public void gamePause()
     {
-        LabelSprite aLabel = new LabelSprite("Game Pause", new Font("TimesRoman", Font.PLAIN, 20));
+        SLabel aLabel = new SLabel("Game Pause", new Font("TimesRoman", Font.PLAIN, 20));
         aLabel.setWidth(100);
         aLabel.setHeight(20);
         aLabel.bTextFrame = false;
