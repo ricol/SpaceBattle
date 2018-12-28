@@ -11,6 +11,8 @@ import com.wang.Game2dEngine.action.MoveCentreXToAction;
 import com.wang.Game2dEngine.action.MoveCentreYToAction;
 import com.wang.Game2dEngine.action.MoveXByAction;
 import com.wang.Game2dEngine.action.MoveYByAction;
+import com.wang.Game2dEngine.action.VelocityXToAction;
+import com.wang.Game2dEngine.action.VelocityYToAction;
 import com.wang.Game2dEngine.scene.Layer;
 import com.wang.Game2dEngine.sprite.Sprite;
 import com.wang.game.spacebattle.common.Common;
@@ -48,12 +50,16 @@ public class MySpaceship extends Spaceship implements ActionListener
     Weapon theWeaponAlternative = new FriendAlternativeWeapon(this);
     Weapon theWeaponAutoMissile = new FriendAutoMissileWeapon(this);
     Set<Action> oldActions = null;
+    VelocityXToAction vx_action;
+    VelocityYToAction vy_action;
 
     public MySpaceship()
     {
         super("resource/my-spaceship.png");
         this.setLifeTime(Sprite.EVER);
         this.bCollisionDetect = true;
+//        this.bDrawVelocityVector = true;
+//        this.bDrawAccelarationVector = true;
         this.setCollisionCategory(Common.CATEGORY_FRIEND_SHIP);
         this.addTargetCollisionCategory(Common.CATEGORY_ENEMY_SHIP);
 
@@ -302,5 +308,74 @@ public class MySpaceship extends Spaceship implements ActionListener
     public void fireAutoFollowMissile()
     {
         this.theWeaponAutoMissile.fire();
+    }
+
+    public void brake(float duration)
+    {
+        this.brakeX(duration);
+        this.breakY(duration);
+    }
+
+    public void cancelBrake()
+    {
+        Set<Action> s = new HashSet<>();
+        if (vx_action != null)
+        {
+            s.add(vx_action);
+            vx_action = null;
+        }
+        if (vy_action != null)
+        {
+            s.add(vy_action);
+            vy_action = null;
+        }
+        if (s.size() > 0)
+            this.removeActions(s);
+    }
+
+    public void brakeX(float duration)
+    {
+        boolean bRun = false;
+        if (vx_action != null)
+        {
+            if (vx_action.bComplete)
+                bRun = true;
+        } else
+        {
+            bRun = true;
+        }
+
+        if (bRun)
+        {
+            if (abs(this.getVelocityX()) > 1e-3)
+            {
+                vx_action = new VelocityXToAction(this);
+                vx_action.velocityXTo(0, duration);
+                this.addAction(vx_action);
+            }
+        }
+    }
+
+    public void breakY(float duration)
+    {
+        boolean bRun = false;
+        if (vy_action != null)
+        {
+            if (vy_action.bComplete)
+                bRun = true;
+        } else
+        {
+            bRun = true;
+        }
+
+        if (bRun)
+        {
+            if (abs(this.getVelocityY()) > 1e-3)
+            {
+                vy_action = new VelocityYToAction(this);
+                vy_action.velocityYTo(0, duration);
+                this.addAction(vy_action);
+            }
+        }
     }
 }

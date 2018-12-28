@@ -125,9 +125,9 @@ public class Spaceship extends CircleShapeMovingObject implements ActionListener
             aFire.setY(this.getCentreY() + this.getHeight() / 2);
             aFire.setVelocityX(tmpX);
             aFire.setVelocityY(tmpY);
-            aFire.setRed(255);
-            aFire.setGreen(255);
-            aFire.setBlue(255);
+            aFire.setRed(abs(theRandom.nextInt()) % 255);
+            aFire.setGreen(abs(theRandom.nextInt()) % 255);
+            aFire.setBlue(abs(theRandom.nextInt()) % 255);
             aFire.setWidth(size);
             aFire.setHeight(size);
             aFire.bDeadIfNoActions = true;

@@ -645,6 +645,7 @@ public class SpaceShipScene extends Scene implements ActionListener, InputMonito
     protected void didUpdateModel()
     {
         super.didUpdateModel(); //To change body of generated methods, choose Tools | Templates.
+
         if (bGameRunning)
         {
             if (InputMonitor.getSharedInstance().rightButtonPressed)
@@ -669,33 +670,42 @@ public class SpaceShipScene extends Scene implements ActionListener, InputMonito
             {
                 InputMonitor monitor = InputMonitor.getSharedInstance();
 
-                //control ship by w, a, s, d keys
-                double velocity = 250;
-                double velocityX = 0;
-                double velocityY = 0;
+                double value = 500;
+                double accelarationX = 0;
+                double accelarationY = 0;
 
                 if (monitor.isKeyPressed(KeyEvent.VK_A))
                 {
-                    velocityX -= velocity;
+                    accelarationX -= value;
                 }
 
                 if (monitor.isKeyPressed(KeyEvent.VK_D))
                 {
-                    velocityX += velocity;
+                    accelarationX += value;
                 }
 
                 if (monitor.isKeyPressed(KeyEvent.VK_S))
                 {
-                    velocityY += velocity;
+                    accelarationY += value;
                 }
 
                 if (monitor.isKeyPressed(KeyEvent.VK_W))
                 {
-                    velocityY -= velocity;
+                    accelarationY -= value;
                 }
 
-                theShip.setVelocityX(velocityX);
-                theShip.setVelocityY(velocityY);
+                theShip.setAccelarationX(accelarationX);
+                theShip.setAccelarationY(accelarationY);
+
+                //slow down if there is no accelaration
+                float duration = 0.8f;
+                if (abs(accelarationX) <= 1e-5 && abs(accelarationY) <= 1e-5)
+                {
+                    theShip.brake(duration);
+                } else
+                {
+                    theShip.cancelBrake();
+                }
             }
         }
     }
@@ -706,11 +716,15 @@ public class SpaceShipScene extends Scene implements ActionListener, InputMonito
         switch (key)
         {
             case KeyEvent.VK_SPACE:
+            {
                 this.theShip.openLaser();
                 break;
+            }
             case KeyEvent.VK_ESCAPE:
+            {
                 this.bMouseControl = !this.bMouseControl;
                 break;
+            }
             default:
                 break;
         }
