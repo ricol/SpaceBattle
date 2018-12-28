@@ -1,10 +1,8 @@
 package com.wang.game.spacebattle.main;
 
 import com.wang.Game2dEngine.director.Director;
-import com.wang.Game2dEngine.monitor.MouseMonitor;
+import com.wang.Game2dEngine.monitor.InputMonitor;
 import com.wang.game.spacebattle.scene.SpaceShipScene;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import static java.lang.System.exit;
 
 /*
@@ -16,7 +14,7 @@ import static java.lang.System.exit;
  *
  * @author ricolwang
  */
-public class FrameMain extends javax.swing.JFrame implements KeyListener
+public class FrameMain extends javax.swing.JFrame
 
 {
 
@@ -25,7 +23,7 @@ public class FrameMain extends javax.swing.JFrame implements KeyListener
     public FrameMain()
     {
         initComponents();
-        this.addKeyListener(this);
+        this.addKeyListener(InputMonitor.getSharedInstance());
     }
 
     @SuppressWarnings("unchecked")
@@ -206,32 +204,14 @@ public class FrameMain extends javax.swing.JFrame implements KeyListener
 
     void launchGame()
     {
+        if (this.theScene != null) InputMonitor.getSharedInstance().removeObserverForKeyTyped(theScene);
         this.theScene = new SpaceShipScene();
-        this.theScene.getComponent().addMouseListener(MouseMonitor.getSharedInstance());
-        this.theScene.getComponent().addMouseMotionListener(MouseMonitor.getSharedInstance());
+        InputMonitor.getSharedInstance().addObserverForKeyTyped(theScene);
+        this.theScene.getComponent().addMouseListener(InputMonitor.getSharedInstance());
+        this.theScene.getComponent().addMouseMotionListener(InputMonitor.getSharedInstance());
         Director.getSharedInstance().setParent(this.panelGame);
         Director.getSharedInstance().showScene(theScene);
         this.theScene.bMouseControl = cbMouseControl.isSelected();
         this.theScene.gameStart();
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e)
-    {
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e)
-    {
-        if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
-        {
-            cbMouseControl.setSelected(!cbMouseControl.isSelected());
-            theScene.bMouseControl = cbMouseControl.isSelected();
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e)
-    {
     }
 }

@@ -5,10 +5,11 @@
  */
 package com.wang.game.spacebattle.scene;
 
+import com.sun.glass.events.KeyEvent;
 import com.wang.Game2dEngine.action.AlphaByAction;
 import com.wang.Game2dEngine.action.AlphaToAction;
 import com.wang.Game2dEngine.action.MoveYToAction;
-import com.wang.Game2dEngine.monitor.MouseMonitor;
+import com.wang.Game2dEngine.monitor.InputMonitor;
 import com.wang.Game2dEngine.scene.Scene;
 import com.wang.Game2dEngine.sprite.Sprite;
 import com.wang.Game2dEngine.sprite.UI.SLabel;
@@ -36,7 +37,7 @@ import javax.swing.Timer;
  *
  * @author ricolwang
  */
-public class SpaceShipScene extends Scene implements ActionListener
+public class SpaceShipScene extends Scene implements ActionListener, InputMonitor.IKeyTyped
 {
 
     public boolean bGameRunning;
@@ -644,31 +645,74 @@ public class SpaceShipScene extends Scene implements ActionListener
     protected void didUpdateModel()
     {
         super.didUpdateModel(); //To change body of generated methods, choose Tools | Templates.
-
         if (bGameRunning)
         {
-            if (MouseMonitor.getSharedInstance().rightButtonPressed)
+            if (InputMonitor.getSharedInstance().rightButtonPressed)
                 theShip.openLaser();
 
-            if (MouseMonitor.getSharedInstance().leftButtonPressed)
+            if (InputMonitor.getSharedInstance().leftButtonPressed)
                 theShip.bAutoshot = !theShip.bAutoshot;
 
             if (bMouseControl)
             {
-                if (MouseMonitor.getSharedInstance().mouseEntered)
+                if (InputMonitor.getSharedInstance().mouseEntered)
                 {
-                    int x = MouseMonitor.getSharedInstance().MouseX;
-                    int y = MouseMonitor.getSharedInstance().MouseY;
+                    int x = InputMonitor.getSharedInstance().MouseX;
+                    int y = InputMonitor.getSharedInstance().MouseY;
                     if ((abs(theShip.getX() - x) > 0.1)
                             || (abs(theShip.getY() - y) > 0.1))
                     {
                         theShip.moveToXYInSequence(x, y, 0.1f);
                     }
                 }
-            }else
+            } else
             {
-                
+                InputMonitor monitor = InputMonitor.getSharedInstance();
+
+                //control ship by w, a, s, d keys
+                double velocity = 250;
+                double velocityX = 0;
+                double velocityY = 0;
+
+                if (monitor.isKeyPressed(KeyEvent.VK_A))
+                {
+                    velocityX -= velocity;
+                }
+
+                if (monitor.isKeyPressed(KeyEvent.VK_D))
+                {
+                    velocityX += velocity;
+                }
+
+                if (monitor.isKeyPressed(KeyEvent.VK_S))
+                {
+                    velocityY += velocity;
+                }
+
+                if (monitor.isKeyPressed(KeyEvent.VK_W))
+                {
+                    velocityY -= velocity;
+                }
+
+                theShip.setVelocityX(velocityX);
+                theShip.setVelocityY(velocityY);
             }
+        }
+    }
+
+    @Override
+    public void inputMonitorKeyTyped(char key)
+    {
+        switch (key)
+        {
+            case KeyEvent.VK_SPACE:
+                this.theShip.openLaser();
+                break;
+            case KeyEvent.VK_ESCAPE:
+                this.bMouseControl = !this.bMouseControl;
+                break;
+            default:
+                break;
         }
     }
 

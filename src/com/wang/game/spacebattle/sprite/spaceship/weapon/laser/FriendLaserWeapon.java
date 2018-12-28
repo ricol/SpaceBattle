@@ -23,8 +23,6 @@ public class FriendLaserWeapon extends RectangleShapeMovingObject
     public static final int HEIGHT = 1000;
     public static final int WIDTH = 20;
 
-    Spaceship theShip;
-
     public FriendLaserWeapon(Spaceship ship)
     {
         super(0, 0, 0, HEIGHT, 0, 0, 0);
@@ -34,7 +32,6 @@ public class FriendLaserWeapon extends RectangleShapeMovingObject
         this.setWidth(WIDTH * abs(theRandom.nextFloat()) + 5);
         this.setCentreX(ship.getCentreX());
         this.setCentreY(ship.getCentreY() - this.getHeight() / 2 - ship.getHeight() / 2);
-        theShip = ship;
 
         this.setLayer(ship.getLayer());
         this.setLifeTime(0.01f);
