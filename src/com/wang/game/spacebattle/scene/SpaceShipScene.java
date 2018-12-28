@@ -10,8 +10,8 @@ import com.wang.Game2dEngine.action.AlphaToAction;
 import com.wang.Game2dEngine.action.MoveYToAction;
 import com.wang.Game2dEngine.monitor.MouseMonitor;
 import com.wang.Game2dEngine.scene.Scene;
-import com.wang.Game2dEngine.sprite.UI.SLabel;
 import com.wang.Game2dEngine.sprite.Sprite;
+import com.wang.Game2dEngine.sprite.UI.SLabel;
 import com.wang.game.spacebattle.common.Common;
 import com.wang.game.spacebattle.sprite.other.Score;
 import com.wang.game.spacebattle.sprite.other.SpaceBackground;
@@ -40,6 +40,7 @@ public class SpaceShipScene extends Scene implements ActionListener
 {
 
     public boolean bGameRunning;
+    public boolean bMouseControl = false;
     boolean bUp;
     public MySpaceship theShip;
     public SLabel lblEnemyKilled;
@@ -652,15 +653,21 @@ public class SpaceShipScene extends Scene implements ActionListener
             if (MouseMonitor.getSharedInstance().leftButtonPressed)
                 theShip.bAutoshot = !theShip.bAutoshot;
 
-            if (MouseMonitor.getSharedInstance().mouseEntered)
+            if (bMouseControl)
             {
-                int x = MouseMonitor.getSharedInstance().MouseX;
-                int y = MouseMonitor.getSharedInstance().MouseY;
-                if ((abs(theShip.getX() - x) > 0.1)
-                        || (abs(theShip.getY() - y) > 0.1))
+                if (MouseMonitor.getSharedInstance().mouseEntered)
                 {
-                    theShip.moveToXYInSequence(x, y, 0.1f);
+                    int x = MouseMonitor.getSharedInstance().MouseX;
+                    int y = MouseMonitor.getSharedInstance().MouseY;
+                    if ((abs(theShip.getX() - x) > 0.1)
+                            || (abs(theShip.getY() - y) > 0.1))
+                    {
+                        theShip.moveToXYInSequence(x, y, 0.1f);
+                    }
                 }
+            }else
+            {
+                
             }
         }
     }

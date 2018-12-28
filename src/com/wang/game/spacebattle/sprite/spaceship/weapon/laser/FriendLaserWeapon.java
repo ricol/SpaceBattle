@@ -5,14 +5,12 @@
  */
 package com.wang.game.spacebattle.sprite.spaceship.weapon.laser;
 
-import com.wang.Game2dEngine.Cache.ResourceCache;
 import com.wang.Game2dEngine.Shape.ESpecialRectangleShape;
 import com.wang.Game2dEngine.painter.interfaces.IEngineGraphics;
 import com.wang.game.spacebattle.common.Common;
 import com.wang.game.spacebattle.sprite.basic.RectangleShapeMovingObject;
 import com.wang.game.spacebattle.sprite.spaceship.Spaceship;
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 import static java.lang.Math.abs;
 
 /**
@@ -39,7 +37,7 @@ public class FriendLaserWeapon extends RectangleShapeMovingObject
         theShip = ship;
 
         this.setLayer(ship.getLayer());
-        this.setLifeTime(0.001f);
+        this.setLifeTime(0.01f);
 
         this.bCustomDrawing = true;
 
@@ -47,30 +45,6 @@ public class FriendLaserWeapon extends RectangleShapeMovingObject
         this.setCollisionCategory(Common.CATEGORY_FRIEND_SHIP);
         this.addTargetCollisionCategory(Common.CATEGORY_ENEMY_SHIP);
         this.setTheShape(new ESpecialRectangleShape(0, 0, 0, 0));
-    }
-
-    public FriendLaserWeapon(String imagename)
-    {
-        super(0, 0, 0, 0, 0, 0, 0);
-
-        BufferedImage aImage;
-
-        aImage = ResourceCache.getSharedInstance().getImage(imagename);
-        int max = aImage.getWidth();
-        if (aImage.getWidth() < aImage.getHeight())
-        {
-            max = aImage.getHeight();
-        }
-        this.setWidth(max);
-        this.setHeight(max);
-
-        this.setImage(imagename);
-
-        this.setLifeTime(1);
-
-        this.bCollisionDetect = true;
-        this.setCollisionCategory(Common.CATEGORY_FRIEND_SHIP);
-        this.addTargetCollisionCategory(Common.CATEGORY_ENEMY_SHIP);
     }
 
     @Override

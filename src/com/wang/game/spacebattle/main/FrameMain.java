@@ -3,6 +3,8 @@ package com.wang.game.spacebattle.main;
 import com.wang.Game2dEngine.director.Director;
 import com.wang.Game2dEngine.monitor.MouseMonitor;
 import com.wang.game.spacebattle.scene.SpaceShipScene;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import static java.lang.System.exit;
 
 /*
@@ -14,7 +16,7 @@ import static java.lang.System.exit;
  *
  * @author ricolwang
  */
-public class FrameMain extends javax.swing.JFrame
+public class FrameMain extends javax.swing.JFrame implements KeyListener
 
 {
 
@@ -23,6 +25,7 @@ public class FrameMain extends javax.swing.JFrame
     public FrameMain()
     {
         initComponents();
+        this.addKeyListener(this);
     }
 
     @SuppressWarnings("unchecked")
@@ -31,9 +34,16 @@ public class FrameMain extends javax.swing.JFrame
     {
 
         panelGame = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        btnStart = new javax.swing.JButton();
-        btnClose = new javax.swing.JButton();
+        menuBar = new javax.swing.JMenuBar();
+        menuGame = new javax.swing.JMenu();
+        menuStart = new javax.swing.JMenuItem();
+        menuPause = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        menuExit = new javax.swing.JMenuItem();
+        menuOption = new javax.swing.JMenu();
+        cbMouseControl = new javax.swing.JCheckBoxMenuItem();
+        menuHelp = new javax.swing.JMenu();
+        menuAbout = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addComponentListener(new java.awt.event.ComponentAdapter()
@@ -61,36 +71,79 @@ public class FrameMain extends javax.swing.JFrame
         panelGame.setLayout(panelGameLayout);
         panelGameLayout.setHorizontalGroup(
             panelGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 687, Short.MAX_VALUE)
+            .addGap(0, 538, Short.MAX_VALUE)
         );
         panelGameLayout.setVerticalGroup(
             panelGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 617, Short.MAX_VALUE)
+            .addGap(0, 707, Short.MAX_VALUE)
         );
 
         getContentPane().add(panelGame, java.awt.BorderLayout.CENTER);
 
-        btnStart.setText("Start");
-        btnStart.addActionListener(new java.awt.event.ActionListener()
+        menuGame.setText("Game");
+
+        menuStart.setText("Start");
+        menuStart.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                btnStartActionPerformed(evt);
+                menuStartActionPerformed(evt);
             }
         });
-        jPanel1.add(btnStart);
+        menuGame.add(menuStart);
 
-        btnClose.setText("Close");
-        btnClose.addActionListener(new java.awt.event.ActionListener()
+        menuPause.setText("Pause");
+        menuPause.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                btnCloseActionPerformed(evt);
+                menuPauseActionPerformed(evt);
             }
         });
-        jPanel1.add(btnClose);
+        menuGame.add(menuPause);
+        menuGame.add(jSeparator1);
 
-        getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_START);
+        menuExit.setText("Exit");
+        menuExit.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                menuExitActionPerformed(evt);
+            }
+        });
+        menuGame.add(menuExit);
+
+        menuBar.add(menuGame);
+
+        menuOption.setText("Option");
+
+        cbMouseControl.setText("Mouse Control");
+        cbMouseControl.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                cbMouseControlActionPerformed(evt);
+            }
+        });
+        menuOption.add(cbMouseControl);
+
+        menuBar.add(menuOption);
+
+        menuHelp.setText("Help");
+
+        menuAbout.setText("About");
+        menuAbout.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                menuAboutActionPerformed(evt);
+            }
+        });
+        menuHelp.add(menuAbout);
+
+        menuBar.add(menuHelp);
+
+        setJMenuBar(menuBar);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -104,32 +157,6 @@ public class FrameMain extends javax.swing.JFrame
         this.requestFocus();
     }//GEN-LAST:event_formWindowActivated
 
-    private void btnStartActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnStartActionPerformed
-    {//GEN-HEADEREND:event_btnStartActionPerformed
-        if (theScene == null)
-        {
-            this.launchGame();
-        } else
-        {
-            theScene.pause();
-        }
-
-        if (theScene.isScenePaused())
-        {
-            btnStart.setText("Continue");
-        } else
-        {
-            btnStart.setText("Pause");
-        }
-
-        this.requestFocus();
-    }//GEN-LAST:event_btnStartActionPerformed
-
-    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCloseActionPerformed
-    {//GEN-HEADEREND:event_btnCloseActionPerformed
-        exit(0);
-    }//GEN-LAST:event_btnCloseActionPerformed
-
     private void formComponentResized(java.awt.event.ComponentEvent evt)//GEN-FIRST:event_formComponentResized
     {//GEN-HEADEREND:event_formComponentResized
         if (theScene != null)
@@ -138,10 +165,42 @@ public class FrameMain extends javax.swing.JFrame
         }
     }//GEN-LAST:event_formComponentResized
 
+    private void menuPauseActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_menuPauseActionPerformed
+    {//GEN-HEADEREND:event_menuPauseActionPerformed
+        if (theScene != null) theScene.pause();
+    }//GEN-LAST:event_menuPauseActionPerformed
+
+    private void menuStartActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_menuStartActionPerformed
+    {//GEN-HEADEREND:event_menuStartActionPerformed
+        launchGame();
+    }//GEN-LAST:event_menuStartActionPerformed
+
+    private void menuExitActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_menuExitActionPerformed
+    {//GEN-HEADEREND:event_menuExitActionPerformed
+        exit(0);
+    }//GEN-LAST:event_menuExitActionPerformed
+
+    private void menuAboutActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_menuAboutActionPerformed
+    {//GEN-HEADEREND:event_menuAboutActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuAboutActionPerformed
+
+    private void cbMouseControlActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cbMouseControlActionPerformed
+    {//GEN-HEADEREND:event_cbMouseControlActionPerformed
+        theScene.bMouseControl = cbMouseControl.isSelected();
+    }//GEN-LAST:event_cbMouseControlActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnClose;
-    private javax.swing.JButton btnStart;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JCheckBoxMenuItem cbMouseControl;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JMenuItem menuAbout;
+    private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenuItem menuExit;
+    private javax.swing.JMenu menuGame;
+    private javax.swing.JMenu menuHelp;
+    private javax.swing.JMenu menuOption;
+    private javax.swing.JMenuItem menuPause;
+    private javax.swing.JMenuItem menuStart;
     private javax.swing.JPanel panelGame;
     // End of variables declaration//GEN-END:variables
 
@@ -150,10 +209,29 @@ public class FrameMain extends javax.swing.JFrame
         this.theScene = new SpaceShipScene();
         this.theScene.getComponent().addMouseListener(MouseMonitor.getSharedInstance());
         this.theScene.getComponent().addMouseMotionListener(MouseMonitor.getSharedInstance());
-        this.theScene.getComponent().requestFocus();
-
         Director.getSharedInstance().setParent(this.panelGame);
         Director.getSharedInstance().showScene(theScene);
+        this.theScene.bMouseControl = cbMouseControl.isSelected();
         this.theScene.gameStart();
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e)
+    {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e)
+    {
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
+        {
+            cbMouseControl.setSelected(!cbMouseControl.isSelected());
+            theScene.bMouseControl = cbMouseControl.isSelected();
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e)
+    {
     }
 }
