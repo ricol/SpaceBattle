@@ -5,7 +5,6 @@
  */
 package com.wang.game.spacebattle.scene;
 
-import com.sun.glass.events.KeyEvent;
 import com.wang.Game2dEngine.action.AlphaByAction;
 import com.wang.Game2dEngine.action.AlphaToAction;
 import com.wang.Game2dEngine.action.MoveYToAction;
@@ -25,6 +24,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import static java.lang.Math.abs;
 import static java.lang.Math.pow;
 import java.util.ArrayList;
