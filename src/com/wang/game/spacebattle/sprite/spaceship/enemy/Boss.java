@@ -72,7 +72,7 @@ public class Boss extends Enemy
     {
         super.onActionComplete(theAction);
 
-        if (theAction.identifer.equals("ActionExpand"))
+        if (theAction.identifier.equals("ActionExpand"))
         {
             if (theAction instanceof ExpandByAction)
             {
@@ -191,7 +191,7 @@ public class Boss extends Enemy
         float time = abs(theRandom.nextInt()) % 2 + 1;
         ExpandByAction aAction = new ExpandByAction();
         aAction.expandBy(num, time);
-        aAction.identifer = "ActionExpand";
+        aAction.identifier = "ActionExpand";
         return aAction;
     }
 
@@ -201,7 +201,7 @@ public class Boss extends Enemy
         float value = action.getExpandBy();
         float time = action.getExpandByDuration();
         aAction.expandBy(-action.getExpandBy(), action.getExpandByDuration() / 1000.0f);
-        aAction.identifer = "ActionExpandBack";
+        aAction.identifier = "ActionExpandBack";
         this.addAction(aAction);
     }
 }

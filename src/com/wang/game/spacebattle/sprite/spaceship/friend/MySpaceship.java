@@ -107,11 +107,11 @@ public class MySpaceship extends Spaceship implements ActionListener
     public void moveToXY(int x, int y)
     {
         MoveCentreXToAction aCentreXAction = new MoveCentreXToAction(this);
-        aCentreXAction.MoveCentreXTo(x, 0);
+        aCentreXAction.moveCentreXTo(x, 0);
         this.addAction(aCentreXAction);
 
         MoveCentreYToAction aCentreYAction = new MoveCentreYToAction(this);
-        aCentreYAction.MoveCentreYTo(y, 0);
+        aCentreYAction.moveCentreYTo(y, 0);
         this.addAction(aCentreYAction);
     }
 
@@ -126,11 +126,11 @@ public class MySpaceship extends Spaceship implements ActionListener
         Set<Action> aSetOfActions = new HashSet<>();
 
         MoveCentreXToAction aCentreXAction = new MoveCentreXToAction(this);
-        aCentreXAction.MoveCentreXTo(x, duration);
+        aCentreXAction.moveCentreXTo(x, duration);
         aSetOfActions.add(aCentreXAction);
 
         MoveCentreYToAction aCentreYAction = new MoveCentreYToAction(this);
-        aCentreYAction.MoveCentreYTo(y, duration);
+        aCentreYAction.moveCentreYTo(y, duration);
         aSetOfActions.add(aCentreYAction);
         this.enQueueActions(aSetOfActions);
 
